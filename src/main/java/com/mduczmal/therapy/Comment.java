@@ -1,8 +1,13 @@
 package com.mduczmal.therapy;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class Comment {
+    @Id
+    private Long id;
     private String author;
     private String content;
     private LocalDateTime dateCreated;

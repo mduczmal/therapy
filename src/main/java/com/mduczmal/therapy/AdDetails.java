@@ -1,7 +1,9 @@
 package com.mduczmal.therapy;
 
+import javax.persistence.Embeddable;
 import java.util.Map;
 
+@Embeddable
 public class AdDetails {
     private String name;
     private String surname;
@@ -77,6 +79,7 @@ public class AdDetails {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
+
     public void setImage(String path) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
@@ -127,5 +130,9 @@ public class AdDetails {
 
     public void setOnlineSessions(boolean onlineSessions) {
         throw new UnsupportedOperationException("Not implemented yet.");
+    }
+
+    public boolean obligatoryFieldsPresent() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
