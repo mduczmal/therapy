@@ -19,7 +19,7 @@ public class Therapist {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    public UUID getID() {
+    public UUID getId() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
