@@ -1,7 +1,9 @@
 package com.mduczmal.therapy;
 
 import javax.persistence.Embeddable;
+import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.validator.routines.EmailValidator;
 
 @Embeddable
 public class AdDetails {
@@ -9,7 +11,7 @@ public class AdDetails {
     private String surname;
     private String address;
     private String description;
-    private Map<String, Integer> pricing;
+    private Map<String, Integer> pricing = new HashMap<>();
     private String therapyCenter;
     private String imagePath;
     private String telephoneNumber;
@@ -20,119 +22,125 @@ public class AdDetails {
     private boolean onlineSessions;
 
     public String getName() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return name;
     }
 
     public void setName(String name) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (!name.isBlank()) this.name = name;
     }
 
     public String getSurname() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return surname;
     }
 
     public void setSurname(String surname) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (!surname.isBlank()) this.surname = surname;
     }
 
     public String getAddress() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return address;
     }
 
     public void setAddress(String address) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (!address.isBlank()) this.address = address;
     }
 
     public String getDescription() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return description;
     }
 
     public void setDescription(String description) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (!description.isBlank()) this.description = description;
     }
 
     public Map<String, Integer> getPricing() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return pricing;
     }
 
     public Integer getPrice(String service) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return pricing.get(service);
     }
 
     public void setPrice(String service, Integer price) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (price >= 0) pricing.put(service, price);
     }
 
     public void deletePrice(String service) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        pricing.remove(service);
     }
 
     public String getTherapyCenter() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return therapyCenter;
     }
 
     public void setTherapyCenter(String center) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        this.therapyCenter = center;
     }
 
     public String getImagePath() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return imagePath;
     }
-
 
     public void setImage(String path) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     public String getTelephoneNumber() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return telephoneNumber;
     }
 
     public void setTelephoneNumber(String number) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (number.length() != 9 && number.length() != 11) return;
+        for (char c : number.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return;
+            }
+        }
+        this.telephoneNumber = number;
     }
 
     public String getEmail() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return email;
     }
 
     public void setEmail(String email) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        EmailValidator validator = EmailValidator.getInstance();
+        if (validator.isValid(email)) this.email = email;
     }
 
     public String getTherapyApproach() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return therapyApproach;
     }
 
     public void setTherapyApproach(String approach) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (!approach.isBlank()) this.therapyApproach = approach;
     }
 
     public String getTraining() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return training;
     }
 
     public void setTraining(String training) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (training.isBlank()) this.training = training;
     }
 
     public boolean getSupervision() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return supervision;
     }
 
     public void setSupervision(boolean isSupervised) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        this.supervision = isSupervised;
     }
 
     public boolean getOnlineSessions() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return onlineSessions;
     }
 
     public void setOnlineSessions(boolean onlineSessions) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        this.onlineSessions = onlineSessions;
     }
 
     public boolean obligatoryFieldsPresent() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return (name != null && surname != null && address != null);
     }
 }

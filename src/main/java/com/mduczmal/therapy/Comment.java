@@ -13,28 +13,36 @@ public class Comment {
     private LocalDateTime dateCreated;
     private boolean selfComment;
 
+    public Comment() {
+        this.dateCreated = LocalDateTime.now();
+    }
+
     public String getAuthor() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return author;
     }
 
     public void setAuthor(String author) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (author.isBlank()) {
+           this.author = "Komentarz anonimowy";
+        } else {
+            this.author = author;
+        }
     }
 
     public String getContent() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return content;
     }
 
     public void setContent(String content) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        this.content = content;
     }
 
     public LocalDateTime getDateCreated() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return dateCreated;
     }
 
     public boolean isSelfComment() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return selfComment;
     }
 
     public void delete() {

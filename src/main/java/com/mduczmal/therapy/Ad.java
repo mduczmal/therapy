@@ -19,11 +19,11 @@ public class Ad {
     private AdDetails adDetails;
 
     public Ad() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        dateCreated = LocalDateTime.now();
     }
 
     public UUID getId() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return id;
     }
 
     public UUID getTherapist() {
@@ -31,7 +31,7 @@ public class Ad {
     }
 
     public LocalDateTime getDateCreated() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return dateCreated;
     }
 
     public AdDetails getDetails() {

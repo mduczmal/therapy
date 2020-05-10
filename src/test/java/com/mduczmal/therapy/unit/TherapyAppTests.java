@@ -14,16 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithUserDetails;
 
-
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-/*
-    JUnit is de facto standard unit testing library for Java projects
-    and offers nice Spring Boot integration
- */
 class TherapyAppTests {
 
     @Test
@@ -114,7 +109,7 @@ class TherapyAppTests {
     @Test
     void polishSurnameIsSet() {
         AdDetails details = new AdDetails();
-        details.setName("PolishSurnameąęńóżźł");
+        details.setSurname("PolishSurnameąęńóżźł");
         String surname = details.getSurname();
         assertEquals("PolishSurnameąęńóżźł", surname);
     }

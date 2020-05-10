@@ -13,22 +13,22 @@ public class Therapist {
     private String login;
     private UUID ad;
     @Embedded
-    private Cookies cookies;
+    private final Cookies cookies;
 
     public Therapist() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        this.cookies = new Cookies();
     }
 
     public UUID getId() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return id;
     }
 
     public String getLogin() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return login;
     }
 
     public Cookies getCookies() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return cookies;
     }
 
     public Optional<Ad> createAd() {
