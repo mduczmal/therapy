@@ -1,25 +1,27 @@
 package com.mduczmal.therapy;
 
-import javax.persistence.Embedded;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Ad {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @OneToOne
     private UUID therapist;
     private LocalDateTime dateCreated;
-    @Embedded
-    private AdDetails adDetails;
+    /*@Embedded
+    private AdDetails adDetails;*/
 
     public Ad() {
         dateCreated = LocalDateTime.now();
+    }
+
+    public Ad(Therapist therapist) {
+        this();
+        this.therapist = therapist.getId();
     }
 
     public UUID getId() {
@@ -27,7 +29,7 @@ public class Ad {
     }
 
     public UUID getTherapist() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return therapist;
     }
 
     public LocalDateTime getDateCreated() {

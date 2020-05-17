@@ -1,12 +1,12 @@
 package com.mduczmal.therapy;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Optional;
 import java.util.UUID;
+import static java.util.UUID.randomUUID;
 
 @Entity
+@Table
 public class Therapist {
     @Id
     private UUID id;
@@ -16,7 +16,13 @@ public class Therapist {
     private final Cookies cookies;
 
     public Therapist() {
+        this.id = randomUUID();
         this.cookies = new Cookies();
+    }
+
+    public Therapist(String username) {
+        this();
+        this.login = username;
     }
 
     public UUID getId() {
