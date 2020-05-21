@@ -1,6 +1,6 @@
 package com.mduczmal.therapy;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -11,7 +11,8 @@ public class AdDetails {
     private String surname;
     private String address;
     private String description;
-    private Map<String, Integer> pricing = new HashMap<>();
+    @ElementCollection
+    private Map<String, Integer> pricing;
     private String therapyCenter;
     private String imagePath;
     private String telephoneNumber;
@@ -20,6 +21,12 @@ public class AdDetails {
     private String training;
     private boolean supervision;
     private boolean onlineSessions;
+
+    public AdDetails() {
+        this.pricing = new HashMap<>();
+        this.supervision = false;
+        this.onlineSessions = false;
+    }
 
     public String getName() {
         return name;
@@ -121,7 +128,7 @@ public class AdDetails {
     }
 
     public void setTraining(String training) {
-        if (training.isBlank()) this.training = training;
+        if (!training.isBlank()) this.training = training;
     }
 
     public boolean getSupervision() {

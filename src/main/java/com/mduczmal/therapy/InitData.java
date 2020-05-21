@@ -1,8 +1,6 @@
 package com.mduczmal.therapy;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +33,8 @@ public class InitData implements CommandLineRunner {
         TherapistPrincipal therapistPrincipal = new TherapistPrincipal(therapist.getLogin(),
                 passwordEncoder.encode(password), authorities, therapist);
         Ad ad = new Ad(therapist);
+        ad.getDetails().setPrice("Pierwsza wizyta", 150);
+        ad.getDetails().setPrice("Sesja indywidualna", 100);
         therapistRepository.save(therapist);
         adRepository.save(ad);
         userRepository.save(therapistPrincipal);
@@ -43,7 +43,7 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        for (int i=1; i<10; i++) {
+        for (int i=1; i<3; i++) {
             addTherapist("Test" + i, "pass" + i);
             System.out.println("Number of therapists: " + therapistRepository.count());
         }

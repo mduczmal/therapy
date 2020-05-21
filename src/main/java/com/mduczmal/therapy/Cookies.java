@@ -1,7 +1,5 @@
 package com.mduczmal.therapy;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Embeddable;
 
 @Embeddable

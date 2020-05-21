@@ -12,11 +12,12 @@ public class Ad {
     private UUID id;
     private UUID therapist;
     private LocalDateTime dateCreated;
-    /*@Embedded
-    private AdDetails adDetails;*/
+    @Embedded
+    private AdDetails adDetails;
 
     public Ad() {
         dateCreated = LocalDateTime.now();
+        adDetails = new AdDetails();
     }
 
     public Ad(Therapist therapist) {
@@ -37,7 +38,7 @@ public class Ad {
     }
 
     public AdDetails getDetails() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return adDetails;
     }
 
     public List<Comment> getComments() {

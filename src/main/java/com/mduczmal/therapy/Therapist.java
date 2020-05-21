@@ -14,6 +14,7 @@ public class Therapist {
     private UUID ad;
     private String login;
     @Embedded
+    @AttributeOverride(name="accepted", column=@Column(name = "cookies_accepted"))
     private final Cookies cookies;
 
     public Therapist() {
@@ -43,6 +44,7 @@ public class Therapist {
     }
 
     public Optional<Ad> createAd() {
+        if (ad != null) return Optional.empty();
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

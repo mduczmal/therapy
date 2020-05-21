@@ -1,7 +1,6 @@
 package com.mduczmal.therapy;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 

@@ -16,6 +16,16 @@
         <a th:href="@{/}" class="card-link">Home link</a>
     </div>
 </div>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Ogłoszenia</h5>
+        <div th:each="ad, iter: ${ads}">
+            <p>Ogłoszenie nr <span th:text="${iter.index}"></span></p>
+            <a class="card-link" th:href="@{/ads/{ad_id}(ad_id=${iter.index})}">Zobacz szczegóły</a>
+            <p></p>
+        </div>
+    </div>
+</div>
 <script th:src="@{/js/jquery-3.5.0.slim.min.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
 </body>
