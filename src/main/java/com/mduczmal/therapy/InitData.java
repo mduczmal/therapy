@@ -15,26 +15,37 @@ public class InitData implements CommandLineRunner {
     private final AdRepository adRepository;
     private final TherapistRepository therapistRepository;
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     public InitData(AdRepository adRepository, TherapistRepository therapistRepository,
-                    UserRepository userRepository, PasswordEncoder passwordEncoder) {
+                    UserRepository userRepository, AuthorityRepository authorityRepository,
+                    PasswordEncoder passwordEncoder) {
         this.adRepository = adRepository;
         this.therapistRepository = therapistRepository;
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        Therapist therapist = new Therapist("Test1");
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+    private void addTherapist(String username, String password) {
+        Therapist therapist = new Therapist(username);
+        List<Authority> authorities = new ArrayList<>();
+        Authority authority = new Authority(username, "ROLE_THERAPIST");
+        authorities.add(authority);
         TherapistPrincipal therapistPrincipal = new TherapistPrincipal(therapist.getLogin(),
-                passwordEncoder.encode("hello"), authorities, therapist);
+                passwordEncoder.encode(password), authorities, therapist);
         Ad ad = new Ad(therapist);
         therapistRepository.save(therapist);
         adRepository.save(ad);
         userRepository.save(therapistPrincipal);
-        System.out.println("Number of therapists: " + therapistRepository.count());
+        authorityRepository.save(authority);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        for (int i=1; i<10; i++) {
+            addTherapist("Test" + i, "pass" + i);
+            System.out.println("Number of therapists: " + therapistRepository.count());
+        }
     }
 }

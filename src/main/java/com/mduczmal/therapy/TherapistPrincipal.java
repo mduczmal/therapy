@@ -1,6 +1,7 @@
 package com.mduczmal.therapy;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -29,14 +30,13 @@ public class TherapistPrincipal implements UserDetails {
         this.authorities = new ArrayList<>();
     }
 
-    public TherapistPrincipal(String username, String password, List<GrantedAuthority> grantedAuthorities,
+    public TherapistPrincipal(String username, String password, List<Authority> authorities,
                               Therapist therapist) {
+        therapist.setLogin(username);
         this.therapist = therapist;
         this.username = username;
         this.password = password;
-        this.authorities = grantedAuthorities.stream()
-                .map(g -> new Authority(username, g.getAuthority())).collect(Collectors.toList());
-        therapist.setLogin(username);
+        this.authorities = authorities;
         this.enabled = true;
     }
 
@@ -46,7 +46,7 @@ public class TherapistPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities.stream().map(Authority::getAuthority).collect(Collectors.toList());
+        return authorities.stream().map(a -> new SimpleGrantedAuthority(a.getAuthority())).collect(Collectors.toList());
     }
 
     @Override

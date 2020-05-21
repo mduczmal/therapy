@@ -1,6 +1,7 @@
 package com.mduczmal.therapy;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 import static java.util.UUID.randomUUID;
@@ -8,6 +9,7 @@ import static java.util.UUID.randomUUID;
 @Entity
 public class Therapist {
     @Id
+    @NotNull
     private UUID id;
     private UUID ad;
     private String login;
@@ -42,5 +44,18 @@ public class Therapist {
 
     public Optional<Ad> createAd() {
         throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Therapist therapist = (Therapist) o;
+        return id.equals(therapist.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

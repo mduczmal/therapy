@@ -32,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin();
+                .and().formLogin()
+                .and().logout();
     }
 
     @Override
