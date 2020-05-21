@@ -24,6 +24,7 @@ public class TherapyAppController {
     String index(Model model) {
         loadAds();
         model.addAttribute("ads", ads);
+        model.addAttribute("cookies_text", Cookies.TEXT);
         return "index";
     }
     @GetMapping("/boring")

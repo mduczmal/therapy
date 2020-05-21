@@ -25,26 +25,38 @@ public class InitData implements CommandLineRunner {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private void addTherapist(String username, String password) {
+    private Therapist addTherapist(String username, String password) {
         Therapist therapist = new Therapist(username);
         List<Authority> authorities = new ArrayList<>();
         Authority authority = new Authority(username, "ROLE_THERAPIST");
         authorities.add(authority);
         TherapistPrincipal therapistPrincipal = new TherapistPrincipal(therapist.getLogin(),
                 passwordEncoder.encode(password), authorities, therapist);
-        Ad ad = new Ad(therapist);
-        ad.getDetails().setPrice("Pierwsza wizyta", 150);
-        ad.getDetails().setPrice("Sesja indywidualna", 100);
         therapistRepository.save(therapist);
-        adRepository.save(ad);
         userRepository.save(therapistPrincipal);
         authorityRepository.save(authority);
+        return therapist;
     }
+
+    private Ad addSimpleAd(Therapist therapist) {
+        Ad ad = new Ad(therapist);
+        AdDetails details = ad.getDetails();
+        details.setPrice("Pierwsza wizyta", 150);
+        details.setPrice("Sesja indywidualna", 100);
+        details.setName("Pan/Pani " + therapist.getLogin());
+        details.setSurname("Nazwisko");
+        details.setAddress("ul. Ulica 1/1 00-000 Miasto");
+        details.setOnlineSessions(true);
+        adRepository.save(ad);
+        return ad;
+    }
+
 
     @Override
     public void run(String... args) throws Exception {
         for (int i=1; i<3; i++) {
-            addTherapist("Test" + i, "pass" + i);
+            Therapist therapist = addTherapist("Test" + i, "pass" + i);
+            addSimpleAd(therapist);
             System.out.println("Number of therapists: " + therapistRepository.count());
         }
     }

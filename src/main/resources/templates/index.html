@@ -7,6 +7,10 @@
     <title>Therapy</title>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-success">
+    <a class="navbar-brand">Terapia</a>
+    <a th:href="@{/logout}" class="btn btn-success btn-outline-light text-light bg-success">Wyloguj</a>
+</nav>
 <div class="card" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
@@ -16,13 +20,27 @@
         <a th:href="@{/}" class="card-link">Home link</a>
     </div>
 </div>
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Ogłoszenia</h5>
-        <div th:each="ad, iter: ${ads}">
-            <p>Ogłoszenie nr <span th:text="${iter.index}"></span></p>
+<div th:each="ad, iter: ${ads}">
+    <div class="card w-50 ml-3">
+        <div class="card-body">
+        <h5 class="card-title">Ogłoszenie nr <span th:text="${iter.index}"></span></h5>
             <a class="card-link" th:href="@{/ads/{ad_id}(ad_id=${iter.index})}">Zobacz szczegóły</a>
             <p></p>
+        </div>
+    </div>
+</div>
+<div class="card fixed-bottom bg-secondary ml-auto" style="width: 37rem;">
+    <div class="card-body">
+        <div class="d-flex flex-column">
+            <div>
+                <h5 class="card-title">Ciasteczka</h5>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="d-flex align-items-center">
+                    <div th:text="${cookies_text}">Cookies text</div>
+                </div>
+                <div class="btn btn-success ml-4">Rozumiem</div>
+            </div>
         </div>
     </div>
 </div>
