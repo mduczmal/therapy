@@ -11,29 +11,81 @@
     <a class="navbar-brand">Terapia</a>
     <a th:href="@{/logout}" class="btn btn-success btn-outline-light text-light bg-success">Wyloguj</a>
 </nav>
-<div class="card w-50 mx-auto">
+<div class="card w-50 mt-3 mx-auto">
     <div class="card-body">
         <div class="col">
             <h5 class="card-title mb-4">Dodaj ogłoszenie</h5>
-            <div class="row mb-2">
+            <div class="row mb-3">
                 <div class="input-group col pr-0">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Imię</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Twoje imię" aria-label="Imię">
+                    <input type="text" class="form-control" placeholder="Twoje imię (pole wymagane)" aria-label="Imię">
                 </div>
                 <div class="input-group col pl-0">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Nazwisko</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Twoje nazwisko" aria-label="Nazwisko">
+                    <input type="text" class="form-control" placeholder="Twoje nazwisko (pole wymagane)" aria-label="Nazwisko">
                 </div>
             </div>
-            <div class="input-group mb-2">
+            <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Adres</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Adres gabinetu" aria-label="Adres gabinetu">
+                <input type="text" class="form-control" placeholder="Adres gabinetu (pole wymagane)" aria-label="Adres gabinetu">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Telefon</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Numer Twojego telefonu" aria-label="Numer telefonu">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Twój adres email" aria-label="Adres email">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nazwa ośrodka</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Jeśli pracujesz w ośrodku terapeutycznym, podaj jego nazwę" aria-label="Ośrodek terapeutyczny">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Opis terapii</span>
+                </div>
+                <textarea class="form-control" aria-label="Opis terapii" placeholder="Informacje o Tobie i prowadzonej terapii, np. wykształcenie, doświadczenie, przebieg typowej sesji terapeutycznej"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nurt psychoterapeutyczny</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Nurt w jaim prowadzisz psychoterapię, np. psychodynamiczny, behawioralny" aria-label="Nurt psychoterapeutyczny">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Szkolenia i certyfikaty</span>
+                </div>
+                <textarea class="form-control" placeholder="Informacja o przebytych szkoleniach i posiadanych certyfikatach" aria-label="Nurt psychoterapii"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Zaznacz, jeśli regularnie korzystasz z superwizji</span>
+                </div>
+                <div class="input-group-text">
+                    <input type="checkbox" aria-label="Superwizja">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Zaznacz, jeśli prowadzisz sesje terapeutyczne online</span>
+                </div>
+                <div class="input-group-text">
+                    <input type="checkbox" aria-label="Szkolenia online">
+                </div>
             </div>
             <div class="row">
                 <button th:href="@{/}" class="btn btn-success ml-auto mr-3">Dodaj ogłoszenie</button>
