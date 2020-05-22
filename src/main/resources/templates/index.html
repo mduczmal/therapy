@@ -11,7 +11,7 @@
     <a class="navbar-brand">Terapia</a>
     <a th:href="@{/logout}" class="btn btn-success btn-outline-light text-light bg-success">Wyloguj</a>
 </nav>
-<div class="card" style="width: 18rem;">
+<div id="sampleCard" class="card collapse show" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-<div class="card fixed-bottom bg-secondary ml-auto" style="width: 37rem;">
+<div id="cookies" class="card fixed-bottom bg-secondary ml-auto collapse show" style="width: 37rem;">
     <div class="card-body">
         <div class="d-flex flex-column">
             <div>
@@ -39,12 +39,12 @@
                 <div class="d-flex align-items-center">
                     <div th:text="${cookies_text}">Cookies text</div>
                 </div>
-                <div class="btn btn-success ml-4">Rozumiem</div>
+                <button class="btn btn-success ml-4" type="button" data-toggle="collapse" data-target="#cookies">Rozumiem</button>
             </div>
         </div>
     </div>
 </div>
-<script th:src="@{/js/jquery-3.5.0.slim.min.js}" crossorigin="anonymous"></script>
+<script th:src="@{/js/jquery-3.5.1.slim.min.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
 </body>
 </html>
