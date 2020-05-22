@@ -45,7 +45,7 @@ public class Therapist {
 
     public Optional<Ad> createAd() {
         if (ad != null) return Optional.empty();
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Optional.of(new Ad());
     }
 
     @Override

@@ -1,14 +1,18 @@
 package com.mduczmal.therapy;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.validator.routines.EmailValidator;
 
 @Embeddable
 public class AdDetails {
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @NotNull
     private String address;
     private String description;
     @ElementCollection

@@ -12,7 +12,7 @@
     <a th:href="@{/logout}" class="btn btn-success btn-outline-light text-light bg-success">Wyloguj</a>
 </nav>
 <div class="card w-50 mt-3 mx-auto">
-    <div class="card-body">
+    <form class="card-body" th:action="@{/create}" th:object="${details}" method="post">
         <div class="col">
             <h5 class="card-title mb-4">Dodaj ogłoszenie</h5>
             <div class="row mb-3">
@@ -20,20 +20,33 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Imię</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Twoje imię (pole wymagane)" aria-label="Imię">
+                    <input type="text" class="form-control" th:field="*{name}" placeholder="Twoje imię (pole wymagane)" aria-label="Imię">
                 </div>
                 <div class="input-group col pl-0">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Nazwisko</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Twoje nazwisko (pole wymagane)" aria-label="Nazwisko">
+                    <input type="text" class="form-control" th:field="*{surname}"
+                           placeholder="Twoje nazwisko (pole wymagane)" aria-label="Nazwisko">
+                </div>
+            </div>
+            <div class="row mb-3 mt-n3" th:if="${#fields.hasErrors('name') || #fields.hasErrors('surname')}">
+                <div class="input-group col pr-0">
+                    <span th:if="${#fields.hasErrors('name')}" class="input-group-text text-danger">Musisz podać imię</span>
+                </div>
+                <div class="input-group col pl-0"  th:if="${#fields.hasErrors('surname')}">
+                    <span class="input-group-text text-danger">Musisz podać nazwisko</span>
                 </div>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Adres</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Adres gabinetu (pole wymagane)" aria-label="Adres gabinetu">
+                <input type="text" class="form-control" th:field="*{address}"
+                       placeholder="Adres gabinetu (pole wymagane)" aria-label="Adres gabinetu">
+            </div>
+            <div class="input-group mb-3 mt-n3" th:if="${#fields.hasErrors('address')}">
+                <span class="input-group-text text-danger">Musisz podać adres gabinetu</span>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -125,19 +138,22 @@
                 </div>
             </div>
             <div class="row">
-                <button th:href="@{/}" class="btn btn-success ml-auto mr-3">Dodaj ogłoszenie</button>
+                <button type="submit" class="btn btn-success ml-auto mr-3">Dodaj ogłoszenie</button>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script th:src="@{/js/jquery-3.5.1.slim.min.js}" crossorigin="anonymous"></script>
 <script>
-    $( "#addNextPrice" ).click(function() {
+    $("#addNextPrice" ).click(function() {
         $('#pricing').append('<div class="row pricingRow"><div class="input-group col pr-0" style="flex-grow: 7"><div class="input-group-prepend"><span class="input-group-text">Usługa</span></div> <input type="text" class="form-control" placeholder="Usługa, np. pierwsza wizyta, sesja dla par" aria-label="Usługa"> </div> <div class="input-group col pl-0 pr-0" style="flex-grow: 6"> <div class="input-group-prepend"> <span class="input-group-text">Cena</span> </div> <input type="text" class="form-control" placeholder="Cena" aria-label="Cena"> <div class="input-group-append"> <span class="input-group-text">zł</span> </div> </div> <div class="input-group col pl-0"> <button type="button" class="btn btn-danger input-group-text removeBtn">Usuń</button> </div> </div>');
     });
-    $("body").on("click", ".removeBtn", function() {
+    $("#pricing").on("click", ".removeBtn", function() {
         $(this).parents('.pricingRow').remove();
     });
+    function surnameError() {
+
+    }
 </script>
 <script th:src="@{/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
 </body>
