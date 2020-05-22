@@ -9,7 +9,8 @@
 <body>
 <nav class="navbar navbar-dark bg-success">
     <a class="navbar-brand">Terapia</a>
-    <a th:href="@{/logout}" class="btn btn-success btn-outline-light text-light bg-success">Wyloguj</a>
+    <a th:href="@{/create}" class="btn btn-warning btn-outline-light bg-warning text-light ml-auto">Dodaj ogłoszenie</a>
+    <a th:href="@{/logout}" class="btn btn-success btn-outline-light bg-success text-light ml-3">Wyloguj</a>
 </nav>
 <div id="sampleCard" class="card collapse show" style="width: 18rem;">
     <div class="card-body">
@@ -23,7 +24,10 @@
 <div th:each="ad, iter: ${ads}">
     <div class="card w-50 ml-3">
         <div class="card-body">
-        <h5 class="card-title">Ogłoszenie nr <span th:text="${iter.index}"></span></h5>
+        <h5 class="card-title">
+            <span th:text="${ad.details.name}">Name</span>
+            <span th:text="${ad.details.surname}">Surname</span>
+        </h5>
             <a class="card-link" th:href="@{/ads/{ad_id}(ad_id=${iter.index})}">Zobacz szczegóły</a>
             <p></p>
         </div>

@@ -42,4 +42,9 @@ public class TherapyAppController {
         }
         return "details";
     }
+
+    @GetMapping("/create")
+    String create() {
+        return "create";
+    }
 }

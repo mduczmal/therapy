@@ -38,13 +38,13 @@ public class InitData implements CommandLineRunner {
         return therapist;
     }
 
-    private Ad addSimpleAd(Therapist therapist) {
+    private Ad addSimpleAd(Therapist therapist, int num) {
         Ad ad = new Ad(therapist);
         AdDetails details = ad.getDetails();
         details.setPrice("Pierwsza wizyta", 150);
         details.setPrice("Sesja indywidualna", 100);
-        details.setName("Pan/Pani " + therapist.getLogin());
-        details.setSurname("Nazwisko");
+        details.setName("Imię" + num);
+        details.setSurname("Nazwisko" + num);
         details.setAddress("ul. Ulica 1/1 00-000 Miasto");
         details.setOnlineSessions(true);
         adRepository.save(ad);
@@ -56,7 +56,7 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         for (int i=1; i<3; i++) {
             Therapist therapist = addTherapist("Test" + i, "pass" + i);
-            addSimpleAd(therapist);
+            addSimpleAd(therapist, i);
             System.out.println("Number of therapists: " + therapistRepository.count());
         }
     }
