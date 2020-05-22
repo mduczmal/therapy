@@ -31,6 +31,8 @@ public class Therapist {
         return id;
     }
 
+    public UUID getAd() { return ad; }
+
     public String getLogin() {
         return login;
     }
@@ -45,7 +47,9 @@ public class Therapist {
 
     public Optional<Ad> createAd() {
         if (ad != null) return Optional.empty();
-        return Optional.of(new Ad());
+        Ad ad = new Ad(this);
+        this.ad = ad.getId();
+        return Optional.of(ad);
     }
 
     @Override

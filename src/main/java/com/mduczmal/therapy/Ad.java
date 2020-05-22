@@ -1,21 +1,24 @@
 package com.mduczmal.therapy;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import static java.util.UUID.randomUUID;
 
 @Entity
 public class Ad {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @NotNull
     private UUID therapist;
     private LocalDateTime dateCreated;
     @Embedded
     private AdDetails adDetails;
 
     public Ad() {
+        id = randomUUID();
         dateCreated = LocalDateTime.now();
         adDetails = new AdDetails();
     }
@@ -35,6 +38,10 @@ public class Ad {
 
     public LocalDateTime getDateCreated() {
         return dateCreated;
+    }
+
+    public void setDetails(AdDetails details) {
+        this.adDetails = details;
     }
 
     public AdDetails getDetails() {

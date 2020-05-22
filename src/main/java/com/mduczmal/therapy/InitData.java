@@ -54,9 +54,11 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        for (int i=1; i<3; i++) {
+        for (int i=1; i<5; i++) {
             Therapist therapist = addTherapist("Test" + i, "pass" + i);
-            addSimpleAd(therapist, i);
+            if (i>2) {
+                addSimpleAd(therapist, i);
+            }
             System.out.println("Number of therapists: " + therapistRepository.count());
         }
     }

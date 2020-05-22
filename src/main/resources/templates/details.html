@@ -11,13 +11,12 @@
     <a class="navbar-brand">Terapia</a>
     <a th:href="@{/logout}" class="btn btn-success btn-outline-light text-light bg-success">Wyloguj</a>
 </nav>
-<div class="card" style="width: 18rem;">
+<div class="card w-50 mt-3 mx-auto">
     <div class="card-body">
-        <a th:href="@{/}" class="btn btn-primary">Wróć do listy ogłoszeń</a>
-        <h5 class="card-title" th:text="${ad.id}"></h5>
+        <a th:href="@{/}" class="btn btn-success">Wróć do listy ogłoszeń</a>
+        <h5 class="card-title" th:text="${ad.details.name + ' ' + ad.details.surname}">Name and surname</h5>
         <h6 class="card-subtitle mb-2 text-muted">
-            <span th:text="${ad.details.name}">Name</span>
-            <span th:text="${ad.details.surname}">Surname</span>
+            <span th:text="${ad.details.address}">Address</span>
         </h6>
         <p class="card-text">Szczegóły ogłoszenia</p>
     </div>

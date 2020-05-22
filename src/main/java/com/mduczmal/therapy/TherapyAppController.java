@@ -5,10 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,7 +17,28 @@ import java.util.stream.StreamSupport;
 public class TherapyAppController {
     @Autowired
     private AdRepository adRepository;
+    @Autowired
+    private TherapistRepository therapistRepository;
     private List<Ad> ads;
+
+    private TherapistPrincipal getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        if (principal instanceof TherapistPrincipal){
+            return (TherapistPrincipal) principal;
+        } else {
+            return null;
+        }
+    }
+
+    private Therapist getCurrentTherapist() {
+        TherapistPrincipal therapistPrincipal = getCurrentUser();
+        if (therapistPrincipal == null) {
+            return null;
+        } else {
+            return therapistPrincipal.getTherapist();
+        }
+    }
 
     private void loadAds(){
         ads = StreamSupport.stream(adRepository.findAll().spliterator(), false)
@@ -29,10 +47,12 @@ public class TherapyAppController {
     @GetMapping("/")
     String index(Model model) {
         loadAds();
+        model.addAttribute("therapist", getCurrentTherapist());
         model.addAttribute("ads", ads);
         model.addAttribute("cookies_text", Cookies.TEXT);
         return "index";
     }
+
     @GetMapping("/boring")
     String boring() {
         return "boring";
@@ -51,13 +71,8 @@ public class TherapyAppController {
 
     @GetMapping("/create")
     String create(Model model) {
-        /*TherapistPrincipal therapistPrincipal = (TherapistPrincipal) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        Therapist therapist = therapistPrincipal.getTherapist();
-        Optional<Ad> opa = therapist.createAd();
-        if (opa.isEmpty()) return "index";
-        AdDetails details = opa.get().getDetails();
-        model.addAttribute(details);*/
+        Therapist therapist = getCurrentTherapist();
+        if (therapist.getAd() != null) return "redirect:/";
         model.addAttribute("details", new AdDetails());
         return "create";
     }
@@ -67,6 +82,14 @@ public class TherapyAppController {
         if (bindingResult.hasErrors()) {
             return "create";
         }
+        Therapist therapist = getCurrentTherapist();
+        Optional<Ad> opa = therapist.createAd();
+        if (opa.isEmpty()) throw new IllegalStateException(
+                "Therapist with existing ad was allowed to create another one");
+        Ad ad = opa.get();
+        ad.setDetails(details);
+        therapistRepository.save(therapist);
+        adRepository.save(ad);
         return "redirect:/";
     }
 }
