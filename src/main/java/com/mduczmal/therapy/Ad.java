@@ -3,6 +3,7 @@ package com.mduczmal.therapy;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import static java.util.UUID.randomUUID;
@@ -14,6 +15,8 @@ public class Ad {
     @NotNull
     private UUID therapist;
     private LocalDateTime dateCreated;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ad")
+    private List<Comment> comments;
     @Embedded
     private AdDetails adDetails;
 
@@ -21,6 +24,7 @@ public class Ad {
         id = randomUUID();
         dateCreated = LocalDateTime.now();
         adDetails = new AdDetails();
+        comments = new LinkedList<>();
     }
 
     public Ad(Therapist therapist) {
@@ -49,7 +53,7 @@ public class Ad {
     }
 
     public List<Comment> getComments() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return comments;
     }
 
     public void edit() {
@@ -59,6 +63,6 @@ public class Ad {
     public void delete() {}
 
     public void addComment(Comment comment) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        comments.add(comment);
     }
 }

@@ -20,6 +20,8 @@ public class TherapyAppController {
     private AdRepository adRepository;
     @Autowired
     private TherapistRepository therapistRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     private List<Ad> ads;
 
     private TherapistPrincipal getCurrentUser() {
@@ -46,6 +48,11 @@ public class TherapyAppController {
         ads = StreamSupport.stream(adRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
+    private List<Comment> loadComments() {
+        return StreamSupport.stream(commentRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
     @GetMapping("/")
     String index(Model model) {
         loadAds();
@@ -64,15 +71,23 @@ public class TherapyAppController {
 
     @GetMapping(value = "/ads/{id}")
     public String details(@PathVariable("id") int id, Model model) {
-        model.addAttribute("therapist", getCurrentTherapist());
+        Therapist therapist = getCurrentTherapist();
+        model.addAttribute("therapist", therapist);
         //TODO: getmoderator instead of null
         model.addAttribute("moderator", null);
-        if (ads != null) {
-            model.addAttribute("ad", ads.get(id));
-        } else {
+        if (ads == null) {
             loadAds();
-            model.addAttribute("ad", ads.get(id));
         }
+        Ad ad = ads.get(id);
+        model.addAttribute("ad", ad);
+        Comment comment;
+        if (therapist != null && therapist.getAd() == ad.getId()) {
+            comment = new Comment(true);
+        } else {
+            comment = new Comment();
+        }
+        model.addAttribute("new_comment", comment);
+        model.addAllAttributes(ad.getComments());
         return "details";
     }
 
@@ -88,11 +103,11 @@ public class TherapyAppController {
     public String remove(@PathVariable("id") UUID id) {
         Ad ad = adRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("Removed ad not in repository"));
-        Therapist therapist = therapistRepository.findById(ad.getTherapist()).orElseThrow(
-                () -> new IllegalStateException("Therapist of removed ad not in repository"));
-        therapist.removeAd();
+        therapistRepository.findById(ad.getTherapist()).ifPresent(t -> {
+            t.removeAd();
+            therapistRepository.save(t);
+        });
         adRepository.deleteById(id);
-        therapistRepository.save(therapist);
         return "redirect:/";
     }
 

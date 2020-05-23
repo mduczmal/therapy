@@ -1,23 +1,27 @@
 package com.mduczmal.therapy;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private UUID ad;
     private String author;
+    @Column(length = 1000)
     private String content;
     private LocalDateTime dateCreated;
     private boolean selfComment;
 
     public Comment() {
         this.dateCreated = LocalDateTime.now();
+    }
+    public Comment(boolean selfComment) {
+        this();
+        this.selfComment = selfComment;
     }
 
     public String getAuthor() {

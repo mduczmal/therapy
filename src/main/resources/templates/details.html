@@ -13,7 +13,7 @@
     <a th:unless="${therapist == null}" th:href="@{/logout}" class="btn btn-success btn-outline-dark ml-3">Wyloguj</a>
     <a th:if="${therapist == null}" th:href="@{/login}" class="btn btn-success btn-outline-dark ml-3">Zaloguj</a>
 </nav>
-<div class="card w-50 mt-3 mb-5 mx-auto">
+<div class="card w-50 mt-3 mb-4 mx-auto">
     <div class="card-header">
         <ul class="nav nav-pills card-header-pills">
             <li class="nav-item">
@@ -60,6 +60,31 @@
              th:text="${ad.details.description}"
              class="mx-auto w-100 rounded-bottom bg-light mb-3 px-4 py-3">
             Opis psychoterapii
+        </div>
+    </div>
+</div>
+<div class="card w-50 mx-auto mt-3 mb-4">
+    <div class="card-header px-2 py-1">
+        <div class="row px-4">
+            <h4 class="my-auto">Komentarze</h4>
+            <button type="submit" class="btn btn-secondary ml-auto" data-toggle="collapse" data-target="#newComment">Dodaj opinię</button>
+        </div>
+    </div>
+    <div class="card-body"></div>
+    <div id="newComment" class="card card-footer collapse">
+        <div class="card-body">
+            <h6 class="card-title">Nowy komentarz</h6>
+            <form th:action="@{/comment}" th:object="${new_comment}" method="post">
+                <div class="form-group">
+                    <label for="author" class="px-2 pt-2">Pseudonim</label>
+                    <input type="text" class="form-control" th:field="*{author}" id="author" placeholder="Twoje imię">
+                </div>
+                <div class="form-group">
+                    <label for="commentContent" class="px-2 pt-2">Treść komentarza</label>
+                    <textarea class="form-control" id="commentContent" rows="2" placeholder="Twoja opinia"></textarea>
+                </div>
+                <button type="submit" class="btn btn-secondary ml-auto">Zapisz komentarz</button>
+            </form>
         </div>
     </div>
 </div>
