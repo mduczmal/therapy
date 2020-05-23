@@ -52,7 +52,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Zdjęcie</span>
                 </div>
-                <input id="photo" type="file" class="input-group-text" style="flex-grow:1; text-align:left">
+                <input id="photo" type="file" class="input-group-text flex-grow-1 text-left">
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button">Prześlij</button>
                 </div>
@@ -137,7 +137,8 @@
                     <input type="checkbox" aria-label="Szkolenia online">
                 </div>
             </div>
-            <div class="row">
+            <div class="row mx-auto">
+                <a th:href="@{/}" type="button" class="btn btn-secondary ml-3">Anuluj</a>
                 <button type="submit" class="btn btn-success ml-auto mr-3">Dodaj ogłoszenie</button>
             </div>
         </div>

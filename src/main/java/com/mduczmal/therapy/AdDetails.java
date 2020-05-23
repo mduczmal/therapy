@@ -14,6 +14,7 @@ public class AdDetails {
     private String surname;
     @NotNull
     private String address;
+    @Column(length = 5000)
     private String description;
     @ElementCollection
     private Map<String, Integer> pricing;
@@ -22,6 +23,7 @@ public class AdDetails {
     private String telephoneNumber;
     private String email;
     private String therapyApproach;
+    @Column(length = 1000)
     private String training;
     private boolean supervision;
     private boolean onlineSessions;

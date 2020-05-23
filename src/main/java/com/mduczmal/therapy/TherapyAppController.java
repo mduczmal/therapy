@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -48,6 +49,8 @@ public class TherapyAppController {
     String index(Model model) {
         loadAds();
         model.addAttribute("therapist", getCurrentTherapist());
+        //TODO: getmoderator instead of null
+        model.addAttribute("moderator", null);
         model.addAttribute("ads", ads);
         model.addAttribute("cookies_text", Cookies.TEXT);
         return "index";
@@ -60,6 +63,9 @@ public class TherapyAppController {
 
     @GetMapping(value = "/ads/{id}")
     public String details(@PathVariable("id") int id, Model model) {
+        model.addAttribute("therapist", getCurrentTherapist());
+        //TODO: getmoderator instead of null
+        model.addAttribute("moderator", null);
         if (ads != null) {
             model.addAttribute("ad", ads.get(id));
         } else {
@@ -75,6 +81,12 @@ public class TherapyAppController {
         if (therapist.getAd() != null) return "redirect:/";
         model.addAttribute("details", new AdDetails());
         return "create";
+    }
+
+    @PostMapping("/remove/{id}")
+    public String remove(@PathVariable("id") UUID id) {
+        adRepository.deleteById(id);
+        return "redirect:/";
     }
 
     @PostMapping("/create")
