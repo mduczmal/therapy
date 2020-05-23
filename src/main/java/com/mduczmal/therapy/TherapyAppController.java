@@ -37,7 +37,8 @@ public class TherapyAppController {
         if (therapistPrincipal == null) {
             return null;
         } else {
-            return therapistPrincipal.getTherapist();
+            Therapist oldTherapist = therapistPrincipal.getTherapist();
+            return therapistRepository.findById(oldTherapist.getId()).orElse(null);
         }
     }
 
@@ -85,7 +86,13 @@ public class TherapyAppController {
 
     @PostMapping("/remove/{id}")
     public String remove(@PathVariable("id") UUID id) {
+        Ad ad = adRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("Removed ad not in repository"));
+        Therapist therapist = therapistRepository.findById(ad.getTherapist()).orElseThrow(
+                () -> new IllegalStateException("Therapist of removed ad not in repository"));
+        therapist.removeAd();
         adRepository.deleteById(id);
+        therapistRepository.save(therapist);
         return "redirect:/";
     }
 

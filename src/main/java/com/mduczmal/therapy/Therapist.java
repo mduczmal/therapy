@@ -52,6 +52,10 @@ public class Therapist {
         return Optional.of(ad);
     }
 
+    public void removeAd() {
+        this.ad = null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

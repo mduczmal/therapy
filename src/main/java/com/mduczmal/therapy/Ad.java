@@ -56,9 +56,7 @@ public class Ad {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    public void delete() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
+    public void delete() {}
 
     public void addComment(Comment comment) {
         throw new UnsupportedOperationException("Not implemented yet");
