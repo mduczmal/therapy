@@ -1,4 +1,4 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.ad;
 
 import org.springframework.data.repository.CrudRepository;
 

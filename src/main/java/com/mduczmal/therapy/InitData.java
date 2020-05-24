@@ -1,5 +1,11 @@
 package com.mduczmal.therapy;
 
+import com.mduczmal.therapy.ad.*;
+import com.mduczmal.therapy.ad.comment.Comment;
+import com.mduczmal.therapy.ad.comment.CommentRepository;
+import com.mduczmal.therapy.therapist.Therapist;
+import com.mduczmal.therapy.therapist.TherapistRepository;
+import com.mduczmal.therapy.user.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -88,12 +94,12 @@ public class InitData implements CommandLineRunner {
         return ad;
     }
 
-    private void addComments(Ad ad, int num) {
+    private void addComments(Ad ad, int num, Therapist therapist) {
         for (int i=0; i<num; i++) {
-            Comment comment = new Comment(ad.getId(), false);
+            Comment comment = new Comment(ad.getId());
             comment.setAuthor("AutorKomentarza1");
             comment.setContent("TreśćKomentarza1");
-            ad.addComment(comment);
+            ad.addComment(comment, therapist);
             commentRepository.save(comment);
         }
         adRepository.save(ad);
@@ -110,7 +116,7 @@ public class InitData implements CommandLineRunner {
             else if (i>4) {
                 Ad ad = addComplexAd(therapist, i);
                 if (i>5 ) {
-                    addComments(ad, 3);
+                    addComments(ad, 3, therapist);
                 }
             }
         }

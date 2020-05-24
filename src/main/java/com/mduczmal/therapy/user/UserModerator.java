@@ -1,4 +1,4 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.user;
 
 import javax.persistence.Entity;
 import java.util.List;

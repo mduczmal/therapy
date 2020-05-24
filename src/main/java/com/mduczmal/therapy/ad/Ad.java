@@ -1,4 +1,7 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.ad;
+
+import com.mduczmal.therapy.ad.comment.Comment;
+import com.mduczmal.therapy.therapist.Therapist;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -63,6 +66,16 @@ public class Ad {
     public void delete() {}
 
     public void addComment(Comment comment) {
+        if (comment.getAuthor() == null || comment.getAuthor().isBlank()) {
+            comment.setAuthor("Komentarz anonimowy");
+        }
         comments.add(comment);
+    }
+
+    public void addComment(Comment comment, Therapist therapist) {
+        if (therapist != null && id == therapist.getAd()) {
+            comment.markAsSelfComment();
+        }
+        addComment(comment);
     }
 }

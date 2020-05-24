@@ -1,4 +1,6 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.user;
+
+import com.mduczmal.therapy.therapist.Therapist;
 
 import javax.persistence.*;
 import java.util.List;

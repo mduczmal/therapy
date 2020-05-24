@@ -1,4 +1,6 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.therapist;
+
+import com.mduczmal.therapy.ad.Ad;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

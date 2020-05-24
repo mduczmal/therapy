@@ -6,12 +6,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.mduczmal.therapy.*;
+import com.mduczmal.therapy.ad.Ad;
+import com.mduczmal.therapy.ad.AdDetails;
+import com.mduczmal.therapy.ad.comment.Comment;
+import com.mduczmal.therapy.therapist.Cookies;
+import com.mduczmal.therapy.therapist.Therapist;
+import com.mduczmal.therapy.user.UserDetailsServiceImpl;
+import com.mduczmal.therapy.user.UserTherapist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithUserDetails;
 
 import java.time.LocalDateTime;
@@ -52,14 +59,14 @@ class TherapyAppTests {
     }
 
     @Test
-    @WithUserDetails
+    @WithUserDetails(userDetailsServiceBeanName = "userDetailsService", value = "Test1")
     void commentByAdCreatorIsMarkedAsSelfComment() {
         UserTherapist principal = (UserTherapist) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Therapist therapist = principal.getTherapist();
         Comment comment = new Comment();
 
         Optional<Ad> optAd = therapist.createAd();
-        optAd.ifPresent(ad -> ad.addComment(comment));
+        optAd.ifPresent(ad -> ad.addComment(comment, therapist));
 
         assertTrue(optAd.isPresent());
         assertTrue(comment.isSelfComment());

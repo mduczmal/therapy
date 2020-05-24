@@ -1,4 +1,4 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.therapist;
 
 import javax.persistence.Embeddable;
 

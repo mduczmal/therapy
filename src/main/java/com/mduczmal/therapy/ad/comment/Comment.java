@@ -1,4 +1,4 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.ad.comment;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,10 +19,9 @@ public class Comment {
     public Comment() {
         this.dateCreated = LocalDateTime.now();
     }
-    public Comment(UUID ad, boolean selfComment) {
+    public Comment(UUID ad) {
         this();
         this.ad = ad;
-        this.selfComment = selfComment;
     }
 
     public String getAuthor() {
@@ -30,11 +29,7 @@ public class Comment {
     }
 
     public void setAuthor(String author) {
-        if (author.isBlank()) {
-           this.author = "Komentarz anonimowy";
-        } else {
-            this.author = author;
-        }
+        this.author = author;
     }
 
     public String getContent() {
@@ -53,11 +48,13 @@ public class Comment {
         return selfComment;
     }
 
-    public void delete() {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void markAsSelfComment() {
+        this.selfComment = true;
     }
 
-    Long getId() {
+    public void delete() {}
+
+    public Long getId() {
         return id;
     }
 
