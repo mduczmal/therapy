@@ -10,8 +10,8 @@
 <nav class="navbar navbar-dark bg-success">
     <a class="navbar-brand">Terapia</a>
     <a th:href="@{/create}" class="btn btn-success btn-outline-light ml-auto">Dodaj ogłoszenie</a>
-    <a th:unless="${therapist == null}" th:href="@{/logout}" class="btn btn-success btn-outline-dark ml-3">Wyloguj</a>
-    <a th:if="${therapist == null}" th:href="@{/login}" class="btn btn-success btn-outline-dark ml-3">Zaloguj</a>
+    <a th:unless="${therapist == null && moderator == null}" th:href="@{/logout}" class="btn btn-success btn-outline-dark ml-3">Wyloguj</a>
+    <a th:if="${therapist == null && moderator == null}" th:href="@{/login}" class="btn btn-success btn-outline-dark ml-3">Zaloguj</a>
 </nav>
 <div class="mt-3 ml-3">
     <div class="card w-50 mb-2" th:each="ad, iter: ${ads}">

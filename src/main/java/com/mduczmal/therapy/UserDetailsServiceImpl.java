@@ -15,9 +15,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
     @Override
-    public TherapistPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<TherapistPrincipal> otp = userRepository.findById(username);
-        if (otp.isEmpty()) throw new UsernameNotFoundException("User " + " not found");
-        return otp.get();
+    public SecurityDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<SecurityDetails> osd = userRepository.findById(username);
+        if (osd.isEmpty()) throw new UsernameNotFoundException("User " + " not found");
+        return osd.get();
     }
 }

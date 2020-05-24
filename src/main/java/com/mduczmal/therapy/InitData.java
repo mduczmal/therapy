@@ -10,19 +10,31 @@ import java.util.List;
 @Component
 public class InitData implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
-    private final AdRepository adRepository;
     private final TherapistRepository therapistRepository;
+    private final AdRepository adRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
 
     public InitData(AdRepository adRepository, TherapistRepository therapistRepository,
                     UserRepository userRepository, AuthorityRepository authorityRepository,
-                    PasswordEncoder passwordEncoder) {
+                    CommentRepository commentRepository, PasswordEncoder passwordEncoder) {
         this.adRepository = adRepository;
         this.therapistRepository = therapistRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    private UserModerator addModerator(String username, String password) {
+        Authority authority = new Authority(username, "ROLE_MODERATOR");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        UserModerator moderator = new UserModerator(username, passwordEncoder.encode(password), authorities);
+        userRepository.save(moderator);
+        authorityRepository.save(authority);
+        return moderator;
     }
 
     private Therapist addTherapist(String username, String password) {
@@ -53,6 +65,7 @@ public class InitData implements CommandLineRunner {
         return ad;
     }
 
+
     private Ad addComplexAd(Therapist therapist, int num) {
         Ad ad = therapist.createAd().orElseThrow(() ->
                 new IllegalStateException("Therapist has ad during initialization"));
@@ -75,6 +88,17 @@ public class InitData implements CommandLineRunner {
         return ad;
     }
 
+    private void addComments(Ad ad, int num) {
+        for (int i=0; i<num; i++) {
+            Comment comment = new Comment(ad.getId(), false);
+            comment.setAuthor("AutorKomentarza1");
+            comment.setContent("TreśćKomentarza1");
+            ad.addComment(comment);
+            commentRepository.save(comment);
+        }
+        adRepository.save(ad);
+    }
+
 
     @Override
     public void run(String... args) {
@@ -84,9 +108,14 @@ public class InitData implements CommandLineRunner {
                 addSimpleAd(therapist, i);
             }
             else if (i>4) {
-                addComplexAd(therapist, i);
+                Ad ad = addComplexAd(therapist, i);
+                if (i>5 ) {
+                    addComments(ad, 3);
+                }
             }
-            System.out.println("Number of therapists: " + therapistRepository.count());
         }
+        addModerator("admin", "admin");
+        System.out.println("Number of therapists: " + therapistRepository.count());
+        System.out.println("Number of users: " + userRepository.count());
     }
 }

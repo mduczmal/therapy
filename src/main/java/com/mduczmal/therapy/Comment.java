@@ -19,8 +19,9 @@ public class Comment {
     public Comment() {
         this.dateCreated = LocalDateTime.now();
     }
-    public Comment(boolean selfComment) {
+    public Comment(UUID ad, boolean selfComment) {
         this();
+        this.ad = ad;
         this.selfComment = selfComment;
     }
 
