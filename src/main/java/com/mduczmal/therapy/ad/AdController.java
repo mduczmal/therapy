@@ -21,6 +21,7 @@ import java.util.UUID;
 
 @Controller
 public class AdController {
+    //Dependency injection design pattern
     @Autowired
     private UserService userService;
     @Autowired

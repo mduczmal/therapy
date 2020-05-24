@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TherapyAppController {
+    //dependency injection design pattern
     @Autowired
     private UserService userService;
     @Autowired
