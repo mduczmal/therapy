@@ -11,6 +11,11 @@ import java.util.Collection;
 
 @Service
 public class UserService {
+    /*
+    Single Responsibility - klasa dostarcza dla kontrolera metod dotyczących obecnie zalogowanego użytkownika
+    1. Ta klasa ma pojedynczą odpowiedzialność
+    2. Kontroler zachowuje pojedynczą odpowiedzialność
+     */
     @Autowired
     TherapistRepository therapistRepository;
 

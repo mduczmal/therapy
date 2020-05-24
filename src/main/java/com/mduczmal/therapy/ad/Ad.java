@@ -13,6 +13,9 @@ import static java.util.UUID.randomUUID;
 
 @Entity
 public class Ad {
+    /*
+    Single responsibility - klasa reprezentuje stan ogłoszenia i związane z ogłoszeniem akcje
+     */
     @Id
     private UUID id;
     @NotNull
@@ -20,6 +23,8 @@ public class Ad {
     private LocalDateTime dateCreated;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "ad")
     private List<Comment> comments;
+    //Single responsibility - ogłoszenie zawiera dużo danych, więc umieszczenie ich w osobnej klasę zwiększa czytelność
+    //kodu. Klasa AdDetails zawiera szczegółowe dane, a klasa Ad określa interakcje z innymi klasami.
     @Embedded
     private AdDetails adDetails;
 
@@ -59,6 +64,7 @@ public class Ad {
         return comments;
     }
 
+    //Nie zdążyłem zaimplementować edycji ogłoszenia
     public void edit() {
         throw new UnsupportedOperationException("Not implemented yet");
     }

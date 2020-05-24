@@ -8,6 +8,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 @Embeddable
 public class AdDetails {
+    /*
+    Single Responsibility - klasa przechowuje szczegółowe dane ogłoszenia
+     */
     @NotNull
     private String name;
     @NotNull

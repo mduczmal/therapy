@@ -6,6 +6,9 @@ import java.util.UUID;
 
 @Entity
 public class Comment {
+    /*
+    Single Responsibility - klasa odpowiada za stan komentarza
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

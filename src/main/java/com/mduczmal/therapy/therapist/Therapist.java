@@ -10,6 +10,9 @@ import static java.util.UUID.randomUUID;
 
 @Entity
 public class Therapist {
+    /*
+    Single Responsibility - klasa odpowiada za stan i akcje wykonywane przez terapeutę
+     */
     @Id
     @NotNull
     private UUID id;

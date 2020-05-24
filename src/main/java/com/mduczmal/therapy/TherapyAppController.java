@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TherapyAppController {
+    /*
+    Single Responsibility - klasa wyświetla ogłoszenia w systemie. Nie deklaruje żadnych metod poza obsługującymi
+    zapytania http. Zamiast korzystać z takich metod używa serwisów, dostarczanych przez wstrzykiwanie zależności.
+    Open-Closed Principle - można łatwo rozszerzyć funkcjonalność systemu np. o dodawanie ważnej informacji dla
+    użytkowników przez moderatora poprzez dodanie nowej metody
+     */
+
     //dependency injection design pattern
     @Autowired
     private UserService userService;

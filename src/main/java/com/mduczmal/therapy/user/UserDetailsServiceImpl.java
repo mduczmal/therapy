@@ -9,6 +9,8 @@ import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    //Interface Segregation Principle - klasa korzysta z repozytorium zawierającego dane uwierzytelniania
+    //Jako klient tego interfejsu nie musi się przejmować tym niezależnie czy dane należą do moderatora czy terapeuty
     private UserRepository userRepository;
     @Autowired
     public void setUserRepository(UserRepository userRepository) {

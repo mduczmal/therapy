@@ -7,6 +7,10 @@ import java.util.List;
 
 @Entity
 public class UserTherapist extends SecurityDetails {
+    /*
+    Single responsibility - klasa reprezentuje terapeutę jako użytkownika, który może się zalogować
+    Liskov substitution  - klasa może być użyta wszędzie tam, gdzie potrzebne są dane uwierzytelniające
+     */
     @OneToOne
     private Therapist therapist;
 

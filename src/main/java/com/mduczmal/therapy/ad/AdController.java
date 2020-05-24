@@ -21,6 +21,13 @@ import java.util.UUID;
 
 @Controller
 public class AdController {
+    /*
+    Single Responsibility - klasa kontroluje zmiany stanu ogłoszenia. Nie deklaruje żadnych metod poza obsługującymi
+    zapytania http. Zamiast korzystać z takich metod używa serwisów, dostarczanych przez wstrzykiwanie zależności.
+    Dependency Inversion - ponieważ klasy repozytoriów są interfejsami,
+    kontroler jest niezależny od szegółów implementacyjnych mechanizmu utrwalania danych.
+     */
+
     //Dependency injection design pattern
     @Autowired
     private UserService userService;

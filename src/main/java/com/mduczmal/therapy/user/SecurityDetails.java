@@ -15,6 +15,11 @@ import java.util.stream.Collectors;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "users")
 public abstract class SecurityDetails implements UserDetails {
+    /*
+    Open-closed principle - w serwisie już istnieją 2 rodzaje użytkowników, którzy mogą się logować:
+    moderatorzy i terapuci. Jeśli zajdzie taka potrzeba, można rozszerzyć funkcjonalność systemu
+    o kolejny rodzaj użytkownika dziedzicząc po klasie SecurityDetails bez modyfikowania istniejącego kodu.
+     */
     @Id
     private String username;
     private String password;

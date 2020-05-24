@@ -9,6 +9,11 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class AdService {
+    /*
+    Single Responsibility - klasa dostarcza kontrolerowi metodę zwracającą listę ogłoszeń z bazy danych
+    1. Ta klasa ma pojedynczą odpowiedzialność
+    2. Kontroler zachowuje pojedynczą odpowiedzialność
+     */
     @Autowired
     AdRepository adRepository;
     public List<Ad> load() {

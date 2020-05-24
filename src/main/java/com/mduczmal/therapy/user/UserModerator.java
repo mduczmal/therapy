@@ -5,6 +5,10 @@ import java.util.List;
 
 @Entity
 public class UserModerator extends SecurityDetails {
+    /*
+    Single responsibility - klasa reprezentuje moderatora jako użytkownika, który może się zalogować
+    Liskov substitution  - klasa może być użyta wszędzie tam, gdzie potrzebne są dane uwierzytelniające
+     */
     public UserModerator() {
         super();
     }

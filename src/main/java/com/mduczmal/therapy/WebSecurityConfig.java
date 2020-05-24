@@ -19,6 +19,9 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    /*
+    Single Responsibility - klasa odpowiada konfigurację uwierzytelniania
+     */
 
     @Autowired
     DataSource dataSource;
