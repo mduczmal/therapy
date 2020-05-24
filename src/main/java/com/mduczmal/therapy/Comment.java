@@ -56,4 +56,9 @@ public class Comment {
     public void delete() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
+
+    Long getId() {
+        return id;
+    }
+
 }

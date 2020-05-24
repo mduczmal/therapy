@@ -72,11 +72,14 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="card" th:each="comment: ${ad.comments}">
+        <div class="card" th:each="comment, iter: ${ad.comments}">
             <div class="card-body">
-                <form class="d-flex">
+                <form class="d-flex"
+                      th:action="@{/delcomment/{ad_id}/{comment_id}(ad_id=${id}, comment_id=${iter.index})}"
+                      method="post">
                     <h6 class="card-title" th:text="${comment.author}">Autor komentarza</h6>
-                    <button th:if="${moderator != null}" type="submit" class="btn btn-secondary ml-auto">Usuń</button>
+                    <button th:if="${moderator != null}" type="submit"
+                            class="btn btn-secondary ml-auto">Usuń</button>
                 </form>
                 <div class="card-text" th:text="${comment.content}">Treść komentarza</div>
             </div>

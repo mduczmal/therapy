@@ -41,9 +41,16 @@ public class TherapyAppController {
         return "index";
     }
 
-    @GetMapping("/boring")
-    String boring() {
-        return "boring";
+    @PostMapping(value = "/delcomment/{ad_id}/{comment_id}")
+    public String removeComment(@PathVariable("ad_id") int adID, @PathVariable("comment_id") int commentID) {
+        System.out.println("In del comment");
+        Ad ad = ads.get(adID);
+        List<Comment> adComments = ad.getComments();
+        Comment comment = adComments.get(commentID);
+        adComments.remove(commentID);
+        adRepository.save(ad);
+        commentRepository.deleteById(comment.getId());
+        return "redirect:/ads/{ad_id}";
     }
 
     @GetMapping(value = "/ads/{id}")
@@ -51,9 +58,7 @@ public class TherapyAppController {
         Therapist therapist = userService.getCurrentTherapist();
         model.addAttribute("therapist", therapist);
         model.addAttribute("moderator", userService.getCurrentModerator());
-        if (ads == null) {
-            loadAds();
-        }
+        loadAds();
         Ad ad = ads.get(id);
         model.addAttribute("ad", ad);
         boolean selfComment = therapist != null && therapist.getAd() == ad.getId();
@@ -71,19 +76,6 @@ public class TherapyAppController {
         return "create";
     }
 
-    @PostMapping("/remove/{id}")
-    public String remove(@PathVariable("id") UUID id) {
-        Ad ad = adRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException("Removed ad not in repository"));
-        therapistRepository.findById(ad.getTherapist()).ifPresent(t -> {
-            t.removeAd();
-            therapistRepository.save(t);
-        });
-        commentRepository.deleteAll(ad.getComments());
-        adRepository.deleteById(id);
-        return "redirect:/";
-    }
-
     @PostMapping("/create")
     String submitCreate(@Valid @ModelAttribute("details") AdDetails details, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -99,4 +91,18 @@ public class TherapyAppController {
         adRepository.save(ad);
         return "redirect:/";
     }
+
+    @PostMapping("/remove/{id}")
+    public String remove(@PathVariable("id") UUID id) {
+        Ad ad = adRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("Removed ad not in repository"));
+        therapistRepository.findById(ad.getTherapist()).ifPresent(t -> {
+            t.removeAd();
+            therapistRepository.save(t);
+        });
+        commentRepository.deleteAll(ad.getComments());
+        adRepository.deleteById(id);
+        return "redirect:/";
+    }
+
 }
