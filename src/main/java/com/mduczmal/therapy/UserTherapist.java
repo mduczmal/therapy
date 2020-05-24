@@ -4,16 +4,16 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class TherapistPrincipal extends SecurityDetails {
+public class UserTherapist extends SecurityDetails {
     @OneToOne
     private Therapist therapist;
 
-    public TherapistPrincipal() {
+    public UserTherapist() {
         super();
     }
 
-    public TherapistPrincipal(String username, String password, List<Authority> authorities,
-                              Therapist therapist) {
+    public UserTherapist(String username, String password, List<Authority> authorities,
+                         Therapist therapist) {
         super(username, password, authorities);
         therapist.setLogin(username);
         this.therapist = therapist;

@@ -42,7 +42,7 @@ public class InitData implements CommandLineRunner {
         List<Authority> authorities = new ArrayList<>();
         Authority authority = new Authority(username, "ROLE_THERAPIST");
         authorities.add(authority);
-        TherapistPrincipal therapistPrincipal = new TherapistPrincipal(therapist.getLogin(),
+        UserTherapist therapistPrincipal = new UserTherapist(therapist.getLogin(),
                 passwordEncoder.encode(password), authorities, therapist);
         therapistRepository.save(therapist);
         userRepository.save(therapistPrincipal);

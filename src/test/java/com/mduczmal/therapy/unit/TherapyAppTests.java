@@ -54,7 +54,7 @@ class TherapyAppTests {
     @Test
     @WithUserDetails
     void commentByAdCreatorIsMarkedAsSelfComment() {
-        TherapistPrincipal principal = (TherapistPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserTherapist principal = (UserTherapist) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Therapist therapist = principal.getTherapist();
         Comment comment = new Comment();
 
