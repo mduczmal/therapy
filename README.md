@@ -34,23 +34,23 @@ Aplikacja uruchomi się na localhost:8080.
 
 ## Użyte narzędzia
 
-###Dlaczego Java
+### Dlaczego Java
 Chciałem wybrać język statycznie typowany, bo wtedy łatwiej poruszać się po dużym projekcie i go debugować.
 
 Chciałem wybrać język znany, żeby wszystko gładko chodziło (dlatego Kotlin odpadł - próbowałem kiedyś używać go ze Springiem i naraziłem się przez to na specyficzne problemy), żeby było dużo narzędzi, materiałów, odpowiedzi na Stacku.
 
 Co zostawiło do wyboru C#, C++ lub Javę. C# odpada, bo praca pod Windowsem jest trudniejsza niż pod Linuxem, C++ odpadł, bo jest mniej czytelny niż Java.
 
-###Dlaczego Spring
+### Dlaczego Spring
 Chcę się go nauczyć do pracy. Największy framework webowy dla Javy, dużo materiałów.
 
-###Dlaczego Spring Boot
+### Dlaczego Spring Boot
 Gotowa konfiguracja wszystkiego, miałem z nim dobre doświadczenia w przeszłości.
 
-###Dlaczego Bootstrap
+### Dlaczego Bootstrap
 Gotowe komponenty bez używania frameworku do front-endu. Ostatnio robiłem coś z Vue.js i byłem zawiedziony, że wybrałem Vuetify zamiast Bootstrapa. Teraz chciałem to nadrobić.
 
-###Dlaczego JUnit
+### Dlaczego JUnit
 Standardowa biblioteka do testów jednostkowych dla Javy. Dobra integracja ze Springiem.
 
 
