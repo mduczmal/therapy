@@ -9,11 +9,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AdSteps extends Steps {
 
@@ -26,12 +28,12 @@ public class AdSteps extends Steps {
 
     @Given("^I visit the home page$")
     public void visitHomePage() {
-        driver.get("http://127.0.0.1:8080");
+        driver.get("http://localhost:8080");
     }
 
     @Given("^I see the ad details$")
     public void displayFirstAd() {
-        driver.get("http://127.0.0.1:8080/ads/1");
+        driver.get("http://localhost:8080/ads/1");
     }
 
     @When("^I click the ad$")
@@ -56,6 +58,25 @@ public class AdSteps extends Steps {
         List<WebElement> cards = driver.findElements(By.className("card"));
         assertTrue(cards.size() > 0);
     }
+
+    @When("^I accept the cookies$")
+    public void acceptCookies() {
+        driver.findElement(By.id("acceptCookies")).click();
+    }
+
+    @Then("^Info about cookies is displayed$")
+    public void cookiesDisplayed() {
+        assertTrue(driver.findElement(By.id("cookies")).isDisplayed());
+    }
+
+    @Then("^Info about cookies is not displayed$")
+    public void cookiesNotDisplayed() {
+        boolean invisible = new WebDriverWait(driver, 3).until(
+                ExpectedConditions.invisibilityOf(driver.findElement(By.id("cookies")))
+        );
+        assertTrue(invisible);
+    }
+
 
     @After()
     public void closeBrowser() {
