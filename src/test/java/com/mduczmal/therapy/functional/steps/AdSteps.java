@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,6 +62,7 @@ public class AdSteps {
     private static final String DELETE_AD = "Usuń";
     private static final String DELETE_COMMENT = "Usuń";
     private static final String ADD_COMMENT = "Dodaj opinię";
+    private static final String SUBMIT_COMMENT = "Zapisz komentarz";
     private static final String NAME_ARIA = "Imię";
     private static final String SURNAME_ARIA = "Nazwisko";
     private static final String ADDRESS_ARIA = "Adres gabinetu";
@@ -83,6 +85,7 @@ public class AdSteps {
         map.put("back", BACK_TO_AD_LIST);
         map.put("add comment", ADD_COMMENT);
         map.put("delete comment", DELETE_COMMENT);
+        map.put("save comment", SUBMIT_COMMENT);
         return map;
     }
 
@@ -108,7 +111,11 @@ public class AdSteps {
 
     @Given("^I see the ad details$")
     public void displayFirstAd() {
-        driver.get("http://localhost:8080/ads/1");
+        if (adNum == null) {
+            driver.get("http://localhost:8080/ads/1");
+        } else {
+            driver.get(String.format("http://localhost:8080/ads/%d", adNum));
+        }
     }
 
     @Given("^the ad has comments$")
@@ -143,6 +150,14 @@ public class AdSteps {
     @Given("^I have an ad$")
     public void signInThirdTherapist() {
         login("Test3", "pass3");
+        adNum = 0;
+    }
+
+    @When("^I log in as therapist$")
+    public void submitLoginFormAsFirstTherapist() {
+        driver.findElement(By.id("username")).sendKeys("Test1");
+        driver.findElement(By.id("password")).sendKeys("pass1");
+        driver.findElement(By.tagName("button")).click();
     }
 
 
@@ -193,6 +208,56 @@ public class AdSteps {
         driver.findElement(By.xpath(xpath)).sendKeys("TestAddress1");
     }
 
+    @When("I change my address to {string}")
+    public void changeAddress(String address) {
+        String xpath = String.format("//input[@aria-label='%s']", ADDRESS_ARIA);
+        driver.findElement(By.xpath(xpath)).sendKeys(address);
+    }
+
+    @When("I change my name to {string}")
+    public void changeName(String name) {
+        String xpath = String.format("//input[@aria-label='%s']", NAME_ARIA);
+        driver.findElement(By.xpath(xpath)).sendKeys(name);
+    }
+
+    @When("I change my surname to {string}")
+    public void changeSurname(String surname) {
+        String xpath = String.format("//input[@aria-label='%s']", SURNAME_ARIA);
+        driver.findElement(By.xpath(xpath)).sendKeys(surname);
+    }
+
+    @When("I enter a nickname {string}")
+    public void setCommentAuthor(String author) {
+        driver.findElement(By.id("author")).sendKeys(author);
+    }
+
+    @When("^I enter the comment content$")
+    public void setCommentContent() {
+        driver.findElement(By.tagName("textarea")).sendKeys("TestCommentText");
+    }
+
+    @When("^I leave the nickname field blank$")
+    public void setEmptyCommentAuthor() {
+        driver.findElement(By.id("author")).sendKeys("");
+    }
+
+    @Then("^the comment is displayed$")
+    public void getCommentsAfterCreate() {
+        List<WebElement> cardTexts = driver.findElements(By.className("card-text"));
+        List<WebElement> commentTexts = cardTexts.stream().filter(w -> w.getText().equals(TEST_COMMENT_TEXT))
+                .collect(Collectors.toList());
+        assertThat(commentTexts, hasSize(1));
+    }
+
+    @Then("the comment author is {string}")
+    public void getCommentAuthor(String author) {
+        List<WebElement> captions = driver.findElements(By.tagName("h6"));
+        List<WebElement> authors = captions.stream().filter(c -> c.getText().equals(author))
+                .collect(Collectors.toList());
+        assertThat(authors, hasSize(1));
+        assertEquals(authors.get(0).getText(), author);
+    }
+
     @Then("^name and surname is displayed$")
     public void getNameAndSurname() {
         boolean nameAndSurname = !driver.findElement(By.tagName("h3")).getText().isBlank();
@@ -204,6 +269,26 @@ public class AdSteps {
         boolean address = !driver.findElement(By.tagName("h5")).getText().isBlank();
         assertTrue(address);
     }
+
+    @Then("address {string} is displayed")
+    public void getAddress(String address) {
+        String text = driver.findElement(By.tagName("h6")).getText();
+        assertEquals(text, address);
+    }
+
+    @Then("name {string} is displayed")
+    public void getName(String name) {
+        String text = driver.findElement(By.tagName("h5")).getText();
+        assertThat(text, containsString(name));
+    }
+
+    @Then("surname {string} is displayed")
+    public void getSurname(String surname) {
+        String text = driver.findElement(By.tagName("h5")).getText();
+        assertEquals(text, surname);
+    }
+
+
 
     private void getDetail(String label) {
         List<WebElement> detailsLabels = driver.findElements(By.className("rounded-left"));
@@ -267,6 +352,16 @@ public class AdSteps {
     }
 
     @Then("^my ad is displayed$")
+    public void getAdsAfterEdit() {
+        getListOfAds();
+    }
+
+    @Then("^my new ad is not displayed$")
+    public void getAdsAfterUnsuccessfulCreate() {
+        getListOfAds();
+    }
+
+    @Then("^my new ad is displayed$")
     public void getAdsAfterCreate() {
         List<WebElement> cards = driver.findElements(By.className("card"));
         var ads = cards.stream().filter(c -> !c.getAttribute("id").equals("cookies")).collect(Collectors.toList());
