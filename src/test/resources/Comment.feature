@@ -4,7 +4,8 @@ Feature: Comments
     WF 2.1.5 Użytkownik może wyświetlić szczegółowe informacje o ogłoszeniu oraz
     komentarze użytkowników pod tym ogłoszeniem.
 
-    Given The ad has comments
+    Given the ad has comments
+    And I visit the home page
     When  I click the ad
     Then  I see the comments
 

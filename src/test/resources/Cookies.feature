@@ -4,7 +4,7 @@ Feature: Cookies
     WF 2.1.8 Użytkownik widzi informację o ciasteczkach.
 
     Given I visit the home page
-    Then Info about cookies is displayed
+    Then info about cookies is displayed
 
   Scenario: Accept cookies
     WF 2.1.9 Użytkownik może zamknąć informację o ciasteczkach.
@@ -12,4 +12,4 @@ Feature: Cookies
 
     Given I visit the home page
     When I accept the cookies
-    Then Info about cookies is not displayed
+    Then info about cookies is not displayed
