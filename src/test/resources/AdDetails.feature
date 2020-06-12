@@ -1,7 +1,6 @@
-Feature: Ad details are displayed
+Feature: Ad details
 
   Scenario: Display ad details
-
     WF 2.1.5 Użytkownik może wyświetlić szczegółowe informacje o ogłoszeniu oraz
     komentarze użytkowników pod tym ogłoszeniem.
     PU 1.6 Zobacz_ogłoszenie
