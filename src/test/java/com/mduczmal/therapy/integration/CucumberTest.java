@@ -1,4 +1,4 @@
-package com.mduczmal.therapy.functional;
+package com.mduczmal.therapy.integration;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;

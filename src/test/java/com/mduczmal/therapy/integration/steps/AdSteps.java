@@ -1,4 +1,4 @@
-package com.mduczmal.therapy.functional.steps;
+package com.mduczmal.therapy.integration.steps;
 
 import com.mduczmal.therapy.InitData;
 import com.mduczmal.therapy.ad.AdRepository;

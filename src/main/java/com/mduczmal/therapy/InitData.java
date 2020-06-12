@@ -124,7 +124,5 @@ public class InitData implements CommandLineRunner {
             }
         }
         addModerator("admin", "admin");
-        System.out.println("Number of therapists: " + therapistRepository.count());
-        System.out.println("Number of users: " + userRepository.count());
     }
 }
