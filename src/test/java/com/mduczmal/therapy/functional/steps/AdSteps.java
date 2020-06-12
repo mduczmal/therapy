@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,32 +61,43 @@ public class AdSteps {
     private static final String DELETE_AD = "Usuń";
     private static final String DELETE_COMMENT = "Usuń";
     private static final String ADD_COMMENT = "Dodaj opinię";
+    private static final String NAME_ARIA = "Imię";
+    private static final String SURNAME_ARIA = "Nazwisko";
+    private static final String ADDRESS_ARIA = "Adres gabinetu";
     private static final int TEST_AD_WITH_COMMENTS = 3;
     private static final int TEST_NUM_COMMENTS = 3;
     private static final int TEST_AD_WITH_DETAILS = 2;
     private static final int TEST_NUM_ADS = 4;
+    private static final Map<String, String> buttonText = initButtonText();
+
     private WebDriver driver;
     private Integer adNum;
-    private Map<String, String> buttonText;
 
-    @Before
-    public void setUp() {
-        driver = new FirefoxDriver();
-        buttonText = new HashMap<>();
-        buttonText.put("create ad", CREATE_AD);
-        buttonText.put("save ad", SUBMIT_AD);
-        buttonText.put("edit ad", EDIT_AD);
-        buttonText.put("update ad", UPDATE_AD);
-        buttonText.put("delete ad", DELETE_AD);
-        buttonText.put("back", BACK_TO_AD_LIST);
-        buttonText.put("add comment", ADD_COMMENT);
-        buttonText.put("delete comment", DELETE_COMMENT);
+    private static Map<String, String> initButtonText() {
+        Map<String, String> map = new HashMap<>();
+        map.put("create ad", CREATE_AD);
+        map.put("save ad", SUBMIT_AD);
+        map.put("edit ad", EDIT_AD);
+        map.put("update ad", UPDATE_AD);
+        map.put("delete ad", DELETE_AD);
+        map.put("back", BACK_TO_AD_LIST);
+        map.put("add comment", ADD_COMMENT);
+        map.put("delete comment", DELETE_COMMENT);
+        return map;
+    }
 
+    private void dropData() {
         commentRepository.deleteAll();
         adRepository.deleteAll();
         authorityRepository.deleteAll();
         userRepository.deleteAll();
         therapistRepository.deleteAll();
+    }
+
+    @Before
+    public void setUp() {
+        driver = new FirefoxDriver();
+        dropData();
         init.run();
     }
 
@@ -156,9 +168,29 @@ public class AdSteps {
         if (text == null) throw new IllegalArgumentException("Button name '" + buttonName +
                 "' is not present in name to label map.");
         List<WebElement> buttons = driver.findElements(By.className("btn"));
-        WebElement button = buttons.stream().filter(b -> b.getText().equals(text)).findAny().orElseThrow(
+        Stream<WebElement> relevantButtons = buttons.stream().filter(b -> b.getText().equals(text));
+        //skip delete ad button
+        if (buttonName.equals("delete comment")) relevantButtons = relevantButtons.skip(1);
+        WebElement button = relevantButtons.findAny().orElseThrow(
                 () -> new IllegalArgumentException("Button with text: '" + text + "' not found on page"));
         button.click();
+    }
+
+    @When("^I enter the name$")
+    public void setName() {
+        String xpath = String.format("//input[@aria-label='%s']", NAME_ARIA);
+        driver.findElement(By.xpath(xpath)).sendKeys("TestName1");
+    }
+    @When("^I enter the surname$")
+    public void setSurname() {
+        String xpath = String.format("//input[@aria-label='%s']", SURNAME_ARIA);
+        driver.findElement(By.xpath(xpath)).sendKeys("TestSurname1");
+    }
+
+    @When("^I enter the address$")
+    public void setAddress() {
+        String xpath = String.format("//input[@aria-label='%s']", ADDRESS_ARIA);
+        driver.findElement(By.xpath(xpath)).sendKeys("TestAddress1");
     }
 
     @Then("^name and surname is displayed$")
@@ -226,6 +258,19 @@ public class AdSteps {
         List<WebElement> cards = driver.findElements(By.className("card"));
         var ads = cards.stream().filter(c -> !c.getAttribute("id").equals("cookies")).collect(Collectors.toList());
         assertThat(ads, hasSize(TEST_NUM_ADS-1));
+    }
+
+    @Then("^I am redirected to home page$")
+    public void getHomeTitle() {
+        String url = driver.getCurrentUrl();
+        assertEquals("http://localhost:8080/", url);
+    }
+
+    @Then("^my ad is displayed$")
+    public void getAdsAfterCreate() {
+        List<WebElement> cards = driver.findElements(By.className("card"));
+        var ads = cards.stream().filter(c -> !c.getAttribute("id").equals("cookies")).collect(Collectors.toList());
+        assertThat(ads, hasSize(TEST_NUM_ADS+1));
     }
 
     @When("^I accept the cookies$")

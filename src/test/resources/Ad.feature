@@ -4,7 +4,8 @@ Feature: Ad lifecycle
     WF 2.1.1 Terapeuta tworzy ogłoszenie.
     PU 1.1 Dodaj_ogłoszenie
 
-    Given I visit the home page
+    Given I am a therapist
+    And I visit the home page
     When I click the "create ad" button
     And I enter the name
     And I enter the surname
