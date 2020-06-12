@@ -53,10 +53,33 @@ Gotowe komponenty bez używania frameworku do front-endu. Ostatnio robiłem coś
 ### Dlaczego JUnit
 Standardowa biblioteka do testów jednostkowych dla Javy. Dobra integracja ze Springiem.
 
+### Dlaczego Cucumber
+W języku Gherkin można pięknie przedstawić scenariusze testowe.
+
+### Dlaczego Selenium
+Znałem to narzędzie, prostota obsługi.
 
 ## Testy
 
+### Jednostkowe
 Wszystkie testy jednostkowe są w pliku TherapyAppTests. Wszystkie przechodzą, wyniki nie są częścią repo, załączam je na Pegazie.
+
+### Integracyjne
+
+Wykonałem je przy użyciu narzędzi Cucumber i Selenium.
+
+* Lista przypadków testowych, wraz z ich powiązaniami do wymagań znajduje się w folderze
+test/resources w plikach o rozszerzeniu *.feature*.
+
+* Formalne wyniki przeprowadzonych testów sporządzone przy użyciu JUnita nie są częścią repozytorium,
+załączam je na Pegazie w pliku *IntegrationTests.html*.
+
+* Logi odpalenia testów automatycznych są częścią pliku *IntegrationTests.html*,
+można je rozwinąć po kliknięciu nazwy testu.
+
+* Testy automatyczne są zaimplementowane w klasie AdSteps.
+
+
 
 ## Wzorce projektowe
 
