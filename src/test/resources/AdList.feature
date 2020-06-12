@@ -12,5 +12,5 @@ Feature: List of ads
     PU 1.7 Zobacz_listę_ogłoszeń
 
     Given I see the ad details
-    When I press the back button
+    When I click the "back" button
     Then the list of ads is displayed

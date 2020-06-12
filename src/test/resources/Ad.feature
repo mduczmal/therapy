@@ -5,11 +5,11 @@ Feature: Ad lifecycle
     PU 1.1 Dodaj_ogłoszenie
 
     Given I visit the home page
-    When I click the I wish to create ad button
+    When I click the "create ad" button
     And I enter the name
     And I enter the surname
     And I enter the address
-    And I click the create ad button
+    And I click the "save ad" button
     Then I am redirected to home page
     And my ad is displayed
 
@@ -20,9 +20,9 @@ Feature: Ad lifecycle
     Given I am a therapist
     And I have an ad
     And I visit the home page
-    When I click the edit ad button
+    When I click the "edit ad" button
     And I change my address
-    And I click the update the ad button
+    And I click the "update ad" button
     Then I am redirected to home page
     And the ad is displayed
     And new address is displayed
@@ -36,7 +36,7 @@ Feature: Ad lifecycle
     Given I am a therapist
     And I have an ad
     And I visit the home page
-    When I click the delete ad button
+    When I click the "delete ad" button
     Then the ad is not displayed
 
   Scenario: Ad is removed by moderator
@@ -45,6 +45,6 @@ Feature: Ad lifecycle
 
     Given I am a moderator
     And I visit the home page
-    When I click the delete ad button
+    When I click the "delete ad" button
     Then the ad is not displayed
 
