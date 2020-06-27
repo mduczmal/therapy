@@ -6,18 +6,14 @@ import com.mduczmal.therapy.therapist.Therapist;
 import com.mduczmal.therapy.therapist.TherapistRepository;
 import com.mduczmal.therapy.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class AdController {
@@ -42,6 +38,12 @@ public class AdController {
 
     private List<Ad> ads;
 
+    @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, String> addComment(){
+        return Collections.singletonMap("response", "Trying to add a comment");
+    }
 
     @PostMapping(value = "/delcomment/{ad_id}/{comment_id}")
     public String removeComment(@PathVariable("ad_id") int adID, @PathVariable("comment_id") int commentID) {
