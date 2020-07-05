@@ -8,6 +8,19 @@ group = 'com.mduczmal'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+task compileCustomBootstrap(type: Exec) {
+    println "Compiling custom scss..."
+    workingDir "$projectDir/src/main/resources/static/"
+    def sassDir = System.getenv('SASS_DIR')
+    commandLine "$sassDir/sass"
+    args 'scss/custom.scss'
+    args 'css/custom.css'
+}
+
+build {
+    dependsOn compileCustomBootstrap
+}
+
 configurations {
     developmentOnly
     runtimeClasspath {
