@@ -99,7 +99,8 @@ public class InitData implements CommandLineRunner {
 
     private void addComments(Ad ad, int num, Therapist therapist) {
         for (int i=0; i<num; i++) {
-            Comment comment = new Comment(ad.getId());
+            Comment comment = new Comment();
+            comment.setAd(ad.getId());
             comment.setAuthor("AutorKomentarza1");
             comment.setContent("TreśćKomentarza1");
             ad.addComment(comment, therapist);

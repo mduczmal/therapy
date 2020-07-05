@@ -6,7 +6,6 @@ import com.mduczmal.therapy.therapist.Therapist;
 import com.mduczmal.therapy.therapist.TherapistRepository;
 import com.mduczmal.therapy.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,17 +36,18 @@ public class AdController {
     private CommentRepository commentRepository;
 
     private List<Ad> ads;
-
-    @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Map<String, String> addComment(){
-        return Collections.singletonMap("response", "Trying to add a comment");
+    @PostMapping(value="/comment/{ad_id}")
+    public String addComment(@PathVariable("ad_id") int adID,  @ModelAttribute("new_comment") Comment comment) {
+        Ad ad = ads.get(adID);
+        comment.setAd(ad.getId());
+        Comment saved = commentRepository.save(comment);
+        ad.addComment(saved);
+        adRepository.save(ad);
+        return "redirect:/ads/{ad_id}";
     }
 
     @PostMapping(value = "/delcomment/{ad_id}/{comment_id}")
     public String removeComment(@PathVariable("ad_id") int adID, @PathVariable("comment_id") int commentID) {
-        System.out.println("In del comment");
         Ad ad = ads.get(adID);
         List<Comment> adComments = ad.getComments();
         Comment comment = adComments.get(commentID);
@@ -65,8 +65,7 @@ public class AdController {
         ads = adService.load();
         Ad ad = ads.get(id);
         model.addAttribute("ad", ad);
-        Comment comment = new Comment(ad.getId());
-        model.addAttribute("new_comment", comment);
+        model.addAttribute("new_comment", new Comment());
         model.addAllAttributes(ad.getComments());
         return "details";
     }

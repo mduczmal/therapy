@@ -31,6 +31,25 @@ public class AdDetails {
     private boolean supervision;
     private boolean onlineSessions;
 
+    @Override
+    public String toString() {
+        return "AdDetails{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", pricing=" + pricing +
+                ", therapyCenter='" + therapyCenter + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", therapyApproach='" + therapyApproach + '\'' +
+                ", training='" + training + '\'' +
+                ", supervision=" + supervision +
+                ", onlineSessions=" + onlineSessions +
+                '}';
+    }
+
     public AdDetails() {
         this.pricing = new HashMap<>();
         this.supervision = false;

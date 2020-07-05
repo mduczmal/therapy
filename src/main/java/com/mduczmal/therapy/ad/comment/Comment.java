@@ -22,8 +22,12 @@ public class Comment {
     public Comment() {
         this.dateCreated = LocalDateTime.now();
     }
-    public Comment(UUID ad) {
-        this();
+
+    public UUID getAd() {
+        return ad;
+    }
+
+    public void setAd(UUID ad) {
         this.ad = ad;
     }
 
@@ -59,6 +63,33 @@ public class Comment {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", ad=" + ad +
+                ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", selfComment=" + selfComment +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comment comment = (Comment) o;
+
+        return id != null ? id.equals(comment.id) : comment.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
 }

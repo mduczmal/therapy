@@ -88,14 +88,17 @@
     <div id="newComment" class="card card-footer collapse">
         <div class="card-body">
             <h6 class="card-title">Nowy komentarz</h6>
-            <form id="newCommentForm" th:object="${new_comment}">
+            <form id="newCommentForm"
+                  th:object="${new_comment}"
+                  th:action="@{/comment/{ad_id}(ad_id=${id})}"
+                  method="post">
                 <div class="form-group">
                     <label for="author" class="px-2 pt-2">Pseudonim</label>
                     <input type="text" class="form-control" th:field="*{author}" id="author" placeholder="Twoje imię">
                 </div>
                 <div class="form-group">
                     <label for="commentContent" class="px-2 pt-2">Treść komentarza</label>
-                    <textarea class="form-control" id="commentContent" rows="2" placeholder="Twoja opinia"></textarea>
+                    <textarea class="form-control" id="commentContent" th:field="*{content}" rows="2" placeholder="Twoja opinia"></textarea>
                 </div>
                 <button type="submit" class="btn btn-secondary ml-auto">Zapisz komentarz</button>
             </form>
@@ -112,22 +115,6 @@
     $('#newComment').on('shown.bs.collapse', function () {
         $("html, body").animate({ scrollTop: $("#newComment").offset().top }, 1000);
     });
-    $('#newCommentForm').on('submit', function(event) {
-        event.preventDefault();
-        let headers = new Headers();
-        headers.set('Accept', 'application/json');
-        headers.set('Content-Type', 'application/json');
-        let token = getCookie("XSRF-TOKEN");
-        headers.set("X-XSRF-TOKEN", token);
-        fetch("/comment", {
-            method: "POST",
-            headers
-        }).then(response => response.json())
-        .then(function(data) {
-            console.log(data);
-            alert(data.response);
-        });
-    })
 </script>
 <script th:src="@{/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
 </body>

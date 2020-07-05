@@ -233,7 +233,7 @@ public class AdSteps {
 
     @When("^I enter the comment content$")
     public void setCommentContent() {
-        driver.findElement(By.tagName("textarea")).sendKeys("TestCommentText");
+        driver.findElement(By.tagName("textarea")).sendKeys(TEST_COMMENT_TEXT);
     }
 
     @When("^I leave the nickname field blank$")

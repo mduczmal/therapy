@@ -44,6 +44,10 @@ public class Ad {
         return id;
     }
 
+    protected void setId(UUID id) {
+        this.id = id;
+    }
+
     public UUID getTherapist() {
         return therapist;
     }
@@ -83,5 +87,31 @@ public class Ad {
             comment.markAsSelfComment();
         }
         addComment(comment);
+    }
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "id=" + id +
+                ", therapist=" + therapist +
+                ", dateCreated=" + dateCreated +
+                ", comments=" + comments +
+                ", adDetails=" + adDetails +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ad ad = (Ad) o;
+
+        return id != null ? id.equals(ad.id) : ad.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
