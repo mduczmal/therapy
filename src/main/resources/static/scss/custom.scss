@@ -2,7 +2,8 @@
 @import "functions";
 @import "variables";/* -------begin customization-------- *//* change the primary theme color to red */
 $theme-colors: (
-        success: #308050
+        success: #308050,
+        gray-light: $gray-200
 );
 $enable-shadows: true;
 /* -------end customization-------- *//* finally, import Bootstrap to set the changes! */
