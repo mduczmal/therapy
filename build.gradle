@@ -2,23 +2,26 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id "io.miret.etienne.sass" version "1.1.1"
 }
 
 group = 'com.mduczmal'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-task compileCustomBootstrap(type: Exec) {
-    println "Compiling custom scss..."
-    workingDir "$projectDir/src/main/resources/static/"
-    def sassDir = System.getenv('SASS_DIR')
-    commandLine "$sassDir/sass"
-    args 'scss/custom.scss'
-    args 'css/custom.css'
+compileSass {
+    //see https://github.com/EtienneMiret/sass-gradle-plugin for docs
+    outputDir = project.file("${projectDir}/src/main/resources/static/css")
+    sourceDir = project.file("${projectDir}/src/main/resources/static/scss")
+    style = expanded
+    noCharset()
+    noErrorCss()
+    sourceMap = file
+    sourceMapUrls = relative
 }
 
-build {
-    dependsOn compileCustomBootstrap
+processResources {
+    dependsOn compileSass
 }
 
 configurations {
