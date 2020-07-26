@@ -61,13 +61,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Telefon</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Numer Twojego telefonu" aria-label="Numer telefonu">
+                <input type="text" class="form-control" th:field="*{telephoneNumber}"
+                       placeholder="Numer Twojego telefonu" aria-label="Numer telefonu">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Email</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Twój adres email" aria-label="Adres email">
+                <input type="text" class="form-control" th:field="*{email}" placeholder="Twój adres email" aria-label="Adres email">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
