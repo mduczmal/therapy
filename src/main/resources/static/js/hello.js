@@ -44,11 +44,52 @@ function TopBar(props) {
             <Typography variant="h6" className={classes.title}>
                 Terapia
             </Typography>
-            <Button color="inherit">Login</Button>
+            <LoginButton/>
         </Toolbar>
     </AppBar>
     );
 
+}
+
+class LoginButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+    componentDidMount() {
+        fetch("http://localhost:8080/data",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                    });
+                    console.log("I am loaded");
+                    console.log(result);
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+    handleClick() {
+        console.log("I am clicked");
+
+    }
+    render() {
+        return (
+            <Button color="inherit" onClick={this.handleClick}>Login</Button>
+        )
+    }
 }
 class Hello extends React.Component {
     render() {
