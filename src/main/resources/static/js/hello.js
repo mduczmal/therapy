@@ -51,17 +51,26 @@ function TopBar(props) {
 
 }
 
+function getCookie(n) {
+    //https://stackoverflow.com/questions/5639346/what-is-the-shortest-function-for-reading-a-cookie-by-name-in-javascript
+    let c = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)');
+    return c ? c.pop() : '';
+}
+
 class LoginButton extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
-    componentDidMount() {
+    handleClick() {
+        console.log("I am clicked");
+        const token = getCookie('XSRF-TOKEN');
         fetch("http://localhost:8080/data",
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': token
                 },
             })
             .then(res => res.json())
@@ -80,10 +89,6 @@ class LoginButton extends React.Component {
                     });
                 }
             )
-    }
-    handleClick() {
-        console.log("I am clicked");
-
     }
     render() {
         return (
