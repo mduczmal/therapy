@@ -1,7 +1,6 @@
 package com.mduczmal.therapy;
 
 import com.mduczmal.therapy.user.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +23,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     Single Responsibility - klasa odpowiada konfigurację uwierzytelniania
      */
 
-    @Autowired
-    DataSource dataSource;
+    private final DataSource dataSource;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public WebSecurityConfig(DataSource dataSource, UserDetailsServiceImpl userDetailsService) {
+        this.dataSource = dataSource;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

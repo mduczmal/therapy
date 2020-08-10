@@ -18,10 +18,13 @@ public class TherapyAppController {
      */
 
     //dependency injection design pattern
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AdService adService;
+    private final UserService userService;
+    private final AdService adService;
+
+    public TherapyAppController(UserService userService, AdService adService) {
+        this.userService = userService;
+        this.adService = adService;
+    }
 
     @GetMapping("/")
     String index(Model model) {

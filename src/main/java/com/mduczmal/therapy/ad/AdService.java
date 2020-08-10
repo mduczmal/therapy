@@ -1,6 +1,5 @@
 package com.mduczmal.therapy.ad;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +13,12 @@ public class AdService {
     1. Ta klasa ma pojedynczą odpowiedzialność
     2. Kontroler zachowuje pojedynczą odpowiedzialność
      */
-    @Autowired
-    AdRepository adRepository;
+    private final AdRepository adRepository;
+
+    public AdService(AdRepository adRepository) {
+        this.adRepository = adRepository;
+    }
+
     public List<Ad> load() {
         return StreamSupport.stream(adRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());

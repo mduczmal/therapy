@@ -24,18 +24,22 @@ public class AdController {
      */
 
     //Dependency injection design pattern
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AdService adService;
-    @Autowired
-    private AdRepository adRepository;
-    @Autowired
-    private TherapistRepository therapistRepository;
-    @Autowired
-    private CommentRepository commentRepository;
+    private final UserService userService;
+    private final AdService adService;
+    private final AdRepository adRepository;
+    private final TherapistRepository therapistRepository;
+    private final CommentRepository commentRepository;
 
     private List<Ad> ads;
+
+    public AdController(UserService userService, AdService adService, AdRepository adRepository, TherapistRepository therapistRepository, CommentRepository commentRepository) {
+        this.userService = userService;
+        this.adService = adService;
+        this.adRepository = adRepository;
+        this.therapistRepository = therapistRepository;
+        this.commentRepository = commentRepository;
+    }
+
     @PostMapping(value="/comment/{ad_id}")
     public String addComment(@PathVariable("ad_id") int adID,  @ModelAttribute("new_comment") Comment comment) {
         Ad ad = ads.get(adID);
