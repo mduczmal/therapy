@@ -12,10 +12,11 @@ import java.util.Map;
 @Controller
 public class HelloController {
 
-    @GetMapping(value = "/hello")
+    @GetMapping(value = {"/hello", "/v2/**"})
     public String hello() {
         return "hello";
     }
+
     @PostMapping(value = "/data",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

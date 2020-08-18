@@ -16,6 +16,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,9 @@ public class AdSteps {
 
     @Before
     public void setUp() {
-        driver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        driver = new FirefoxDriver(options);
         dropData();
         init.run();
     }
