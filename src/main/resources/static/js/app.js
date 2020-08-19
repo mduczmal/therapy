@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {Hello} from "./hello";
-import {AdDetails} from "./addetails";
+import {Details} from "./details";
 import {Create} from "./create";
 
 export function App() {
@@ -13,7 +13,7 @@ export function App() {
                     <Hello/>
                 </Route>
                 <Route path="/v2/details">
-                    <AdDetails/>
+                    <Details/>
                 </Route>
                 <Route path="/v2/create">
                     <Create/>

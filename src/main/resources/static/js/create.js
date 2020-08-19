@@ -1,10 +1,8 @@
 import React from 'react';
-import {MuiThemeProvider} from "@material-ui/core/styles";
-import {TextField} from "@material-ui/core"
+import { makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
+import {Button, Box, Container, Paper, Grid, TextField} from "@material-ui/core"
 import {TopBar, topBarTheme} from "./topbar";
-import { makeStyles } from "@material-ui/core/styles";
 import {getCookie} from "./hello";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,13 +24,17 @@ class CreateForm extends React.Component {
     handleSubmit(event) {
         console.log("I am submitting");
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/data",
+        fetch("http://localhost:8080/v2/person",
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-XSRF-TOKEN': token
                 },
+                body: JSON.stringify({
+                    name: 'John',
+                    surname: 'Malkovich'
+                })
             })
             .then(res => res.json())
             .then(
@@ -63,12 +65,23 @@ class CreateForm extends React.Component {
 }
 
 export function Create(props) {
+    const classes = useStyles();
     return (
-        <React.Fragment>
+        <div className={classes.root}>
             <MuiThemeProvider theme={topBarTheme}>
                 <TopBar/>
             </MuiThemeProvider>
-            <CreateForm/>
-        </React.Fragment>
+            <Container>
+                <Box mt={3}>
+                    <Grid container spacing={2} justify={'center'}>
+                        <Grid item xs={6}>
+                            <Paper className={classes.paper}>
+                                <CreateForm/>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
+        </div>
     );
 }
