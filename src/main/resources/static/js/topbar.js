@@ -4,7 +4,9 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import {LoginButton} from "./loginbutton";
-import {makeStyles} from "@material-ui/core/styles";
+import {createMuiTheme, makeStyles} from "@material-ui/core/styles";
+import teal from "@material-ui/core/colors/teal";
+import green from "@material-ui/core/colors/green";
 
 const React = require('react');
 
@@ -19,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
 }));
+
+export const topBarTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: teal[500],
+        },
+        secondary: {
+            main: green[500],
+        },
+    },
+});
 
 export function TopBar(props) {
     const classes = useStyles();

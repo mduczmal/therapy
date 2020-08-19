@@ -1,6 +1,5 @@
 import {MuiThemeProvider} from "@material-ui/core/styles";
-import {TopBar} from "./topbar";
-import {topBarTheme} from "./hello";
+import {TopBar, topBarTheme} from "./topbar";
 
 const React = require('react');
 
