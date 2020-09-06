@@ -33,6 +33,7 @@ public class HelloController {
         System.out.println("Person:");
         System.out.println(person.getName());
         System.out.println(person.getSurname());
+        System.out.println(person.getEmail());
         return Collections.singletonMap("result", "ok!");
     }
 

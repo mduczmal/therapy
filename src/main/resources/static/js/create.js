@@ -18,7 +18,13 @@ const useStyles = makeStyles((theme) => ({
 class CreateForm extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {email: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({email: event.target.value});
     }
 
     handleSubmit(event) {
@@ -33,7 +39,8 @@ class CreateForm extends React.Component {
                 },
                 body: JSON.stringify({
                     name: 'John',
-                    surname: 'Malkovich'
+                    surname: 'Malkovich',
+                    email: this.state.email
                 })
             })
             .then(res => res.json())
@@ -57,7 +64,7 @@ class CreateForm extends React.Component {
     render() {
         return (
                 <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-                    <TextField id="filled-basic" label="Email" variant="filled" />
+                    <TextField id="filled-basic" label="Email" variant="filled" onChange={this.handleChange}/>
                     <Button type="submit" color="inherit">Submit</Button>
                 </form>
         )
