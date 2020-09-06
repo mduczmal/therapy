@@ -18,30 +18,50 @@ const useStyles = makeStyles((theme) => ({
 class CreateForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {email: ''};
+        this.state = {
+            num: 0,
+            data: {
+                name: 'John',
+                surname: 'Malkovich',
+                address: '',
+                description: '',
+                pricing: {},
+                therapyCenter: '',
+                imagePath: '',
+                telephoneNumber: '',
+                email: '',
+                therapyApproach: '',
+                training: '',
+                supervision: false,
+                onlineSessions: false
+            }
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({email: event.target.value});
+        const name = event.target.name;
+        this.setState({
+            ...this.state,
+            data: {
+                ...this.state.data,
+                [name]: event.target.value
+            }
+        });
     }
 
     handleSubmit(event) {
         console.log("I am submitting");
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/person",
+        fetch("http://localhost:8080/v2/ad",
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-XSRF-TOKEN': token
                 },
-                body: JSON.stringify({
-                    name: 'John',
-                    surname: 'Malkovich',
-                    email: this.state.email
-                })
+                body: JSON.stringify(this.state.data)
             })
             .then(res => res.json())
             .then(
@@ -64,7 +84,7 @@ class CreateForm extends React.Component {
     render() {
         return (
                 <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-                    <TextField id="filled-basic" label="Email" variant="filled" onChange={this.handleChange}/>
+                    <TextField id="filled-basic" label="Email" variant="filled" name="email" onChange={this.handleChange}/>
                     <Button type="submit" color="inherit">Submit</Button>
                 </form>
         )
