@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
     },
 }));
 
@@ -84,8 +84,32 @@ class CreateForm extends React.Component {
     render() {
         return (
                 <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-                    <TextField id="filled-basic" label="Email" variant="filled" name="email" onChange={this.handleChange}/>
-                    <Button type="submit" color="inherit">Submit</Button>
+                    <Grid container spacing={1} alignItems={'center'}>
+                        <Grid item xs={12} style={{textAlign: 'left'}}>
+                            <p>{this.props.labels.personalInfo}</p>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="filled-basic" label={this.props.labels.name} variant="filled" name="name" onChange={this.handleChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="filled-basic" label={this.props.labels.surname} variant="filled" name="surname" onChange={this.handleChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="filled-basic" label={this.props.labels.email} variant="filled" name="email" onChange={this.handleChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="filled-basic" label={this.props.labels.telephoneNumber} variant="filled" name="telephoneNumber" onChange={this.handleChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <p>{this.props.labels.therapyInfo}</p>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="filled-basic" label={this.props.labels.address} variant="filled" name="address" onChange={this.handleChange}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button type="submit" color="inherit">{this.props.labels.submit}</Button>
+                        </Grid>
+                    </Grid>
                 </form>
         )
     }
@@ -93,6 +117,16 @@ class CreateForm extends React.Component {
 
 export function Create(props) {
     const classes = useStyles();
+    const labels = {
+        personalInfo: 'Informacje o Tobie',
+        name: 'Imię',
+        surname: 'Nazwisko',
+        email: 'Email',
+        telephoneNumber: 'Telefon',
+        address: 'Adres gabinetu',
+        therapyInfo: 'Informacje o terapii',
+        submit: 'Dodaj ogłoszenie'
+    }
     return (
         <div className={classes.root}>
             <MuiThemeProvider theme={topBarTheme}>
@@ -103,7 +137,7 @@ export function Create(props) {
                     <Grid container spacing={2} justify={'center'}>
                         <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <CreateForm/>
+                                <CreateForm labels={labels}/>
                             </Paper>
                         </Grid>
                     </Grid>
