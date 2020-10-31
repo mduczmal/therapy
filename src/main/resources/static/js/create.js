@@ -89,7 +89,21 @@ class CreateForm extends React.Component {
         event.preventDefault();
     }
 
-    handleUpload() {
+    handleUpload(event) {
+        console.log("I am sending file");
+        const file = event.target.files[0]
+        var formData = new FormData();
+        formData.append('file', file);
+        const token = getCookie('XSRF-TOKEN');
+        fetch("http://localhost:8080/upload",
+            {
+                method: 'POST',
+                headers: {
+                    'X-XSRF-TOKEN': token
+                },
+                body: formData
+            }).then()
+        event.preventDefault();
 
     }
 
@@ -110,9 +124,9 @@ class CreateForm extends React.Component {
                             </Grid>
                         </Grid>
                         <Grid item xs={1}>
-                            <input accept="image/*" style={{display: 'none'}} id="upload-button" type="file" />
+                            <input accept="image/*" style={{display: 'none'}} id="upload-button" type="file" onChange={this.handleUpload}/>
                             <label htmlFor="upload-button">
-                                <IconButton color="primary" aria-label="upload picture" component="span" onSubmit={this.handleUpload}>
+                                <IconButton  color="primary" aria-label="upload picture" component="span">
                                     <AddPhotoAlternate />
                                 </IconButton>
                             </label>
