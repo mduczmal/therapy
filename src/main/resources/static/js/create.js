@@ -48,7 +48,6 @@ class CreateForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
-        this.handleUpload = this.handleUpload.bind(this);
     }
 
     handleChange(event) {
@@ -64,37 +63,6 @@ class CreateForm extends React.Component {
 
     handleSubmit(event) {
         console.log("I am submitting");
-        this.handleUpload();
-        const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/ad",
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-XSRF-TOKEN': token
-                },
-                body: JSON.stringify(this.state.data)
-            })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                    });
-                    console.log(result);
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-        event.preventDefault();
-    }
-
-    handleUpload() {
-        console.log("I am sending file");
         var formData = new FormData();
         formData.append('image', this.state.image);
         const token = getCookie('XSRF-TOKEN');
@@ -105,7 +73,45 @@ class CreateForm extends React.Component {
                     'X-XSRF-TOKEN': token
                 },
                 body: formData
-            }).then()
+            }).then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({
+                        data: {
+                            ...this.state.data,
+                            imagePath: result.path
+                        },
+                    });
+                    console.log(this.state.data);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            ).then(() => {
+            fetch("http://localhost:8080/v2/ad",
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-XSRF-TOKEN': token
+                    },
+                    body: JSON.stringify(this.state.data)
+                })
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                        });
+                        console.log(result);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                )
+        })
+        event.preventDefault();
     }
 
     handleImageChange(event) {

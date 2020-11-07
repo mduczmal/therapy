@@ -1,9 +1,6 @@
 package com.mduczmal.therapy.ad.image;
 
-import com.mduczmal.therapy.therapist.Therapist;
-import com.mduczmal.therapy.user.UserService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 @Service
 public class FilesystemStorageService implements ImageStorageService, CommandLineRunner {
@@ -34,29 +30,26 @@ public class FilesystemStorageService implements ImageStorageService, CommandLin
     }
 
     @Override
-    public void store(MultipartFile file) {
+    public Image store(MultipartFile file) {
         if (file.isEmpty()) {
-            System.out.println("Empty file");
+            return null;
         }
         try {
-            System.out.println("Processing");
             byte[] bytes = file.getBytes();
             Image image = new Image();
             Path path = Path.of(images + "/" + image.getFilename());
             Files.write(path, bytes);
-            System.out.println(path + " written");
             imageRepository.save(image);
-            System.out.println(image.getFilename() + " saved");
+            return image;
         } catch (IOException e) {
-            System.out.println("Failed");
             e.printStackTrace();
+            return null;
         }
-
     }
 
     @Override
-    public Resource load(String filename) {
-        return null;
+    public Path load(String filename) {
+        return Path.of(images + "/" + filename);
     }
 
     @Override

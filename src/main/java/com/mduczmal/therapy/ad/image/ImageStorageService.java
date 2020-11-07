@@ -1,15 +1,16 @@
 package com.mduczmal.therapy.ad.image;
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Path;
 
 public interface ImageStorageService {
 
     void init();
 
-    void store(MultipartFile file);
+    Image store(MultipartFile file);
 
-    Resource load(String filename);
+    Path load(String filename);
 
     void deleteAll();
 }
