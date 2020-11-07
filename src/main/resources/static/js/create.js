@@ -42,10 +42,13 @@ class CreateForm extends React.Component {
                 training: '',
                 supervision: false,
                 onlineSessions: false
-            }
+            },
+            image: null
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleImageChange = this.handleImageChange.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
     }
 
     handleChange(event) {
@@ -61,6 +64,7 @@ class CreateForm extends React.Component {
 
     handleSubmit(event) {
         console.log("I am submitting");
+        this.handleUpload();
         const token = getCookie('XSRF-TOKEN');
         fetch("http://localhost:8080/v2/ad",
             {
@@ -89,11 +93,10 @@ class CreateForm extends React.Component {
         event.preventDefault();
     }
 
-    handleUpload(event) {
+    handleUpload() {
         console.log("I am sending file");
-        const file = event.target.files[0]
         var formData = new FormData();
-        formData.append('file', file);
+        formData.append('image', this.state.image);
         const token = getCookie('XSRF-TOKEN');
         fetch("http://localhost:8080/upload",
             {
@@ -103,8 +106,15 @@ class CreateForm extends React.Component {
                 },
                 body: formData
             }).then()
-        event.preventDefault();
+    }
 
+    handleImageChange(event) {
+        const file = event.target.files[0];
+        this.setState({
+            imagePreview: URL.createObjectURL(file),
+            image: file
+        })
+        event.preventDefault();
     }
 
     render() {
@@ -120,11 +130,13 @@ class CreateForm extends React.Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Grid container justify={'center'} alignItems={'center'}>
-                                <Avatar className={this.props.avatar} src="/broken-image.jpg"/>
+                                <Box mb={2}>
+                                    <Avatar className={this.props.avatar} src={this.state.imagePreview}/>
+                                </Box>
                             </Grid>
                         </Grid>
                         <Grid item xs={1}>
-                            <input accept="image/*" style={{display: 'none'}} id="upload-button" type="file" onChange={this.handleUpload}/>
+                            <input accept="image/*" style={{display: 'none'}} id="upload-button" type="file" onChange={this.handleImageChange}/>
                             <label htmlFor="upload-button">
                                 <IconButton  color="primary" aria-label="upload picture" component="span">
                                     <AddPhotoAlternate />

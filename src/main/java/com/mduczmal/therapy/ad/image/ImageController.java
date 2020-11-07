@@ -15,7 +15,7 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    public void upload(@RequestParam("file") MultipartFile file) {
+    public void upload(@RequestParam("image") MultipartFile file) {
         imageStorageService.store(file);
     }
 }

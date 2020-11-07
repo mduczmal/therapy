@@ -15,7 +15,7 @@ ext {
 
 frontend {
     nodeDistributionProvided = isDev
-    nodeVersion = '12.18.3'
+    nodeVersion = '14.15.0'
     nodeDistributionUrlRoot = 'https://nodejs.org/dist/'
     nodeDistributionUrlPathPattern = 'vVERSION/node-vVERSION-ARCH.TYPE'
     nodeInstallDirectory = file("${rootDir}/.gradle/node")
