@@ -38,7 +38,8 @@ export function Create(props) {
         therapyApproach: 'Nurt psychoterapeutyczny',
         submit: 'Dodaj ogłoszenie',
         supervision: 'Korzystam z superwizji',
-        onlineSessions: 'Prowadzę sesje online'
+        onlineSessions: 'Prowadzę sesje online',
+        pricing: 'Cennik'
     }
     return (
         <div className={classes.root}>

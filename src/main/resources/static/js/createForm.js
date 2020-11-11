@@ -1,7 +1,8 @@
 import React from "react";
 import {getCookie} from "./hello";
+import {Pricing} from "./pricing";
+import {Section} from "./section";
 import {Box, Button, Grid, TextField} from "@material-ui/core";
-import FormLabel from "@material-ui/core/FormLabel";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate";
@@ -125,11 +126,7 @@ export class CreateForm extends React.Component {
             <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                 <Grid container spacing={1} alignItems={'center'}>
                     <Grid item xs={12}>
-                        <Box mt={4} mb={2} mx={4}>
-                            <Grid container justify={'flex-start'} alignItems={'center'}>
-                                <FormLabel component={'legend'}>{this.props.labels.personalInfo}</FormLabel>
-                            </Grid>
-                        </Box>
+                        <Section title={this.props.labels.personalInfo}></Section>
                     </Grid>
                     <Grid item xs={3}>
                         <Grid container justify={'center'} alignItems={'center'}>
@@ -165,11 +162,7 @@ export class CreateForm extends React.Component {
                                    name="telephoneNumber" onChange={this.handleChange}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <Box mt={4} mb={2} mx={4}>
-                            <Grid container justify={'flex-start'} alignItems={'center'}>
-                                <FormLabel component={'legend'}>{this.props.labels.therapyInfo}</FormLabel>
-                            </Grid>
-                        </Box>
+                        <Section title={this.props.labels.therapyInfo}></Section>
                     </Grid>
                     <Grid item xs={6}>
                         <TextField id="address" label={this.props.labels.address} variant="filled" name="address"
@@ -192,6 +185,12 @@ export class CreateForm extends React.Component {
                                                name="supervision" color={this.props.checkbox.color}/>}
                             label={this.props.labels.supervision}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Section title={this.props.labels.pricing}></Section>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Pricing></Pricing>
                     </Grid>
                     <Grid item xs={6}></Grid>
                     <Grid item xs={6}>
