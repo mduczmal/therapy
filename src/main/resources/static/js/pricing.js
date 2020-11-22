@@ -3,6 +3,7 @@ import {DataGrid} from '@material-ui/data-grid';
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from '@material-ui/icons/Delete';
+import Grid from "@material-ui/core/Grid";
 
 export function Pricing(props) {
     const labels = {
@@ -37,7 +38,7 @@ export function Pricing(props) {
 
     return (
         <Box>
-            <Box style={{height: 400}} >
+            <Box mx={4} style={{height: 300}} >
             <DataGrid
                 checkboxSelection={true}
                 onSelectionChange={handleSelectionChange}
@@ -47,7 +48,11 @@ export function Pricing(props) {
             />
             </Box>
             <Box>
-                <Button type='button' onClick={handleDelete} startIcon={<DeleteIcon />}>{labels.delete}</Button>
+                <Grid container>
+                    <Grid item xs={6}>
+                        <Button type='button' onClick={handleDelete} startIcon={<DeleteIcon />}>{labels.delete}</Button>
+                    </Grid>
+                </Grid>
             </Box>
         </Box>
     );

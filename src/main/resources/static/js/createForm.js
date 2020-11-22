@@ -126,7 +126,7 @@ export class CreateForm extends React.Component {
             <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                 <Grid container spacing={1} alignItems={'center'}>
                     <Grid item xs={12}>
-                        <Section title={this.props.labels.personalInfo}></Section>
+                        <Section title={this.props.labels.personalInfo}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Grid container justify={'center'} alignItems={'center'}>
@@ -144,7 +144,7 @@ export class CreateForm extends React.Component {
                             </IconButton>
                         </label>
                     </Grid>
-                    <Grid item xs={8}></Grid>
+                    <Grid item xs={8}/>
                     <Grid item xs={6}>
                         <TextField id="name" label={this.props.labels.name} variant="filled" name="name"
                                    onChange={this.handleChange}/>
@@ -162,7 +162,7 @@ export class CreateForm extends React.Component {
                                    name="telephoneNumber" onChange={this.handleChange}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <Section title={this.props.labels.therapyInfo}></Section>
+                        <Section title={this.props.labels.therapyInfo}/>
                     </Grid>
                     <Grid item xs={6}>
                         <TextField id="address" label={this.props.labels.address} variant="filled" name="address"
@@ -187,12 +187,12 @@ export class CreateForm extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Section title={this.props.labels.pricing}></Section>
+                        <Section title={this.props.labels.pricing}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <Pricing></Pricing>
+                        <Pricing/>
                     </Grid>
-                    <Grid item xs={6}></Grid>
+                    <Grid item xs={6}/>
                     <Grid item xs={6}>
                         <Button type="submit" color={this.props.button.color}>{this.props.labels.submit}</Button>
                     </Grid>
