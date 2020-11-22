@@ -105,7 +105,7 @@
         </div>
     </div>
 </div>
-<div id="cookies" class="card fixed-bottom bg-gray-light ml-auto shadow collapse" th:classappend="${therapist == null || !therapist.getCookiesAccepted() ? 'show' : ''}" style="width: 37rem;">
+<div id="cookies" class="card fixed-bottom bg-gray-light ml-auto shadow collapse" th:classappend="${(therapist == null && moderator == null) || (therapist != null && !therapist.getCookiesAccepted()) ? 'show' : ''}" style="width: 37rem;">
     <div class="card-body">
         <div class="d-flex flex-column">
             <div>

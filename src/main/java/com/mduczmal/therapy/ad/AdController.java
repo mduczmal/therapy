@@ -2,17 +2,22 @@ package com.mduczmal.therapy.ad;
 
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
+import com.mduczmal.therapy.cookies.Cookies;
 import com.mduczmal.therapy.therapist.Therapist;
 import com.mduczmal.therapy.therapist.TherapistRepository;
 import com.mduczmal.therapy.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class AdController {
@@ -71,6 +76,7 @@ public class AdController {
         model.addAttribute("ad", ad);
         model.addAttribute("new_comment", new Comment());
         model.addAllAttributes(ad.getComments());
+        model.addAttribute("cookies_text", Cookies.TEXT);
         return "details";
     }
 
@@ -79,6 +85,7 @@ public class AdController {
         Therapist therapist = userService.getCurrentTherapist();
         if (therapist.getAd() != null) return "redirect:/";
         model.addAttribute("details", new AdDetails());
+        model.addAttribute("cookies_text", Cookies.TEXT);
         return "create";
     }
 

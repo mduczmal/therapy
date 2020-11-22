@@ -6,6 +6,7 @@ Feature: Ad lifecycle
     Given I am a therapist
     And I visit the home page
     When I click the "create ad" button
+    And I accept the cookies
     And I enter the name
     And I enter the surname
     And I enter the address
@@ -19,6 +20,7 @@ Feature: Ad lifecycle
     Given I visit the home page
     When I click the "create ad" button
     And I log in as therapist
+    And I accept the cookies
     And I enter the name
     And I enter the surname
     And I enter the address
@@ -32,6 +34,7 @@ Feature: Ad lifecycle
     Given I am a therapist
     And I visit the home page
     When I click the "create ad" button
+    And I accept the cookies
     And I enter the name
     And I enter the address
     And I click the "save ad" button
