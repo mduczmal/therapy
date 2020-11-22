@@ -16,8 +16,11 @@ public class UserService {
     1. Ta klasa ma pojedynczą odpowiedzialność
     2. Kontroler zachowuje pojedynczą odpowiedzialność
      */
-    @Autowired
-    TherapistRepository therapistRepository;
+    private final TherapistRepository therapistRepository;
+
+    public UserService(TherapistRepository therapistRepository) {
+        this.therapistRepository = therapistRepository;
+    }
 
     public SecurityDetails getCurrentUser() {
         Object user = SecurityContextHolder.getContext()

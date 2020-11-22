@@ -1,7 +1,6 @@
 package com.mduczmal.therapy;
 
 import com.mduczmal.therapy.user.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -23,20 +23,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     Single Responsibility - klasa odpowiada konfigurację uwierzytelniania
      */
 
-    @Autowired
-    DataSource dataSource;
+    private final DataSource dataSource;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public WebSecurityConfig(DataSource dataSource, UserDetailsServiceImpl userDetailsService) {
+        this.dataSource = dataSource;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/ads/*", "/comment", "/comment/*").permitAll()
+                .antMatchers("/", "/ads/*", "/comment", "/comment/*", "/hello", "/data", "/login", "/v2/ad", "/upload").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .and().logout();
+                .and().logout()
+                //Write csrf token to a cookie. Required for using fetch API from javascript
+                .and().csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
     }
 
     @Override

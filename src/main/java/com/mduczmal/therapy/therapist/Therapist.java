@@ -1,15 +1,18 @@
 package com.mduczmal.therapy.therapist;
 
 import com.mduczmal.therapy.ad.Ad;
+import com.mduczmal.therapy.cookies.Observer;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Optional;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
 @Entity
-public class Therapist {
+public class Therapist implements Observer {
     /*
     Single Responsibility - klasa odpowiada za stan i akcje wykonywane przez terapeutę
      */
@@ -18,13 +21,11 @@ public class Therapist {
     private UUID id;
     private UUID ad;
     private String login;
-    @Embedded
-    @AttributeOverride(name="accepted", column=@Column(name = "cookies_accepted"))
-    private final Cookies cookies;
+    private boolean cookiesAccepted;
 
     public Therapist() {
         this.id = randomUUID();
-        this.cookies = new Cookies();
+        this.cookiesAccepted = false;
     }
 
     public Therapist(String username) {
@@ -46,8 +47,11 @@ public class Therapist {
         this.login = username;
     }
 
-    public Cookies getCookies() {
-        return cookies;
+    public void setCookiesAccepted() {
+        this.cookiesAccepted = true;
+    }
+    public boolean getCookiesAccepted() {
+        return cookiesAccepted;
     }
 
     public Optional<Ad> createAd() {
@@ -74,5 +78,10 @@ public class Therapist {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public void update() {
+        setCookiesAccepted();
     }
 }

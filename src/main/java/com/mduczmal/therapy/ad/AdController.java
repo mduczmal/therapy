@@ -2,17 +2,22 @@ package com.mduczmal.therapy.ad;
 
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
+import com.mduczmal.therapy.cookies.Cookies;
 import com.mduczmal.therapy.therapist.Therapist;
 import com.mduczmal.therapy.therapist.TherapistRepository;
 import com.mduczmal.therapy.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class AdController {
@@ -24,18 +29,22 @@ public class AdController {
      */
 
     //Dependency injection design pattern
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AdService adService;
-    @Autowired
-    private AdRepository adRepository;
-    @Autowired
-    private TherapistRepository therapistRepository;
-    @Autowired
-    private CommentRepository commentRepository;
+    private final UserService userService;
+    private final AdService adService;
+    private final AdRepository adRepository;
+    private final TherapistRepository therapistRepository;
+    private final CommentRepository commentRepository;
 
     private List<Ad> ads;
+
+    public AdController(UserService userService, AdService adService, AdRepository adRepository, TherapistRepository therapistRepository, CommentRepository commentRepository) {
+        this.userService = userService;
+        this.adService = adService;
+        this.adRepository = adRepository;
+        this.therapistRepository = therapistRepository;
+        this.commentRepository = commentRepository;
+    }
+
     @PostMapping(value="/comment/{ad_id}")
     public String addComment(@PathVariable("ad_id") int adID,  @ModelAttribute("new_comment") Comment comment) {
         Ad ad = ads.get(adID);
@@ -67,6 +76,7 @@ public class AdController {
         model.addAttribute("ad", ad);
         model.addAttribute("new_comment", new Comment());
         model.addAllAttributes(ad.getComments());
+        model.addAttribute("cookies_text", Cookies.TEXT);
         return "details";
     }
 
@@ -75,6 +85,7 @@ public class AdController {
         Therapist therapist = userService.getCurrentTherapist();
         if (therapist.getAd() != null) return "redirect:/";
         model.addAttribute("details", new AdDetails());
+        model.addAttribute("cookies_text", Cookies.TEXT);
         return "create";
     }
 

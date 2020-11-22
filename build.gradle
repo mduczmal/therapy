@@ -2,26 +2,29 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id "io.miret.etienne.sass" version "1.1.1"
+    id "org.siouan.frontend-jdk11" version "4.0.0"
 }
 
 group = 'com.mduczmal'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-compileSass {
-    //see https://github.com/EtienneMiret/sass-gradle-plugin for docs
-    outputDir = project.file("${projectDir}/src/main/resources/static/css")
-    sourceDir = project.file("${projectDir}/src/main/resources/static/scss")
-    style = expanded
-    noCharset()
-    noErrorCss()
-    sourceMap = file
-    sourceMapUrls = relative
+ext {
+    isDev = buildType == 'dev'
 }
 
-processResources {
-    dependsOn compileSass
+frontend {
+    nodeDistributionProvided = isDev
+    nodeVersion = '14.15.0'
+    nodeDistributionUrlRoot = 'https://nodejs.org/dist/'
+    nodeDistributionUrlPathPattern = 'vVERSION/node-vVERSION-ARCH.TYPE'
+    nodeInstallDirectory = file("${rootDir}/.gradle/node")
+
+    installScript = 'install'
+    assembleScript = 'run build'
+
+    packageJsonDirectory = projectDir
+    verboseModeEnabled = false
 }
 
 configurations {

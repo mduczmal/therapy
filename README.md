@@ -26,6 +26,8 @@ Przykładowe dane (konta użytkowników, ogłoszenia, komentarze) inicjalizowane
     * Użytkownik: therapy
 
     * Hasło: test
+    
+* Geckodriver
 
 ### Instalacja
 

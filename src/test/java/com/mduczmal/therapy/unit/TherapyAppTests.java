@@ -1,29 +1,28 @@
 package com.mduczmal.therapy.unit;
 
-import static org.hamcrest.collection.IsMapContaining.hasEntry;
-import static org.hamcrest.collection.IsMapWithSize.aMapWithSize;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.ad.AdDetails;
 import com.mduczmal.therapy.ad.comment.Comment;
-import com.mduczmal.therapy.therapist.Cookies;
+import com.mduczmal.therapy.cookies.Cookies;
 import com.mduczmal.therapy.therapist.Therapist;
-import com.mduczmal.therapy.user.UserDetailsServiceImpl;
 import com.mduczmal.therapy.user.UserTherapist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithUserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsMapContaining.hasEntry;
+import static org.hamcrest.collection.IsMapWithSize.aMapWithSize;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class TherapyAppTests {
@@ -35,11 +34,12 @@ class TherapyAppTests {
     }
 
     @Test
-    void cookiesAreAcceptedWhenTherapistAcceptsThem() {
+    void therapistCookiesAcceptedWhenObservedCookiesAccepted() {
         Therapist therapist = new Therapist();
-        Cookies cookies = therapist.getCookies();
+        Cookies cookies = new Cookies();
+        cookies.attach(therapist);
         cookies.accept();
-        assertTrue(cookies.areAccepted());
+        assertTrue(therapist.getCookiesAccepted());
     }
 
     @Test
