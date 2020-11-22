@@ -41,3 +41,11 @@ Feature: Cookies
     When I accept the cookies
     And I click the ad
     Then info about cookies is not displayed
+
+  Scenario: Accept cookies on the home page and go to the details page as Therapist
+
+    Given I am a therapist
+    When I visit the home page
+    When I accept the cookies
+    And I click the ad
+    Then info about cookies is not displayed
