@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {Hello} from "./hello";
 import {Details} from "./details";
 import {Create} from "./create";
+import {Ads} from "./ads";
 
 export function App() {
     return (
@@ -17,6 +18,9 @@ export function App() {
                 </Route>
                 <Route path="/v2/create">
                     <Create/>
+                </Route>
+                <Route path="/v2/ads">
+                    <Ads />
                 </Route>
             </Switch>
         </div>
