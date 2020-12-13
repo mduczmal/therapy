@@ -1,12 +1,12 @@
+import React from 'react';
 import {makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
 import {TopBar, topBarTheme} from "./topbar";
 import {getCookie} from "./hello";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import {Box, CardContent} from "@material-ui/core";
-
-const React = require('react');
+import {Box, CardContent, CardHeader} from "@material-ui/core";
+import {Link as RouterLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,10 +64,16 @@ export class Ads extends React.Component {
                         {!this.state.loaded? null : this.state.ads.map((ad) => (
                             <Grid item key={ad.id} xs={12}>
                                 <Card>
+                                    <CardHeader title={ad.details.name + " " + ad.details.surname}/>
                                     <CardContent>
                                         <Typography color="textPrimary">
-                                            {ad.details.surname}
+                                            {ad.details.address}
                                         </Typography>
+                                        <RouterLink to={{
+                                            pathname: "/v2/details/"+ad.id,
+                                        }}>
+                                            {"Szczegóły"}
+                                        </RouterLink>
                                     </CardContent>
                                 </Card>
                             </Grid>
