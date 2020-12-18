@@ -20,6 +20,13 @@ frontend {
     nodeDistributionUrlPathPattern = 'vVERSION/node-vVERSION-ARCH.TYPE'
     nodeInstallDirectory = file("${rootDir}/.gradle/node")
 
+    yarnEnabled = true
+    yarnDistributionProvided = isDev
+    yarnVersion = '1.22.10'
+    yarnDistributionUrlRoot = 'https://github.com/yarnpkg/yarn/releases/download/'
+    yarnDistributionUrlPathPattern = 'vVERSION/yarn-vVERSION.tar.gz'
+    yarnInstallDirectory = file("${projectDir}/yarn")
+
     installScript = 'install'
     assembleScript = 'run build'
 
