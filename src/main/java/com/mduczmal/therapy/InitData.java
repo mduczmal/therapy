@@ -1,11 +1,18 @@
 package com.mduczmal.therapy;
 
-import com.mduczmal.therapy.ad.*;
+import com.mduczmal.therapy.ad.Ad;
+import com.mduczmal.therapy.ad.AdDetails;
+import com.mduczmal.therapy.ad.AdRepository;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
+import com.mduczmal.therapy.moderator.Moderator;
+import com.mduczmal.therapy.moderator.ModeratorRepository;
 import com.mduczmal.therapy.therapist.Therapist;
 import com.mduczmal.therapy.therapist.TherapistRepository;
-import com.mduczmal.therapy.user.*;
+import com.mduczmal.therapy.user.Authority;
+import com.mduczmal.therapy.user.AuthorityRepository;
+import com.mduczmal.therapy.user.UserAccount;
+import com.mduczmal.therapy.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,41 +27,45 @@ public class InitData implements CommandLineRunner {
      */
     private final PasswordEncoder passwordEncoder;
     private final TherapistRepository therapistRepository;
+    private final ModeratorRepository moderatorRepository;
     private final AdRepository adRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
 
     public InitData(AdRepository adRepository, TherapistRepository therapistRepository,
-                    UserRepository userRepository, AuthorityRepository authorityRepository,
-                    CommentRepository commentRepository, PasswordEncoder passwordEncoder) {
+                    ModeratorRepository moderatorRepository, UserRepository userRepository,
+                    AuthorityRepository authorityRepository, CommentRepository commentRepository,
+                    PasswordEncoder passwordEncoder) {
         this.adRepository = adRepository;
         this.therapistRepository = therapistRepository;
+        this.moderatorRepository = moderatorRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    private UserModerator addModerator(String username, String password) {
+    private void addModerator(String username, String password) {
+        Moderator moderator = new Moderator();
         Authority authority = new Authority(username, "ROLE_MODERATOR");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
-        UserModerator moderator = new UserModerator(username, passwordEncoder.encode(password), authorities);
-        userRepository.save(moderator);
+        UserAccount userAccount = new UserAccount(moderator, username, passwordEncoder.encode(password), authorities);
+        moderatorRepository.save(moderator);
+        userRepository.save(userAccount);
         authorityRepository.save(authority);
-        return moderator;
     }
 
     private Therapist addTherapist(String username, String password) {
-        Therapist therapist = new Therapist(username);
+        Therapist therapist = new Therapist();
         List<Authority> authorities = new ArrayList<>();
         Authority authority = new Authority(username, "ROLE_THERAPIST");
         authorities.add(authority);
-        UserTherapist therapistPrincipal = new UserTherapist(therapist.getLogin(),
-                passwordEncoder.encode(password), authorities, therapist);
+        UserAccount userAccount = new UserAccount(therapist, username,
+                passwordEncoder.encode(password), authorities);
         therapistRepository.save(therapist);
-        userRepository.save(therapistPrincipal);
+        userRepository.save(userAccount);
         authorityRepository.save(authority);
         return therapist;
     }

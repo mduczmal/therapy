@@ -1,13 +1,10 @@
 package com.mduczmal.therapy.user;
 
+import com.mduczmal.therapy.moderator.Moderator;
 import com.mduczmal.therapy.therapist.Therapist;
 import com.mduczmal.therapy.therapist.TherapistRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 
 @Service
 public class UserService {
@@ -22,11 +19,11 @@ public class UserService {
         this.therapistRepository = therapistRepository;
     }
 
-    public SecurityDetails getCurrentUser() {
-        Object user = SecurityContextHolder.getContext()
+    public UserAccount getCurrentUserAccount() {
+        Object userAccount = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
-        if (user instanceof SecurityDetails) {
-            return (SecurityDetails) user;
+        if (userAccount instanceof UserAccount) {
+            return (UserAccount) userAccount;
         }
         else {
             return null;
@@ -34,11 +31,10 @@ public class UserService {
     }
 
     public Therapist getCurrentTherapist() {
-        SecurityDetails currentUser = getCurrentUser();
-        if (currentUser == null) return null;
-        Collection<? extends GrantedAuthority> authorities = currentUser.getAuthorities();
-        if (authorities.stream().map(GrantedAuthority::getAuthority).anyMatch(a -> a.equals("ROLE_THERAPIST"))) {
-            Therapist oldTherapist = ((UserTherapist) currentUser).getTherapist();
+        UserAccount userAccount = getCurrentUserAccount();
+        if (userAccount == null) return null;
+        if (userAccount.hasRole("ROLE_THERAPIST")) {
+            Therapist oldTherapist = (Therapist) userAccount.getUser();
             //db query allows to create next ad immediately after removing the old one
             //without logout and login
             return therapistRepository.findById(oldTherapist.getId()).orElse(null);
@@ -47,12 +43,11 @@ public class UserService {
         }
     }
 
-    public UserModerator getCurrentModerator() {
-        SecurityDetails currentUser = getCurrentUser();
-        if (currentUser == null) return null;
-        Collection<? extends GrantedAuthority> authorities = currentUser.getAuthorities();
-        if (authorities.stream().map(GrantedAuthority::getAuthority).anyMatch(a -> a.equals("ROLE_MODERATOR"))) {
-            return (UserModerator) currentUser;
+    public Moderator getCurrentModerator() {
+        UserAccount userAccount = getCurrentUserAccount();
+        if (userAccount == null) return null;
+        if (userAccount.hasRole("ROLE_MODERATOR")) {
+            return (Moderator) userAccount.getUser();
         } else {
             return null;
         }

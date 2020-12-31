@@ -12,14 +12,13 @@ import java.util.stream.Collectors;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "users")
-public abstract class SecurityDetails implements UserDetails {
+public class UserAccount implements UserDetails {
     /*
-    Open-closed principle - w serwisie już istnieją 2 rodzaje użytkowników, którzy mogą się logować:
-    moderatorzy i terapeuci. Jeśli zajdzie taka potrzeba, można rozszerzyć funkcjonalność systemu
-    o kolejny rodzaj użytkownika dziedzicząc po klasie SecurityDetails bez modyfikowania istniejącego kodu.
-     */
+        Open-closed principle - w serwisie już istnieją 2 rodzaje użytkowników, którzy mogą się logować:
+        moderatorzy i terapeuci. Jeśli zajdzie taka potrzeba, można rozszerzyć funkcjonalność systemu
+        o kolejny rodzaj użytkownika dziedzicząc po klasie SecurityDetails bez modyfikowania istniejącego kodu.
+         */
     @Id
     private String username;
     private String password;
@@ -28,18 +27,23 @@ public abstract class SecurityDetails implements UserDetails {
     @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
     private List<Authority> authorities;
 
-    public SecurityDetails() {
+    @OneToOne
+    private final User user;
+
+    public UserAccount() {
+        this.user = null;
         this.username = "";
         this.password = "";
         this.enabled = true;
         this.authorities = new ArrayList<>();
     }
 
-    public SecurityDetails(String username, String password, List<Authority> authorities) {
+    public UserAccount(User user, String username, String password, List<Authority> authorities) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.enabled = true;
+        this.user = user;
     }
 
     @Override
@@ -76,4 +80,12 @@ public abstract class SecurityDetails implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+    public boolean hasRole(String role) {
+        return authorities.stream().map(GrantedAuthority::getAuthority).anyMatch(a -> a.equals(role));
+    }
+    public User getUser() {
+        return user;
+    }
+
 }

@@ -5,7 +5,7 @@ import com.mduczmal.therapy.ad.AdDetails;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.cookies.Cookies;
 import com.mduczmal.therapy.therapist.Therapist;
-import com.mduczmal.therapy.user.UserTherapist;
+import com.mduczmal.therapy.user.UserAccount;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -61,8 +61,8 @@ class TherapyAppTests {
     @Test
     @WithUserDetails(userDetailsServiceBeanName = "userDetailsService", value = "Test1")
     void commentByAdCreatorIsMarkedAsSelfComment() {
-        UserTherapist principal = (UserTherapist) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Therapist therapist = principal.getTherapist();
+        UserAccount userAccount = (UserAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Therapist therapist = (Therapist) userAccount.getUser();
         Comment comment = new Comment();
 
         Optional<Ad> optAd = therapist.createAd();

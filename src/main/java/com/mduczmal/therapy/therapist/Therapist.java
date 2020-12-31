@@ -2,50 +2,26 @@ package com.mduczmal.therapy.therapist;
 
 import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.cookies.Observer;
+import com.mduczmal.therapy.user.Specialist;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 
-import static java.util.UUID.randomUUID;
-
 @Entity
-public class Therapist implements Observer {
+public class Therapist extends Specialist implements Observer {
     /*
     Single Responsibility - klasa odpowiada za stan i akcje wykonywane przez terapeutę
      */
-    @Id
-    @NotNull
-    private UUID id;
     private UUID ad;
-    private String login;
     private boolean cookiesAccepted;
 
     public Therapist() {
-        this.id = randomUUID();
+        super();
         this.cookiesAccepted = false;
     }
 
-    public Therapist(String username) {
-        this();
-        this.login = username;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
     public UUID getAd() { return ad; }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String username) {
-        this.login = username;
-    }
 
     public void setCookiesAccepted() {
         this.cookiesAccepted = true;

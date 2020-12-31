@@ -1,18 +1,16 @@
-package com.mduczmal.therapy.user;
+package com.mduczmal.therapy.moderator;
+
+import com.mduczmal.therapy.user.User;
 
 import javax.persistence.Entity;
-import java.util.List;
 
 @Entity
-public class UserModerator extends SecurityDetails {
+public class Moderator extends User {
     /*
     Single responsibility - klasa reprezentuje moderatora jako użytkownika, który może się zalogować
     Liskov substitution  - klasa może być użyta wszędzie tam, gdzie potrzebne są dane uwierzytelniające
      */
-    public UserModerator() {
+    public Moderator() {
         super();
-    }
-    public UserModerator(String username, String password, List<Authority> authorities) {
-        super(username, password, authorities);
     }
 }
