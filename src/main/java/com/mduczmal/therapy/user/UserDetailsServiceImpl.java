@@ -19,7 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public SecurityDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<SecurityDetails> osd = userRepository.findById(username);
-        if (osd.isEmpty()) throw new UsernameNotFoundException("User " + " not found");
-        return osd.get();
+        return osd.orElseThrow(() -> new UsernameNotFoundException("User " + " not found"));
     }
 }

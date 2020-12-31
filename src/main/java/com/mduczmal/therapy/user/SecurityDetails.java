@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public abstract class SecurityDetails implements UserDetails {
     /*
     Open-closed principle - w serwisie już istnieją 2 rodzaje użytkowników, którzy mogą się logować:
-    moderatorzy i terapuci. Jeśli zajdzie taka potrzeba, można rozszerzyć funkcjonalność systemu
+    moderatorzy i terapeuci. Jeśli zajdzie taka potrzeba, można rozszerzyć funkcjonalność systemu
     o kolejny rodzaj użytkownika dziedzicząc po klasie SecurityDetails bez modyfikowania istniejącego kodu.
      */
     @Id
