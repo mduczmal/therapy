@@ -1,8 +1,8 @@
 package com.mduczmal.therapy.user;
 
-import com.mduczmal.therapy.moderator.Moderator;
-import com.mduczmal.therapy.therapist.Therapist;
-import com.mduczmal.therapy.therapist.TherapistRepository;
+import com.mduczmal.therapy.user.moderator.Moderator;
+import com.mduczmal.therapy.user.therapist.Therapist;
+import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

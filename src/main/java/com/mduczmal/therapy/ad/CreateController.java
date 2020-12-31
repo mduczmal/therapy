@@ -1,8 +1,8 @@
 package com.mduczmal.therapy.ad;
 
-import com.mduczmal.therapy.therapist.Therapist;
-import com.mduczmal.therapy.therapist.TherapistRepository;
 import com.mduczmal.therapy.user.UserService;
+import com.mduczmal.therapy.user.therapist.Therapist;
+import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

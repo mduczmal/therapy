@@ -1,7 +1,7 @@
 package com.mduczmal.therapy.ad;
 
 import com.mduczmal.therapy.ad.comment.Comment;
-import com.mduczmal.therapy.therapist.Therapist;
+import com.mduczmal.therapy.user.therapist.Therapist;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+
 import static java.util.UUID.randomUUID;
 
 @Entity

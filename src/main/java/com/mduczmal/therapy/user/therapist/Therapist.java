@@ -1,4 +1,4 @@
-package com.mduczmal.therapy.therapist;
+package com.mduczmal.therapy.user.therapist;
 
 import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.cookies.Observer;

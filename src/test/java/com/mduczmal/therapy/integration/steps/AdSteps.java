@@ -3,9 +3,9 @@ package com.mduczmal.therapy.integration.steps;
 import com.mduczmal.therapy.InitData;
 import com.mduczmal.therapy.ad.AdRepository;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
-import com.mduczmal.therapy.therapist.TherapistRepository;
 import com.mduczmal.therapy.user.AuthorityRepository;
 import com.mduczmal.therapy.user.UserRepository;
+import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -29,10 +29,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

@@ -1,4 +1,4 @@
-package com.mduczmal.therapy.moderator;
+package com.mduczmal.therapy.user.moderator;
 
 import org.springframework.data.repository.CrudRepository;
 
