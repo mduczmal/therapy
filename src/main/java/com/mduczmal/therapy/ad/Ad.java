@@ -4,7 +4,6 @@ import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.user.therapist.Therapist;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,14 +12,13 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 
 @Entity
-public class Ad {
+public abstract class Ad {
     /*
     Single responsibility - klasa reprezentuje stan ogłoszenia i związane z ogłoszeniem akcje
      */
     @Id
     private UUID id;
-    @NotNull
-    private UUID therapist;
+
     private LocalDateTime dateCreated;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "ad")
     private List<Comment> comments;
@@ -36,10 +34,9 @@ public class Ad {
         comments = new LinkedList<>();
     }
 
-    public Ad(Therapist therapist) {
-        this();
-        this.therapist = therapist.getId();
-    }
+    public abstract UUID getCreator();
+
+    public abstract void setCreator(UUID id);
 
     public UUID getId() {
         return id;
@@ -47,10 +44,6 @@ public class Ad {
 
     protected void setId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getTherapist() {
-        return therapist;
     }
 
     public LocalDateTime getDateCreated() {
@@ -94,7 +87,6 @@ public class Ad {
     public String toString() {
         return "Ad{" +
                 "id=" + id +
-                ", therapist=" + therapist +
                 ", dateCreated=" + dateCreated +
                 ", comments=" + comments +
                 ", adDetails=" + adDetails +

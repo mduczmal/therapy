@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -34,15 +33,19 @@ public class AdController {
     private final AdRepository adRepository;
     private final TherapistRepository therapistRepository;
     private final CommentRepository commentRepository;
+    private final AdFactory adFactory;
 
     private List<Ad> ads;
 
-    public AdController(UserService userService, AdService adService, AdRepository adRepository, TherapistRepository therapistRepository, CommentRepository commentRepository) {
+    public AdController(UserService userService, AdService adService, AdRepository adRepository,
+                        TherapistRepository therapistRepository, CommentRepository commentRepository,
+                        AdFactory adFactory) {
         this.userService = userService;
         this.adService = adService;
         this.adRepository = adRepository;
         this.therapistRepository = therapistRepository;
         this.commentRepository = commentRepository;
+        this.adFactory = adFactory;
     }
 
     @PostMapping(value="/comment/{ad_id}")
@@ -95,10 +98,7 @@ public class AdController {
             return "create";
         }
         Therapist therapist = userService.getCurrentTherapist();
-        Optional<Ad> opa = therapist.createAd();
-        if (opa.isEmpty()) throw new IllegalStateException(
-                "Therapist with existing ad was allowed to create another one");
-        Ad ad = opa.get();
+        Ad ad = adFactory.createAd(therapist);
         ad.setDetails(details);
         therapistRepository.save(therapist);
         adRepository.save(ad);
@@ -109,7 +109,7 @@ public class AdController {
     public String remove(@PathVariable("id") UUID id) {
         Ad ad = adRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("Removed ad not in repository"));
-        therapistRepository.findById(ad.getTherapist()).ifPresent(t -> {
+        therapistRepository.findById(ad.getCreator()).ifPresent(t -> {
             t.removeAd();
             therapistRepository.save(t);
         });

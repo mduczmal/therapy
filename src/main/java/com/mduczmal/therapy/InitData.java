@@ -2,6 +2,7 @@ package com.mduczmal.therapy;
 
 import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.ad.AdDetails;
+import com.mduczmal.therapy.ad.AdFactory;
 import com.mduczmal.therapy.ad.AdRepository;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
@@ -32,11 +33,12 @@ public class InitData implements CommandLineRunner {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final AdFactory adFactory;
 
     public InitData(AdRepository adRepository, TherapistRepository therapistRepository,
                     ModeratorRepository moderatorRepository, UserRepository userRepository,
                     AuthorityRepository authorityRepository, CommentRepository commentRepository,
-                    PasswordEncoder passwordEncoder) {
+                    PasswordEncoder passwordEncoder, AdFactory adFactory) {
         this.adRepository = adRepository;
         this.therapistRepository = therapistRepository;
         this.moderatorRepository = moderatorRepository;
@@ -44,6 +46,7 @@ public class InitData implements CommandLineRunner {
         this.commentRepository = commentRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
+        this.adFactory = adFactory;
     }
 
     private void addModerator(String username, String password) {
@@ -71,8 +74,7 @@ public class InitData implements CommandLineRunner {
     }
 
     private Ad addSimpleAd(Therapist therapist, int num) {
-        Ad ad = therapist.createAd().orElseThrow(() ->
-                new IllegalStateException("Therapist has ad during initialization"));
+        Ad ad = adFactory.createAd(therapist);
         AdDetails details = ad.getDetails();
         details.setPrice("Pierwsza wizyta", 150);
         details.setPrice("Sesja indywidualna", 100);
@@ -87,8 +89,7 @@ public class InitData implements CommandLineRunner {
 
 
     private Ad addComplexAd(Therapist therapist, int num) {
-        Ad ad = therapist.createAd().orElseThrow(() ->
-                new IllegalStateException("Therapist has ad during initialization"));
+        Ad ad = adFactory.createAd(therapist);
         AdDetails details = ad.getDetails();
         details.setPrice("Pierwsza wizyta", 200);
         details.setPrice("Sesja indywidualna", 130);

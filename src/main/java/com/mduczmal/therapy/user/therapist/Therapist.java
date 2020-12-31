@@ -1,11 +1,9 @@
 package com.mduczmal.therapy.user.therapist;
 
-import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.cookies.Observer;
 import com.mduczmal.therapy.user.Specialist;
 
 import javax.persistence.Entity;
-import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -23,18 +21,15 @@ public class Therapist extends Specialist implements Observer {
 
     public UUID getAd() { return ad; }
 
+    public void setAd(UUID ad) {
+        this.ad = ad;
+    }
+
     public void setCookiesAccepted() {
         this.cookiesAccepted = true;
     }
     public boolean getCookiesAccepted() {
         return cookiesAccepted;
-    }
-
-    public Optional<Ad> createAd() {
-        if (ad != null) return Optional.empty();
-        Ad ad = new Ad(this);
-        this.ad = ad.getId();
-        return Optional.of(ad);
     }
 
     public void removeAd() {
@@ -60,4 +55,5 @@ public class Therapist extends Specialist implements Observer {
     public void update() {
         setCookiesAccepted();
     }
+
 }

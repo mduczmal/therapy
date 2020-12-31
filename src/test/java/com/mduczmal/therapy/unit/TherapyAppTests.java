@@ -1,7 +1,9 @@
 package com.mduczmal.therapy.unit;
 
+import com.mduczmal.therapy.TherapyAdFactory;
 import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.ad.AdDetails;
+import com.mduczmal.therapy.ad.AdFactory;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.cookies.Cookies;
 import com.mduczmal.therapy.user.UserAccount;
@@ -9,13 +11,13 @@ import com.mduczmal.therapy.user.therapist.Therapist;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithUserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
@@ -26,6 +28,9 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class TherapyAppTests {
+
+    @Autowired
+    AdFactory adFactory;
 
     @Test
     void cookiesAreNotAcceptedByDefault() {
@@ -52,7 +57,8 @@ class TherapyAppTests {
     @Test
     void commentWithNoAuthorIsAnonymous() {
         Comment mockedComment = mock(Comment.class);
-        Ad ad = new Ad();
+        AdFactory adFactory = new TherapyAdFactory();
+        Ad ad = adFactory.createAd(mock(Therapist.class));
         ad.addComment(mockedComment);
 
         verify(mockedComment).setAuthor("Komentarz anonimowy");
@@ -65,10 +71,10 @@ class TherapyAppTests {
         Therapist therapist = (Therapist) userAccount.getUser();
         Comment comment = new Comment();
 
-        Optional<Ad> optAd = therapist.createAd();
-        optAd.ifPresent(ad -> ad.addComment(comment, therapist));
+        AdFactory adFactory = new TherapyAdFactory();
+        Ad ad = adFactory.createAd(therapist);
+        ad.addComment(comment, therapist);
 
-        assertTrue(optAd.isPresent());
         assertTrue(comment.isSelfComment());
     }
 
@@ -185,10 +191,10 @@ class TherapyAppTests {
 
     @Test
     void therapistCannotCreateTwoAds() {
+        AdFactory adFactory = new TherapyAdFactory();
         Therapist therapist = new Therapist();
-        therapist.createAd();
-        Optional<Ad> secondAd = therapist.createAd();
-        assertTrue(secondAd.isEmpty());
+        adFactory.createAd(therapist);
+        assertThrows(IllegalStateException.class, () -> adFactory.createAd(therapist));
     }
 
     @Test
@@ -257,7 +263,8 @@ class TherapyAppTests {
     void newAdHasPresentCreationDate() {
         LocalDateTime beforeCreation = LocalDateTime.now();
         LocalDateTime afterCreation = beforeCreation.plusSeconds(30);
-        Ad ad = new Ad();
+        AdFactory adFactory = new TherapyAdFactory();
+        Ad ad = adFactory.createAd(mock(Therapist.class));
 
         assertTrue(ad.getDateCreated().isAfter(beforeCreation));
         assertTrue(ad.getDateCreated().isBefore(afterCreation));
