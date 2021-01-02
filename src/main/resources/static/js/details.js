@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import {getCookie} from "./hello";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
+import {Cookies} from "./cookies";
 
 export class Details extends React.Component {
     constructor(props) {
@@ -64,6 +65,7 @@ export class Details extends React.Component {
                                 </Typography>
                             </CardContent>
                         </Card>
+                        <Cookies/>
                     </Box>
                 )
                 }

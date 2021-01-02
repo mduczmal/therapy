@@ -1,23 +1,13 @@
 import React from 'react';
-import {makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
+import {MuiThemeProvider} from "@material-ui/core/styles";
 import {TopBar, topBarTheme} from "./topbar";
+import {Cookies} from "./cookies";
 import {getCookie} from "./hello";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import {Box, CardContent, CardHeader} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.primary,
-    }
-}));
 
 export class Ads extends React.Component {
     constructor(props) {
@@ -80,6 +70,7 @@ export class Ads extends React.Component {
                         ))}
                     </Grid>
                 </Box>
+                <Cookies/>
             </div>
         );
     }

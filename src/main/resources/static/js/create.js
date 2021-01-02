@@ -3,6 +3,7 @@ import {makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
 import {Box, Container, Grid, Paper} from "@material-ui/core"
 import {TopBar, topBarTheme} from "./topbar";
 import {CreateForm} from "./createForm";
+import {Cookies} from "./cookies";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,6 +59,7 @@ export function Create(props) {
                     </Grid>
                 </Box>
             </Container>
+            <Cookies/>
         </div>
     );
 }
