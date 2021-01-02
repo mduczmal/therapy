@@ -6,13 +6,14 @@ import {CardContent, CardHeader} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {getCookie} from "./hello";
 import Box from "@material-ui/core/Box";
+import Avatar from "@material-ui/core/Avatar";
 
 export class Details extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             ad: null,
-            loaded: false
+            loaded: false,
         }
     }
 
@@ -51,7 +52,12 @@ export class Details extends React.Component {
                             <TopBar/>
                         </MuiThemeProvider>
                         <Card>
-                            <CardHeader title={this.state.ad.details.name + " " + this.state.ad.details.surname}/>
+                            <CardHeader title={this.state.ad.details.name + " " + this.state.ad.details.surname}
+                            avatar={
+                                <Avatar aria-label="therapistImage" height={10} width={10}
+                                        src={"/images/" + this.state.ad.details.imageId}/>
+                            }
+                            />
                             <CardContent>
                                 <Typography color="textPrimary">
                                     {this.state.ad.details.address}

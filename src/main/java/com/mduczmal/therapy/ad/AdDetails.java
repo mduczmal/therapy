@@ -1,10 +1,14 @@
 package com.mduczmal.therapy.ad;
 
-import javax.persistence.*;
+import org.apache.commons.validator.routines.EmailValidator;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.validator.routines.EmailValidator;
+import java.util.UUID;
 
 @Embeddable
 public class AdDetails {
@@ -22,7 +26,7 @@ public class AdDetails {
     @ElementCollection
     private Map<String, Integer> pricing;
     private String therapyCenter;
-    private String imagePath;
+    private UUID imageId;
     private String telephoneNumber;
     private String email;
     private String therapyApproach;
@@ -40,7 +44,7 @@ public class AdDetails {
                 ", description='" + description + '\'' +
                 ", pricing=" + pricing +
                 ", therapyCenter='" + therapyCenter + '\'' +
-                ", imagePath='" + imagePath + '\'' +
+                ", imageId='" + imageId + '\'' +
                 ", telephoneNumber='" + telephoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", therapyApproach='" + therapyApproach + '\'' +
@@ -112,12 +116,12 @@ public class AdDetails {
         this.therapyCenter = center;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public UUID getImageId() {
+        return imageId;
     }
 
-    public void setImage(String path) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    public void setImageId(UUID id) {
+        this.imageId = id;
     }
 
     public String getTelephoneNumber() {

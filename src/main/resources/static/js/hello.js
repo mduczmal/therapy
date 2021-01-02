@@ -1,7 +1,7 @@
+import React from 'react';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import {TopBar, topBarTheme} from "./topbar";
 
-const React = require('react');
 
 export function getCookie(n) {
     //https://stackoverflow.com/questions/5639346/what-is-the-shortest-function-for-reading-a-cookie-by-name-in-javascript

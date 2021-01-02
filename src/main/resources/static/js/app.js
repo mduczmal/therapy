@@ -18,9 +18,7 @@ export function App() {
                     <Hello/>
                 </Route>
                 <Route path="/v2/details/:id">
-                    <Route path="/v2/details">
-                        <GetDetails />
-                    </Route>
+                    <GetDetails />
                 </Route>
                 <Route path="/v2/create">
                     <Create/>

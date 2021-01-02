@@ -21,7 +21,7 @@ export class CreateForm extends React.Component {
                 description: '',
                 pricing: {},
                 therapyCenter: '',
-                imagePath: '',
+                imageId: '',
                 telephoneNumber: '',
                 email: '',
                 therapyApproach: '',
@@ -78,7 +78,7 @@ export class CreateForm extends React.Component {
                     this.setState({
                         data: {
                             ...this.state.data,
-                            imagePath: result.path
+                            imageId: result.id
                         },
                     });
                     console.log(this.state.data);

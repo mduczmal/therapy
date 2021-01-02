@@ -1,15 +1,13 @@
 package com.mduczmal.therapy.ad.image;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class ImageController {
@@ -21,9 +19,18 @@ public class ImageController {
     }
 
     @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Map<String, String> upload(@RequestParam("image") MultipartFile file) {
+    public @ResponseBody Map<String, UUID> upload(@RequestParam("image") MultipartFile file) {
         Image image = imageStorageService.store(file);
-        Path path = imageStorageService.load(image.getFilename());
-        return Collections.singletonMap("path", path.toString());
+        return Collections.singletonMap("id", image.getId());
+    }
+
+    @GetMapping(value = "/v2/image", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Map<String, byte[]> getImage(@RequestParam UUID id) {
+        try {
+            return Map.of("image", imageStorageService.load(id));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Map.of("image", new byte[]{});
+        }
     }
 }
