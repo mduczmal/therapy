@@ -1,12 +1,14 @@
 package com.mduczmal.therapy.ad.image;
 
+import com.mduczmal.therapy.UniversallyIdentifiable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
-public class Image {
+public class Image implements UniversallyIdentifiable {
     @Id
     @NotNull
     private UUID id;

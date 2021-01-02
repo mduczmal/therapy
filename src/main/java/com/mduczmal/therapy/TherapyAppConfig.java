@@ -1,6 +1,7 @@
 package com.mduczmal.therapy;
 
 import com.mduczmal.therapy.ad.AdFactory;
+import com.mduczmal.therapy.ad.TherapyAdFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

@@ -1,5 +1,6 @@
 package com.mduczmal.therapy.ad;
 
+import com.mduczmal.therapy.UniversallyIdentifiable;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.user.therapist.Therapist;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 
 @Entity
-public abstract class Ad {
+public abstract class Ad implements UniversallyIdentifiable {
     /*
     Single responsibility - klasa reprezentuje stan ogłoszenia i związane z ogłoszeniem akcje
      */

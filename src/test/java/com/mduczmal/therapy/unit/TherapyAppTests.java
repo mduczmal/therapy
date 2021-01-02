@@ -1,9 +1,9 @@
 package com.mduczmal.therapy.unit;
 
-import com.mduczmal.therapy.TherapyAdFactory;
 import com.mduczmal.therapy.ad.Ad;
 import com.mduczmal.therapy.ad.AdDetails;
 import com.mduczmal.therapy.ad.AdFactory;
+import com.mduczmal.therapy.ad.TherapyAdFactory;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.cookies.Cookies;
 import com.mduczmal.therapy.user.UserAccount;
