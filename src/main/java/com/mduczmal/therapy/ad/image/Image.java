@@ -1,6 +1,6 @@
 package com.mduczmal.therapy.ad.image;
 
-import com.mduczmal.therapy.UniversallyIdentifiable;
+import com.mduczmal.therapy.Identifiable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
-public class Image implements UniversallyIdentifiable {
+public class Image implements Identifiable {
     @Id
     @NotNull
     private UUID id;
@@ -19,6 +19,7 @@ public class Image implements UniversallyIdentifiable {
         this.filename = id.toString();
     }
 
+    @Override
     public UUID getId() {
         return id;
     }

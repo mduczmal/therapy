@@ -1,4 +1,4 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.config;
 
 import com.mduczmal.therapy.user.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

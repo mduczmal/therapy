@@ -1,4 +1,4 @@
-package com.mduczmal.therapy;
+package com.mduczmal.therapy.config;
 
 import com.mduczmal.therapy.ad.AdFactory;
 import com.mduczmal.therapy.ad.TherapyAdFactory;
