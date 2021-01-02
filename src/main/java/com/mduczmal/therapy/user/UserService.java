@@ -30,6 +30,12 @@ public class UserService {
         }
     }
 
+    public User getCurrentUser() {
+        UserAccount userAccount = getCurrentUserAccount();
+        if (userAccount == null) return null;
+        else return userAccount.getUser();
+    }
+
     public Therapist getCurrentTherapist() {
         UserAccount userAccount = getCurrentUserAccount();
         if (userAccount == null) return null;
