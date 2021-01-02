@@ -26,7 +26,7 @@ public class Image {
         return filename;
     }
 
-    public void setFilename(String path) {
-        this.filename = path;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

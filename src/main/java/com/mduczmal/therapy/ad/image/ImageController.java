@@ -4,7 +4,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -26,11 +25,6 @@ public class ImageController {
 
     @GetMapping(value = "/v2/image", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Map<String, byte[]> getImage(@RequestParam UUID id) {
-        try {
             return Map.of("image", imageStorageService.load(id));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Map.of("image", new byte[]{});
-        }
     }
 }

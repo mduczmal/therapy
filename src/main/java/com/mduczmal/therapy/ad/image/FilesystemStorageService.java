@@ -2,6 +2,7 @@ package com.mduczmal.therapy.ad.image;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 @Service
 public class FilesystemStorageService implements ImageStorageService, CommandLineRunner {
-    private final String images = System.getenv( "FILES") + "/images";
+    private final String images = System.getenv( "FILES") + "/images/";
     private final ImageRepository imageRepository;
     private final Base64.Encoder base64encoder = Base64.getEncoder();
 
@@ -39,7 +40,7 @@ public class FilesystemStorageService implements ImageStorageService, CommandLin
         try {
             byte[] bytes = file.getBytes();
             Image image = new Image();
-            Path path = Path.of(images + "/" + image.getFilename());
+            Path path = Path.of(images + image.getFilename());
             Files.write(path, bytes);
             imageRepository.save(image);
             return image;
@@ -50,20 +51,25 @@ public class FilesystemStorageService implements ImageStorageService, CommandLin
     }
 
     @Override
-    public byte[] load(UUID id) throws IOException {
-        Image image = imageRepository.findById(id).orElseThrow(() -> new FileNotFoundException("Image " + id + " not found"));
-        Path path = Path.of(images + "/" + image.getFilename());
-        return base64encoder.encode(Files.readAllBytes(path));
-    }
-
-    @Override
-    public Path getPath(String filename) {
-        return Path.of(images + "/" + filename);
+    public byte[] load(UUID id) {
+        try {
+            Image image = imageRepository.findById(id).orElseThrow(() -> new FileNotFoundException("Image " + id + " not found"));
+            Path path = Path.of(images + image.getFilename());
+            return base64encoder.encode(Files.readAllBytes(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[]{};
+        }
     }
 
     @Override
     public void deleteAll() {
-
+        imageRepository.deleteAll();
+        try {
+            FileSystemUtils.deleteRecursively(Paths.get(images));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
