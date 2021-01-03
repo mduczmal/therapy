@@ -98,7 +98,7 @@ export class Ads extends React.Component {
             delete: "Usuń ogłoszenie"
         }
         return (
-            <div>
+            <Box>
                 <MuiThemeProvider theme={topBarTheme}>
                     <TopBar/>
                 </MuiThemeProvider>
@@ -128,7 +128,7 @@ export class Ads extends React.Component {
                     </Grid>
                 </Box>
                 <Cookies/>
-            </div>
+            </Box>
         );
     }
 }

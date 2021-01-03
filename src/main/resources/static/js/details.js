@@ -8,6 +8,7 @@ import {getCookie} from "./hello";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import {Cookies} from "./cookies";
+import {Comments} from "./comments";
 
 export class Details extends React.Component {
     constructor(props) {
@@ -52,19 +53,34 @@ export class Details extends React.Component {
                         <MuiThemeProvider theme={topBarTheme}>
                             <TopBar/>
                         </MuiThemeProvider>
-                        <Card>
-                            <CardHeader title={this.state.ad.details.name + " " + this.state.ad.details.surname}
-                            avatar={
-                                <Avatar aria-label="therapistImage" height={10} width={10}
-                                        src={"/images/" + this.state.ad.details.imageId}/>
-                            }
-                            />
-                            <CardContent>
-                                <Typography color="textPrimary">
-                                    {this.state.ad.details.address}
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        <Box mt={3}>
+                            <Card>
+                                <CardHeader title={this.state.ad.details.name + " " + this.state.ad.details.surname}
+                                            avatar={
+                                                <Avatar aria-label="therapistImage" height={10} width={10}
+                                                        src={"/images/" + this.state.ad.details.imageId}/>
+                                            }
+                                />
+                                <CardContent>
+                                    <Typography color="textPrimary">
+                                        {this.state.ad.details.address}
+                                    </Typography>
+                                    <Typography color="textPrimary">
+                                        {this.state.ad.details.email}
+                                    </Typography>
+                                    <Typography color="textPrimary">
+                                        {this.state.ad.details.telephoneNumber}
+                                    </Typography>
+                                    <Typography color="textPrimary">
+                                        {this.state.ad.details.therapyInfo}
+                                    </Typography>
+                                    <Typography color="textPrimary">
+                                        {this.state.ad.details.therapyApproach}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                            <Comments comments={this.state.ad.comments}/>
+                        </Box>
                         <Cookies/>
                     </Box>
                 )
