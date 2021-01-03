@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
+                .defaultSuccessUrl("/v2/ads")
                 .and().logout()
                 //Write csrf token to a cookie. Required for using fetch API from javascript
                 .and().csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));

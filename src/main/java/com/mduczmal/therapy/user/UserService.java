@@ -66,7 +66,7 @@ public class UserService implements Observer {
     @Override
     public void update() {
         User user = getCurrentUser();
-        if (user != null) {
+        if (user != null && !user.getCookiesAccepted()) {
             user.setCookiesAccepted();
             userRepository.save(user);
         }
