@@ -8,17 +8,22 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import {Box, CardContent, CardHeader} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 export class Ads extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             ads : null,
-            loaded : false
-        }
+            loaded : false,
+            user: null
+        };
+        this.handleDelete = this.handleDelete.bind(this);
     }
     componentDidMount() {
         this.getAds();
+        this.getUser();
     }
     getAds() {
         const token = getCookie('XSRF-TOKEN');
@@ -42,8 +47,56 @@ export class Ads extends React.Component {
                     console.log(error);
                 });
     }
+    getUser() {
+        const token = getCookie('XSRF-TOKEN');
+        fetch("http://localhost:8080/v2/user",
+            {
+                method: 'GET',
+                headers: {
+                    'X-XSRF-TOKEN': token
+                }
+            }).then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({
+                        ...this.state,
+                        user: result.hasOwnProperty("user") ? result.user : null,
+                    });
+                },
+                (error) => {
+                    console.log(error);
+                });
+    }
+    handleDelete(id) {
+        const token = getCookie('XSRF-TOKEN');
+        fetch("http://localhost:8080/v2/remove?id=" + id,
+            {
+                method: 'POST',
+                headers: {
+                    'X-XSRF-TOKEN': token
+                }
+            }).then(res => res.json()).then(
+            (result) => {
+                if(result.success) {
+                    const ads = this.state.ads;
+                    this.setState({
+                            ...this.state,
+                            ads: ads.filter((a) => a.id !== id)
+                        }
+                    )
+                }
+            },
+            (error) => {
+                console.log(error);
+            });
+    }
 
     render() {
+        const labels = {
+            details: "Szczegóły",
+            delete: "Usuń ogłoszenie"
+        }
         return (
             <div>
                 <MuiThemeProvider theme={topBarTheme}>
@@ -52,8 +105,12 @@ export class Ads extends React.Component {
                 <Box mt={3}>
                     <Grid container spacing={4}>
                         {!this.state.loaded? null : this.state.ads.map((ad) => (
-                            <Grid item key={ad.id} xs={12}>
+                            <Grid item key={ad.id} xs={4}>
                                 <Card>
+                                    {this.state.user !== null && this.state.user === ad.creator ?
+                                        (<Button type='button' onClick={() => this.handleDelete(ad.id)}
+                                                startIcon={<DeleteIcon/>}>{labels.delete}</Button>) : null
+                                    }
                                     <CardHeader title={ad.details.name + " " + ad.details.surname}/>
                                     <CardContent>
                                         <Typography color="textPrimary">
@@ -62,7 +119,7 @@ export class Ads extends React.Component {
                                         <RouterLink to={{
                                             pathname: "/v2/details/"+ad.id,
                                         }}>
-                                            {"Szczegóły"}
+                                            {labels.details}
                                         </RouterLink>
                                     </CardContent>
                                 </Card>

@@ -64,7 +64,7 @@ public abstract class Ad implements Identifiable {
         return comments;
     }
 
-    //Nie zdążyłem zaimplementować edycji ogłoszenia
+    //TODO: implement
     public void edit() {
         throw new UnsupportedOperationException("Not implemented yet");
     }

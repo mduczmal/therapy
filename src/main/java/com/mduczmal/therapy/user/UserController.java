@@ -31,7 +31,7 @@ public class UserController {
         if (user != null) {
             return Map.of("user", user.getId());
         } else {
-            return Map.of("user", UUID.fromString(""));
+            return Map.of();
         }
     }
 
