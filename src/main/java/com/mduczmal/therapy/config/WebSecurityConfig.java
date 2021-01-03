@@ -35,13 +35,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/ads/*", "/comment", "/comment/*", "/hello", "/data", "/login",
-                        "/v2/ad", "/v2/ads", "/v2/cookies", "/upload").permitAll()
+                .antMatchers("/", "/ads/*", "/comment", "/comment/*", "/hello", "/login",
+                        "/v2/ad", "/v2/ads", "/v2/cookies", "/v2/logged", "/upload").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .defaultSuccessUrl("/v2/ads")
                 .and().logout()
+                .logoutSuccessUrl("/v2/ads")
                 //Write csrf token to a cookie. Required for using fetch API from javascript
                 .and().csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
     }

@@ -4,6 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import {LoginButton} from "./loginbutton";
+import {CreateAdButton} from "./createAdButton";
 import {createMuiTheme, makeStyles} from "@material-ui/core/styles";
 import teal from "@material-ui/core/colors/teal";
 import green from "@material-ui/core/colors/green";
@@ -33,8 +34,14 @@ export const topBarTheme = createMuiTheme({
     },
 });
 
+
 export function TopBar(props) {
     const classes = useStyles();
+    const labels = {
+        "login": "Zaloguj",
+        "logout": "Wyloguj",
+        "createAd": "Dodaj ogłoszenie"
+    }
     return (<AppBar position="static">
             <Toolbar>
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -43,7 +50,8 @@ export function TopBar(props) {
                 <Typography variant="h6" className={classes.title}>
                     Terapia
                 </Typography>
-                <LoginButton/>
+                <CreateAdButton labels={labels}/>
+                <LoginButton labels={labels}/>
             </Toolbar>
         </AppBar>
     );

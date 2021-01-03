@@ -1,15 +1,37 @@
+import React, {useEffect} from "react";
 import Button from "@material-ui/core/Button";
+import {getCookie} from "./hello";
 
-const React = require('react');
+export function LoginButton(props) {
+    const [state, setState] = React.useState({loaded: false, isLogged: false});
 
-export class LoginButton extends React.Component {
-    constructor(props) {
-        super(props);
+    const isLogged = () => {
+        const token = getCookie('XSRF-TOKEN');
+        fetch("http://localhost:8080/v2/logged",
+            {
+                method: 'GET',
+                headers: {
+                    'X-XSRF-TOKEN': token
+                }
+            }).then(res => res.json())
+            .then(
+                (result) => {
+                    setState({
+                        isLogged: result.logged,
+                        loaded: true
+                    });
+                },
+                (error) => {
+                    console.log(error);
+                });
     }
+    useEffect(isLogged, [])
 
-    render() {
-        return (
-            <Button color="inherit" href={"http://localhost:8080/login"}>Login</Button>
-        )
-    }
+    return (<React.Fragment>{!state.loaded ? null : (
+        <React.Fragment>{state.isLogged ?
+            (<Button color="inherit" href={"http://localhost:8080/logout"}>{props.labels.logout}</Button>)
+            : (<Button color="inherit" href={"http://localhost:8080/login"}>{props.labels.login}</Button>)
+        }
+        </React.Fragment>
+    )}</React.Fragment>)
 }

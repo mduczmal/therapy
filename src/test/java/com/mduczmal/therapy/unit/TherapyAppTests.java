@@ -39,15 +39,6 @@ class TherapyAppTests {
     }
 
     @Test
-    void therapistCookiesAcceptedWhenObservedCookiesAccepted() {
-        Therapist therapist = new Therapist();
-        Cookies cookies = new Cookies();
-        cookies.attach(therapist);
-        cookies.accept();
-        assertTrue(therapist.getCookiesAccepted());
-    }
-
-    @Test
     void commentContentWitPolishCharsIsSet() {
         Comment comment = new Comment();
         comment.setContent("Polish chars: ąęńóżźł");
