@@ -2,7 +2,6 @@ package com.mduczmal.therapy.user;
 
 
 import com.mduczmal.therapy.Identifiable;
-import com.mduczmal.therapy.cookies.Observer;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -11,7 +10,7 @@ import java.util.UUID;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "concrete_users")
-public abstract class User implements Observer, Identifiable {
+public abstract class User implements Identifiable {
     @Id
     protected UUID id;
     protected boolean cookiesAccepted;
@@ -32,11 +31,6 @@ public abstract class User implements Observer, Identifiable {
 
     public boolean getCookiesAccepted() {
         return cookiesAccepted;
-    }
-
-    @Override
-    public void update() {
-        setCookiesAccepted();
     }
 
     @Override

@@ -11,14 +11,14 @@ import java.util.Optional;
 public class UserDetailsServiceImpl implements UserDetailsService {
     //Interface Segregation Principle - klasa korzysta z repozytorium zawierającego dane uwierzytelniania
     //Jako klient tego interfejsu nie musi się przejmować tym niezależnie czy dane należą do moderatora czy terapeuty
-    private UserRepository userRepository;
+    private UserAccountRepository userAccountRepository;
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserRepository(UserAccountRepository userAccountRepository) {
+        this.userAccountRepository = userAccountRepository;
     }
     @Override
     public UserAccount loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserAccount> osd = userRepository.findById(username);
+        Optional<UserAccount> osd = userAccountRepository.findById(username);
         return osd.orElseThrow(() -> new UsernameNotFoundException("User " + " not found"));
     }
 }

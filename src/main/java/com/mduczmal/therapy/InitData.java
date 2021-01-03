@@ -6,14 +6,9 @@ import com.mduczmal.therapy.ad.AdFactory;
 import com.mduczmal.therapy.ad.AdRepository;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
-import com.mduczmal.therapy.user.Authority;
-import com.mduczmal.therapy.user.AuthorityRepository;
-import com.mduczmal.therapy.user.UserAccount;
-import com.mduczmal.therapy.user.UserRepository;
+import com.mduczmal.therapy.user.*;
 import com.mduczmal.therapy.user.moderator.Moderator;
-import com.mduczmal.therapy.user.moderator.ModeratorRepository;
 import com.mduczmal.therapy.user.therapist.Therapist;
-import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -27,22 +22,20 @@ public class InitData implements CommandLineRunner {
     Single Responsibility - klasa odpowiada za wypełnienie bazy danych przykładowymi danymi
      */
     private final PasswordEncoder passwordEncoder;
-    private final TherapistRepository therapistRepository;
-    private final ModeratorRepository moderatorRepository;
+    private final UserRepository userRepository;
     private final AdRepository adRepository;
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
+    private final UserAccountRepository userAccountRepository;
     private final AuthorityRepository authorityRepository;
     private final AdFactory adFactory;
 
-    public InitData(AdRepository adRepository, TherapistRepository therapistRepository,
-                    ModeratorRepository moderatorRepository, UserRepository userRepository,
+    public InitData(AdRepository adRepository, UserRepository userRepository,
+                    UserAccountRepository userAccountRepository,
                     AuthorityRepository authorityRepository, CommentRepository commentRepository,
                     PasswordEncoder passwordEncoder, AdFactory adFactory) {
         this.adRepository = adRepository;
-        this.therapistRepository = therapistRepository;
-        this.moderatorRepository = moderatorRepository;
         this.userRepository = userRepository;
+        this.userAccountRepository = userAccountRepository;
         this.commentRepository = commentRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
@@ -55,8 +48,8 @@ public class InitData implements CommandLineRunner {
         List<Authority> authorities = new ArrayList<>();
         authorities.add(authority);
         UserAccount userAccount = new UserAccount(moderator, username, passwordEncoder.encode(password), authorities);
-        moderatorRepository.save(moderator);
-        userRepository.save(userAccount);
+        userRepository.save(moderator);
+        userAccountRepository.save(userAccount);
         authorityRepository.save(authority);
     }
 
@@ -67,8 +60,8 @@ public class InitData implements CommandLineRunner {
         authorities.add(authority);
         UserAccount userAccount = new UserAccount(therapist, username,
                 passwordEncoder.encode(password), authorities);
-        therapistRepository.save(therapist);
-        userRepository.save(userAccount);
+        userRepository.save(therapist);
+        userAccountRepository.save(userAccount);
         authorityRepository.save(authority);
         return therapist;
     }
@@ -82,7 +75,7 @@ public class InitData implements CommandLineRunner {
         details.setSurname("Nazwisko" + num);
         details.setAddress("ul. Ulica 1/1 00-000 Miasto");
         details.setOnlineSessions(true);
-        therapistRepository.save(therapist);
+        userRepository.save(therapist);
         adRepository.save(ad);
         return ad;
     }
@@ -104,7 +97,7 @@ public class InitData implements CommandLineRunner {
         details.setTraining("Certyfikat 1\nCertyfikat 2\nSzkolenie 1");
         details.setSupervision(true);
         details.setOnlineSessions(false);
-        therapistRepository.save(therapist);
+        userRepository.save(therapist);
         adRepository.save(ad);
         return ad;
     }

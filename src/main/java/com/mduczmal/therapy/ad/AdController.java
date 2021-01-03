@@ -3,9 +3,10 @@ package com.mduczmal.therapy.ad;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
 import com.mduczmal.therapy.cookies.Cookies;
+import com.mduczmal.therapy.user.Specialist;
+import com.mduczmal.therapy.user.UserRepository;
 import com.mduczmal.therapy.user.UserService;
 import com.mduczmal.therapy.user.therapist.Therapist;
-import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,19 +32,19 @@ public class AdController {
     private final UserService userService;
     private final AdService adService;
     private final AdRepository adRepository;
-    private final TherapistRepository therapistRepository;
+    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final AdFactory adFactory;
 
     private List<Ad> ads;
 
     public AdController(UserService userService, AdService adService, AdRepository adRepository,
-                        TherapistRepository therapistRepository, CommentRepository commentRepository,
-                        AdFactory adFactory) {
+                        UserRepository userRepository,
+                        CommentRepository commentRepository, AdFactory adFactory) {
         this.userService = userService;
         this.adService = adService;
         this.adRepository = adRepository;
-        this.therapistRepository = therapistRepository;
+        this.userRepository = userRepository;
         this.commentRepository = commentRepository;
         this.adFactory = adFactory;
     }
@@ -100,7 +101,7 @@ public class AdController {
         Therapist therapist = userService.getCurrentTherapist();
         Ad ad = adFactory.createAd(therapist);
         ad.setDetails(details);
-        therapistRepository.save(therapist);
+        userRepository.save(therapist);
         adRepository.save(ad);
         return "redirect:/";
     }
@@ -109,9 +110,10 @@ public class AdController {
     public String remove(@PathVariable("id") UUID id) {
         Ad ad = adRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException("Removed ad not in repository"));
-        therapistRepository.findById(ad.getCreator()).ifPresent(t -> {
-            t.removeAd();
-            therapistRepository.save(t);
+        userRepository.findById(ad.getCreator()).ifPresent(u -> {
+            Specialist s = (Specialist) u;
+            s.removeAd();
+            userRepository.save(s);
         });
         commentRepository.deleteAll(ad.getComments());
         adRepository.deleteById(id);

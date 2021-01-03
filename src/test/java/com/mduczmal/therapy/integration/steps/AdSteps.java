@@ -4,8 +4,8 @@ import com.mduczmal.therapy.InitData;
 import com.mduczmal.therapy.ad.AdRepository;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
 import com.mduczmal.therapy.user.AuthorityRepository;
+import com.mduczmal.therapy.user.UserAccountRepository;
 import com.mduczmal.therapy.user.UserRepository;
-import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -43,11 +43,11 @@ public class AdSteps {
     @Autowired
     private AdRepository adRepository;
     @Autowired
-    private TherapistRepository therapistRepository;
+    private UserRepository userRepository;
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserAccountRepository userAccountRepository;
     @Autowired
     private AuthorityRepository authorityRepository;
 
@@ -95,8 +95,8 @@ public class AdSteps {
         commentRepository.deleteAll();
         adRepository.deleteAll();
         authorityRepository.deleteAll();
+        userAccountRepository.deleteAll();
         userRepository.deleteAll();
-        therapistRepository.deleteAll();
     }
 
     @Before

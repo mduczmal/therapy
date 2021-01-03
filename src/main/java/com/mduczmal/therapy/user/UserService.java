@@ -1,22 +1,26 @@
 package com.mduczmal.therapy.user;
 
+import com.mduczmal.therapy.cookies.Observer;
 import com.mduczmal.therapy.user.moderator.Moderator;
 import com.mduczmal.therapy.user.therapist.Therapist;
-import com.mduczmal.therapy.user.therapist.TherapistRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class UserService {
+public class UserService implements Observer {
     /*
     Single Responsibility - klasa dostarcza dla kontrolera metod dotyczących obecnie zalogowanego użytkownika
     1. Ta klasa ma pojedynczą odpowiedzialność
     2. Kontroler zachowuje pojedynczą odpowiedzialność
      */
-    private final TherapistRepository therapistRepository;
+    private final UserAccountRepository userAccountRepository;
+    private final UserRepository userRepository;
 
-    public UserService(TherapistRepository therapistRepository) {
-        this.therapistRepository = therapistRepository;
+    public UserService(UserAccountRepository userAccountRepository, UserRepository userRepository) {
+        this.userAccountRepository = userAccountRepository;
+        this.userRepository = userRepository;
     }
 
     public UserAccount getCurrentUserAccount() {
@@ -40,10 +44,10 @@ public class UserService {
         UserAccount userAccount = getCurrentUserAccount();
         if (userAccount == null) return null;
         if (userAccount.hasRole("ROLE_THERAPIST")) {
-            Therapist oldTherapist = (Therapist) userAccount.getUser();
             //db query allows to create next ad immediately after removing the old one
             //without logout and login
-            return therapistRepository.findById(oldTherapist.getId()).orElse(null);
+            Optional<UserAccount> updated = userAccountRepository.findById(userAccount.getUsername());
+            return updated.map(account -> (Therapist) account.getUser()).orElse(null);
         } else {
             return null;
         }
@@ -56,6 +60,15 @@ public class UserService {
             return (Moderator) userAccount.getUser();
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public void update() {
+        User user = getCurrentUser();
+        if (user != null) {
+            user.setCookiesAccepted();
+            userRepository.save(user);
         }
     }
 }
