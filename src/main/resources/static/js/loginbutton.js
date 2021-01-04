@@ -7,7 +7,7 @@ export function LoginButton(props) {
 
     const isLogged = () => {
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/logged",
+        fetch("/v2/logged",
             {
                 method: 'GET',
                 headers: {

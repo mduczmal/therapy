@@ -25,7 +25,7 @@ export function Cookies(props) {
 
     const checkCookies = () => {
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/cookies",
+        fetch("/v2/cookies",
             {
                 method: 'GET',
                 headers: {
@@ -46,7 +46,7 @@ export function Cookies(props) {
     const acceptCookies = () => {
         setState({ ...state, isOpen: false });
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/cookies",
+        fetch("/v2/cookies",
             {
                 method: 'POST',
                 headers: {

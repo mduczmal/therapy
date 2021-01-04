@@ -23,9 +23,13 @@ export class Details extends React.Component {
         this.getAd();
     }
 
+    getId() {
+        return this.state.ad === null ? this.props.id : this.state.ad.id;
+    }
+
     getAd() {
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/ad?id=" + this.props.id,
+        fetch("/v2/ad?id=" + this.getId(),
             {
                 method: 'GET',
                 headers: {

@@ -27,7 +27,7 @@ export class Ads extends React.Component {
     }
     getAds() {
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/ads",
+        fetch("/v2/ads",
             {
                 method: 'POST',
                 headers: {
@@ -49,7 +49,7 @@ export class Ads extends React.Component {
     }
     getUser() {
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/user",
+        fetch("/v2/user",
             {
                 method: 'GET',
                 headers: {
@@ -70,7 +70,7 @@ export class Ads extends React.Component {
     }
     handleDelete(id) {
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/v2/remove?id=" + id,
+        fetch("/v2/remove?id=" + id,
             {
                 method: 'POST',
                 headers: {

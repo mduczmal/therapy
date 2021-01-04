@@ -64,7 +64,7 @@ export class CreateForm extends React.Component {
         var formData = new FormData();
         formData.append('image', this.state.image);
         const token = getCookie('XSRF-TOKEN');
-        fetch("http://localhost:8080/upload",
+        fetch("/upload",
             {
                 method: 'POST',
                 headers: {
@@ -87,7 +87,7 @@ export class CreateForm extends React.Component {
                     console.log(error);
                 }
             ).then(() => {
-            fetch("http://localhost:8080/v2/ad",
+            fetch("/v2/ad",
                 {
                     method: 'POST',
                     headers: {
