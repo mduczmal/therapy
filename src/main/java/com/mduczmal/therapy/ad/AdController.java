@@ -59,7 +59,7 @@ public class AdController {
         return "redirect:/ads/{ad_id}";
     }
 
-    @PostMapping(value = "/delcomment/{ad_id}/{comment_id}")
+    /*@PostMapping(value = "/delcomment/{ad_id}/{comment_id}")
     public String removeComment(@PathVariable("ad_id") int adID, @PathVariable("comment_id") int commentID) {
         Ad ad = ads.get(adID);
         List<Comment> adComments = ad.getComments();
@@ -68,7 +68,7 @@ public class AdController {
         adRepository.save(ad);
         commentRepository.deleteById(comment.getId());
         return "redirect:/ads/{ad_id}";
-    }
+    }*/
 
     @GetMapping(value = "/ads/{id}")
     public String details(@PathVariable("id") int id, Model model) {

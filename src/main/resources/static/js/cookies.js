@@ -16,7 +16,6 @@ export function Cookies(props) {
     const classes = useStyles()
     const [state, setState] = React.useState({isOpen: false});
     const toggleDrawer = (open) => (event) => {
-        console.log("called");
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }

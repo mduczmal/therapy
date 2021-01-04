@@ -1,17 +1,19 @@
 package com.mduczmal.therapy.ad.comment;
 
+import com.mduczmal.therapy.Identifiable;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class Comment {
+public class Comment implements Identifiable {
     /*
     Single Responsibility - klasa odpowiada za stan komentarza
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
     private UUID ad;
     private String author;
     @Column(length = 1000)
@@ -61,7 +63,7 @@ public class Comment {
 
     public void delete() {}
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

@@ -83,7 +83,7 @@ export class Details extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </Card>
-                            <Comments comments={this.state.ad.comments}/>
+                            <Comments ad={this.state.ad}/>
                         </Box>
                         <Cookies/>
                     </Box>
