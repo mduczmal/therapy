@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/ads/*", "/comment", "/comment/*", "/hello", "/login",
                         "/v2/ad", "/v2/ads", "/v2/details/*", "/v2/cookies", "/v2/logged", "/v2/user",
-                        "/v2/has", "/upload").permitAll()
+                        "/v2/has", "/v2/comment/create**", "/upload").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()

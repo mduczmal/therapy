@@ -6,16 +6,24 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import {getCookie} from "./hello";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {CreateComment} from "./createComment";
 
 export class Comments extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            comments: this.props.ad.comments,
             loaded: false,
-            moderator: false
+            moderator: false,
+            creating: false,
+            data: {
+                author: "",
+                content: ""
+            }
         }
+        this.handleCommentChange = this.handleCommentChange.bind(this);
+        this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+        this.handleCreate = this.handleCreate.bind(this);
     }
 
     componentDidMount() {
@@ -55,18 +63,67 @@ export class Comments extends React.Component {
             .then(
                 (result) => {
                     console.log(result);
-                    this.setState({
-                            ...this.state,
-                            comments: this.state.comments.filter((c) => c.id !== id)
-                        }
-                    )
+                    this.props.reload();
                 },
                 (error) => {
                     console.log(error);
                 });
     }
 
-    render() {
+    handleCommentSubmit(event) {
+        const token = getCookie('XSRF-TOKEN');
+        fetch("/v2/comment/create?ad=" + this.props.ad.id,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': token
+                },
+                body: JSON.stringify(this.state.data)
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    this.setState({
+                        ...this.state,
+                        creating: false
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        ...this.state,
+                        creating: false
+                    });
+                    console.log(error);
+                }
+            ).then(() => {
+            this.props.reload();
+        });
+        event.preventDefault();
+    }
+
+    handleCommentChange(event) {
+        const name = event.target.name;
+        this.setState({
+            ...this.state,
+            data: {
+                ...this.state.data,
+                [name]: event.target.value
+            }
+        });
+    }
+
+
+
+    handleCreate() {
+        this.setState({
+            ...this.state,
+            creating: true
+        });
+    }
+
+        render() {
         const labels = {
             delete: "Usuń komentarz",
             comments: "Komentarze",
@@ -75,11 +132,16 @@ export class Comments extends React.Component {
         return(
                 <Box my={1}>
                     <Card width={"50%"}>
-                        <CardHeader title={labels.comments} action={<Button>{labels.createComment}</Button>}/>
+                        <CardHeader title={labels.comments} action={<Button onClick={this.handleCreate}>{labels.createComment}</Button>}/>
                         {!this.state.loaded? null : (
                             <CardContent>
+                                {!this.state.creating? null : (
+                                    <CreateComment ad={this.props.ad}
+                                                   handleSubmit={(event) => this.handleCommentSubmit(event)}
+                                                   handleChange={(event) => this.handleCommentChange(event)}/>
+                                )}
                                 <Grid container spacing={1}>
-                                    {this.state.comments.map((comment) => (
+                                    {this.props.ad.comments.map((comment) => (
                                         <Grid item key={comment.id} xs={12}>
                                             <Card>
                                                 {this.state.moderator ?

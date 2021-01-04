@@ -17,6 +17,8 @@ export class Details extends React.Component {
             ad: null,
             loaded: false,
         }
+        this.getAd = this.getAd.bind(this);
+        this.getId = this.getId.bind(this);
     }
 
     componentDidMount() {
@@ -83,7 +85,7 @@ export class Details extends React.Component {
                                     </Typography>
                                 </CardContent>
                             </Card>
-                            <Comments ad={this.state.ad}/>
+                            <Comments ad={this.state.ad} reload={this.getAd}/>
                         </Box>
                         <Cookies/>
                     </Box>

@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
 import {Box, Container, Grid, Paper} from "@material-ui/core"
 import {TopBar, topBarTheme} from "./topbar";
-import {CreateForm} from "./createForm";
+import {CreateAd} from "./createAd";
 import {Cookies} from "./cookies";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,8 +52,8 @@ export function Create(props) {
                     <Grid container spacing={2} justify={'center'}>
                         <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <CreateForm labels={labels} avatar={classes.avatar}
-                                            button={classes.button} checkbox={classes.checkbox}/>
+                                <CreateAd labels={labels} avatar={classes.avatar}
+                                          button={classes.button} checkbox={classes.checkbox}/>
                             </Paper>
                         </Grid>
                     </Grid>
