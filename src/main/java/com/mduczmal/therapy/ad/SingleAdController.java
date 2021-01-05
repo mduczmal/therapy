@@ -52,8 +52,7 @@ public class SingleAdController {
         }
     }
 
-    //TODO: change to DELETE
-    @PostMapping(value = "/v2/remove",
+    @DeleteMapping(value = "/v2/ad",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Boolean> remove(@RequestParam("id") UUID id) {
         try {

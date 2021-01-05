@@ -64,13 +64,6 @@ public abstract class Ad implements Identifiable {
         return comments;
     }
 
-    //TODO: implement
-    public void edit() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    public void delete() {}
-
     public void addComment(Comment comment) {
         if (comment.getAuthor() == null || comment.getAuthor().isBlank()) {
             comment.setAuthor("Komentarz anonimowy");

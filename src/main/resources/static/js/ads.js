@@ -71,9 +71,9 @@ export class Ads extends React.Component {
     }
     handleDelete(id) {
         const token = getCookie('XSRF-TOKEN');
-        fetch("/v2/remove?id=" + id,
+        fetch("/v2/ad?id=" + id,
             {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'X-XSRF-TOKEN': token
                 }
