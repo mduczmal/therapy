@@ -141,7 +141,8 @@ export class EditAd extends React.Component {
 
     render() {
         const selfLabels = {
-            "edit": "Zapisz zmiany"
+            "edit": "Zapisz zmiany",
+            "cancel": "Anuluj"
         }
         return (
             <React.Fragment>
@@ -172,8 +173,6 @@ export class EditAd extends React.Component {
                             </Grid>
                             <Grid item xs={8}/>
                             <Grid item xs={6}>
-                                {/*<CreateTextField name={"name"} labels={this.props.labels} details={this.state.data.details}
-                                                 handleFieldChange={(event) => this.handleChange(event)}/>*/}
                                 <TextField id="name" label={this.props.labels.name} variant="filled" name="name"
                                            defaultValue={this.state.data.name} onChange={this.handleChange}/>
                             </Grid>
@@ -220,7 +219,10 @@ export class EditAd extends React.Component {
                             <Grid item xs={12}>
                                 <Pricing/>
                             </Grid>
-                            <Grid item xs={6}/>
+                            <Grid item xs={6}>
+                                <Button type="button" color={this.props.button.color}
+                                        href={"/v2/ads"}>{selfLabels.cancel}</Button>
+                            </Grid>
                             <Grid item xs={6}>
                                 <Button type="submit" color={this.props.button.color}>{selfLabels.edit}</Button>
                             </Grid>

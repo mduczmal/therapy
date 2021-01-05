@@ -1,7 +1,7 @@
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
 import Typography from "@material-ui/core/Typography";
 import {LoginButton} from "./loginbutton";
 import {CreateAdButton} from "./createAdButton";
@@ -40,15 +40,17 @@ export function TopBar(props) {
     const labels = {
         "login": "Zaloguj",
         "logout": "Wyloguj",
-        "createAd": "Dodaj ogłoszenie"
+        "createAd": "Dodaj ogłoszenie",
+        "pageTitle": "Terapia"
     }
     return (<AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon/>
+                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="home"
+                            href={"/v2/ads"}>
+                    <HomeIcon/>
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                    Terapia
+                    {labels.pageTitle}
                 </Typography>
                 <CreateAdButton labels={labels}/>
                 <LoginButton labels={labels}/>
