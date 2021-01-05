@@ -29,8 +29,8 @@ export function LoginButton(props) {
 
     return (<React.Fragment>{!state.loaded ? null : (
         <React.Fragment>{state.isLogged ?
-            (<Button color="inherit" href={"http://localhost:8080/logout"}>{props.labels.logout}</Button>)
-            : (<Button color="inherit" href={"http://localhost:8080/login"}>{props.labels.login}</Button>)
+            (<Button color="inherit" href={"/logout"}>{props.labels.logout}</Button>)
+            : (<Button color="inherit" href={"/login"}>{props.labels.login}</Button>)
         }
         </React.Fragment>
     )}</React.Fragment>)

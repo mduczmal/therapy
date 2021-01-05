@@ -4,8 +4,9 @@ import {Box, Container, Grid, Paper} from "@material-ui/core"
 import {TopBar, topBarTheme} from "./topbar";
 import {CreateAd} from "./createAd";
 import {Cookies} from "./cookies";
+import {EditAd} from "./editAd";
 
-const useStyles = makeStyles((theme) => ({
+export const useStylesCreate = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
@@ -26,9 +27,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export function Create(props) {
-    const classes = useStyles();
-    const labels = {
+export const labels = {
+    adDetails: {
         personalInfo: 'Informacje o Tobie',
         name: 'Imię',
         surname: 'Nazwisko',
@@ -42,6 +42,10 @@ export function Create(props) {
         onlineSessions: 'Prowadzę sesje online',
         pricing: 'Cennik'
     }
+}
+
+export function Create(props) {
+    const classes = useStylesCreate();
     return (
         <div className={classes.root}>
             <MuiThemeProvider theme={topBarTheme}>
@@ -52,8 +56,12 @@ export function Create(props) {
                     <Grid container spacing={2} justify={'center'}>
                         <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <CreateAd labels={labels} avatar={classes.avatar}
-                                          button={classes.button} checkbox={classes.checkbox}/>
+                                {props.edit ?
+                                    (<EditAd id={props.id} labels={labels.adDetails} avatar={classes.avatar}
+                                               button={classes.button} checkbox={classes.checkbox}/>)
+                                    : (<CreateAd labels={labels.adDetails} avatar={classes.avatar}
+                                              button={classes.button} checkbox={classes.checkbox}/>)
+                                }
                             </Paper>
                         </Grid>
                     </Grid>

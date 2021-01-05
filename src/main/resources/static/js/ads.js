@@ -10,6 +10,7 @@ import {Box, CardContent, CardHeader} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 export class Ads extends React.Component {
     constructor(props) {
@@ -95,7 +96,8 @@ export class Ads extends React.Component {
     render() {
         const labels = {
             details: "Szczegóły",
-            delete: "Usuń ogłoszenie"
+            delete: "Usuń ogłoszenie",
+            edit: "Edytuj ogłoszenie"
         }
         return (
             <Box>
@@ -108,8 +110,13 @@ export class Ads extends React.Component {
                             <Grid item key={ad.id} xs={4}>
                                 <Card>
                                     {this.state.user !== null && this.state.user === ad.creator ?
-                                        (<Button type='button' onClick={() => this.handleDelete(ad.id)}
-                                                startIcon={<DeleteIcon/>}>{labels.delete}</Button>) : null
+                                        (<React.Fragment>
+                                                <Button type='button' onClick={() => this.handleDelete(ad.id)}
+                                                        startIcon={<DeleteIcon/>}>{labels.delete}</Button>
+                                                <Button type='button' href={"/v2/edit/" + ad.id}
+                                                        startIcon={<EditIcon/>}>{labels.edit}</Button>
+                                            </React.Fragment>
+                                        ) : null
                                     }
                                     <CardHeader title={ad.details.name + " " + ad.details.surname}/>
                                     <CardContent>

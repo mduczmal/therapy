@@ -11,6 +11,11 @@ export function App() {
         let { id } = useParams();
         return <Details key={id} id={id}/>;
     }
+    function GetEditAd() {
+        let { id } = useParams();
+        return <Create key={"edit/" + id} edit={true} id={id}/>;
+    }
+
     return (
         <div>
             <Switch>
@@ -21,7 +26,10 @@ export function App() {
                     <GetDetails />
                 </Route>
                 <Route path="/v2/create">
-                    <Create/>
+                    <Create edit={false}/>
+                </Route>
+                <Route path="/v2/edit/:id">
+                    <GetEditAd />
                 </Route>
                 <Route path="/v2/ads">
                     <Ads />
