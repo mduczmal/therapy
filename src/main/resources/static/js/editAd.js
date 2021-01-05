@@ -16,7 +16,8 @@ export class EditAd extends React.Component {
             imagePreview: null,
             image: null,
             data: null,
-            loaded: false
+            loaded: false,
+            id: null
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -26,7 +27,7 @@ export class EditAd extends React.Component {
         this.getId = this.getId.bind(this);
     }
     getId() {
-        return this.state.data === null ? this.props.id : this.state.data.id;
+        return this.state.data === null ? this.props.id : this.state.id;
     }
 
     getAd() {
@@ -42,7 +43,8 @@ export class EditAd extends React.Component {
                 (result) => {
                     console.log(result);
                     this.setState({
-                        data: result,
+                        data: result.details,
+                        id: result.id,
                         loaded: true
                     });
                 },
@@ -99,14 +101,14 @@ export class EditAd extends React.Component {
                     console.log(error);
                 }
             ).then(() => {
-            fetch("/v2/ad",
+            fetch("/v2/ad?id=" + this.state.id,
                 {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-XSRF-TOKEN': token
                     },
-                    body: JSON.stringify(this.state.data)
+                    body: JSON.stringify(this.state.data, (k, v) => v === null ? "" : v)
                 })
                 .then(res => res.json())
                 .then(
@@ -139,7 +141,7 @@ export class EditAd extends React.Component {
 
     render() {
         const selfLabels = {
-            "edit": "Edytuj ogłoszenie"
+            "edit": "Zapisz zmiany"
         }
         return (
             <React.Fragment>
@@ -154,7 +156,7 @@ export class EditAd extends React.Component {
                                     <Box mb={2}>
                                         <Avatar className={this.props.avatar}
                                                 src={this.state.imagePreview === null?
-                                                    "/images/" + this.state.data.details.imageId
+                                                    "/images/" + this.state.data.imageId
                                                     : this.state.imagePreview }/>
                                     </Box>
                                 </Grid>
@@ -170,42 +172,44 @@ export class EditAd extends React.Component {
                             </Grid>
                             <Grid item xs={8}/>
                             <Grid item xs={6}>
+                                {/*<CreateTextField name={"name"} labels={this.props.labels} details={this.state.data.details}
+                                                 handleFieldChange={(event) => this.handleChange(event)}/>*/}
                                 <TextField id="name" label={this.props.labels.name} variant="filled" name="name"
-                                           onChange={this.handleChange}/>
+                                           defaultValue={this.state.data.name} onChange={this.handleChange}/>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField id="surname" label={this.props.labels.surname} variant="filled" name="surname"
-                                           onChange={this.handleChange}/>
+                                           defaultValue={this.state.data.surname} onChange={this.handleChange}/>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField id="email" label={this.props.labels.email} variant="filled" name="email"
-                                           onChange={this.handleChange}/>
+                                           defaultValue={this.state.data.email}  onChange={this.handleChange}/>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField id="telephoneNumber" label={this.props.labels.telephoneNumber} variant="filled"
-                                           name="telephoneNumber" onChange={this.handleChange}/>
+                                           defaultValue={this.state.data.telephoneNumber}  name="telephoneNumber" onChange={this.handleChange}/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Section title={this.props.labels.therapyInfo}/>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField id="address" label={this.props.labels.address} variant="filled" name="address"
-                                           onChange={this.handleChange}/>
+                                           defaultValue={this.state.data.address} onChange={this.handleChange}/>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField id="therapyApproach" label={this.props.labels.therapyApproach} variant="filled"
-                                           name="therapyApproach" onChange={this.handleChange}/>
+                                           defaultValue={this.state.data.therapyApproach} name="therapyApproach" onChange={this.handleChange}/>
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControlLabel
-                                    control={<Checkbox checked={this.state.onlineSessions} onChange={this.handleCheckboxChange}
+                                    control={<Checkbox checked={this.state.data.onlineSessions} onChange={this.handleCheckboxChange}
                                                        name="onlineSessions" color={this.props.checkbox.color}/>}
                                     label={this.props.labels.onlineSessions}
                                 />
                             </Grid>
                             <Grid item xs={6}>
                                 <FormControlLabel
-                                    control={<Checkbox checked={this.state.supervision} onChange={this.handleCheckboxChange}
+                                    control={<Checkbox checked={this.state.data.supervision} onChange={this.handleCheckboxChange}
                                                        name="supervision" color={this.props.checkbox.color}/>}
                                     label={this.props.labels.supervision}
                                 />
