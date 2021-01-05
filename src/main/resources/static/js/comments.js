@@ -135,14 +135,16 @@ export class Comments extends React.Component {
                         <CardHeader title={labels.comments} action={<Button onClick={this.handleCreate}>{labels.createComment}</Button>}/>
                         {!this.state.loaded? null : (
                             <CardContent>
-                                {!this.state.creating? null : (
-                                    <CreateComment ad={this.props.ad}
-                                                   handleSubmit={(event) => this.handleCommentSubmit(event)}
-                                                   handleChange={(event) => this.handleCommentChange(event)}/>
-                                )}
                                 <Grid container spacing={1}>
+                                        {!this.state.creating? null : (
+                                            <Grid item xs={4}>
+                                            <CreateComment ad={this.props.ad}
+                                                           handleSubmit={(event) => this.handleCommentSubmit(event)}
+                                                           handleChange={(event) => this.handleCommentChange(event)}/>
+                                            </Grid>
+                                        )}
                                     {this.props.ad.comments.map((comment) => (
-                                        <Grid item key={comment.id} xs={12}>
+                                        <Grid item key={comment.id} xs={4}>
                                             <Card>
                                                 {this.state.moderator ?
                                                     (<Button type='button' onClick={() => this.handleDelete(comment.id)}
@@ -157,7 +159,7 @@ export class Comments extends React.Component {
                                             </Card>
                                         </Grid>
                                     ))}
-                    </Grid>
+                                </Grid>
                         </CardContent>
                             )}
                     </Card>
