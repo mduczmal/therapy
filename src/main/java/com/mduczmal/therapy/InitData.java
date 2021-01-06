@@ -1,9 +1,9 @@
 package com.mduczmal.therapy;
 
 import com.mduczmal.therapy.ad.Ad;
-import com.mduczmal.therapy.ad.AdDetails;
 import com.mduczmal.therapy.ad.AdFactory;
 import com.mduczmal.therapy.ad.AdRepository;
+import com.mduczmal.therapy.ad.TherapyAdDetails;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.ad.comment.CommentRepository;
 import com.mduczmal.therapy.user.*;
@@ -68,7 +68,7 @@ public class InitData implements CommandLineRunner {
 
     private Ad addSimpleAd(Therapist therapist, int num) {
         Ad ad = adFactory.createAd(therapist);
-        AdDetails details = ad.getDetails();
+        TherapyAdDetails details = (TherapyAdDetails) ad.getDetails();
         details.setPrice("Pierwsza wizyta", 150);
         details.setPrice("Sesja indywidualna", 100);
         details.setName("Imię" + num);
@@ -83,7 +83,7 @@ public class InitData implements CommandLineRunner {
 
     private Ad addComplexAd(Therapist therapist, int num) {
         Ad ad = adFactory.createAd(therapist);
-        AdDetails details = ad.getDetails();
+        TherapyAdDetails details = (TherapyAdDetails) ad.getDetails();
         details.setPrice("Pierwsza wizyta", 200);
         details.setPrice("Sesja indywidualna", 130);
         details.setName("Imię" + num);

@@ -25,13 +25,12 @@ public abstract class Ad implements Identifiable {
     private List<Comment> comments;
     //Single responsibility - ogłoszenie zawiera dużo danych, więc umieszczenie ich w osobnej klasę zwiększa czytelność
     //kodu. Klasa AdDetails zawiera szczegółowe dane, a klasa Ad określa interakcje z innymi klasami.
-    @Embedded
-    private AdDetails adDetails;
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "details_id")
+    protected AdDetails adDetails;
 
     public Ad() {
         id = randomUUID();
         dateCreated = LocalDateTime.now();
-        adDetails = new AdDetails();
         comments = new LinkedList<>();
     }
 

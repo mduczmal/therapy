@@ -1,8 +1,8 @@
 package com.mduczmal.therapy.unit;
 
 import com.mduczmal.therapy.ad.Ad;
-import com.mduczmal.therapy.ad.AdDetails;
 import com.mduczmal.therapy.ad.AdFactory;
+import com.mduczmal.therapy.ad.TherapyAdDetails;
 import com.mduczmal.therapy.ad.TherapyAdFactory;
 import com.mduczmal.therapy.ad.comment.Comment;
 import com.mduczmal.therapy.cookies.Cookies;
@@ -71,7 +71,7 @@ class TherapyAppTests {
 
     @Test
     void obligatoryFieldsNotPresentIfNameIsMissing() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setSurname("Surname");
         details.setAddress("Address");
         assertFalse(details.obligatoryFieldsPresent());
@@ -79,7 +79,7 @@ class TherapyAppTests {
 
     @Test
     void obligatoryFieldsNotPresentIfSurnameIsMissing() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setName("Name");
         details.setAddress("Address");
         assertFalse(details.obligatoryFieldsPresent());
@@ -87,7 +87,7 @@ class TherapyAppTests {
 
     @Test
     void obligatoryFieldsNotPresentIfAddressIsMissing() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setName("Name");
         details.setSurname("Surname");
         assertFalse(details.obligatoryFieldsPresent());
@@ -95,7 +95,7 @@ class TherapyAppTests {
 
     @Test
     void obligatoryFieldsPresentIfNameAndSurnameAndAddressArePresent() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setName("Name");
         details.setSurname("Surname");
         details.setAddress("Address");
@@ -104,7 +104,7 @@ class TherapyAppTests {
 
     @Test
     void polishNameIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setName("PolishNameĄĘŃÓŻŹŁ");
         String name = details.getName();
         assertEquals("PolishNameĄĘŃÓŻŹŁ", name);
@@ -112,7 +112,7 @@ class TherapyAppTests {
 
     @Test
     void polishSurnameIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setSurname("PolishSurnameąęńóżźł");
         String surname = details.getSurname();
         assertEquals("PolishSurnameąęńóżźł", surname);
@@ -120,7 +120,7 @@ class TherapyAppTests {
 
     @Test
     void polishAddressIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setAddress("Polish Address ąęńóżźłść");
         String address = details.getAddress();
         assertEquals("Polish Address ąęńóżźłść", address);
@@ -129,7 +129,7 @@ class TherapyAppTests {
     @ParameterizedTest
     @ValueSource(strings = {"", "  ", "\t", "\n"})
     void blankNameIsNotSet(String input) {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setName(input);
         String name = details.getName();
         assertNull(name);
@@ -138,7 +138,7 @@ class TherapyAppTests {
     @ParameterizedTest
     @ValueSource(strings = {"", "  ", "\t", "\n"})
     void blankSurnameIsNotSet(String input) {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setSurname(input);
         String surname = details.getSurname();
         assertNull(surname);
@@ -147,7 +147,7 @@ class TherapyAppTests {
     @ParameterizedTest
     @ValueSource(strings = {"", "  ", "\t", "\n"})
     void blankAddressIsNotSet(String input) {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setAddress(input);
         String address = details.getAddress();
         assertNull(address);
@@ -155,7 +155,7 @@ class TherapyAppTests {
 
     @Test
     void validEmailIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setEmail("email@example.com");
         String email = details.getEmail();
         assertEquals("email@example.com", email);
@@ -165,7 +165,7 @@ class TherapyAppTests {
     @ValueSource(strings = {"emailWithoutAt", "double@@email",
     "emailToLongXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@example.com"})
     void emailIsSanitized(String input) {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setEmail(input);
         String email = details.getEmail();
         assertNull(email);
@@ -173,7 +173,7 @@ class TherapyAppTests {
 
     @Test
     void telephoneNumberWithCharsIsNotSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setTelephoneNumber("TEL123456");
         String telephoneNumber = details.getTelephoneNumber();
         assertNull(telephoneNumber);
@@ -190,7 +190,7 @@ class TherapyAppTests {
 
     @Test
     void singlePriceIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setPrice("service", 100);
         int price = details.getPrice("service");
         assertEquals(100,  price);
@@ -198,7 +198,7 @@ class TherapyAppTests {
 
     @Test
     void zeroPriceIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setPrice("service", 0);
         int price = details.getPrice("service");
         assertEquals(0,  price);
@@ -206,7 +206,7 @@ class TherapyAppTests {
 
     @Test
     void pricingIsSetIfPriceIsSet() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         int price = 100;
 
         details.setPrice("service", price);
@@ -218,7 +218,7 @@ class TherapyAppTests {
 
     @Test
     void priceNotSetIfNegative() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         details.setPrice("service", -135);
         Integer price = details.getPrice("service");
         assertNull(price);
@@ -226,7 +226,7 @@ class TherapyAppTests {
 
     @Test
     void priceIsDeleted() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
 
         details.setPrice("first_service", 30);
         details.setPrice("second_service", Integer.MAX_VALUE);
@@ -240,7 +240,7 @@ class TherapyAppTests {
 
     @Test
     void deletedServiceIsNotPresentInPricing() {
-        AdDetails details = new AdDetails();
+        TherapyAdDetails details = new TherapyAdDetails();
         int price = 100;
 
         details.setPrice("service", price);

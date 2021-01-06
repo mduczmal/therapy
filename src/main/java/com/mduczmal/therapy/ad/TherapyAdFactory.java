@@ -7,6 +7,7 @@ public class TherapyAdFactory extends AdFactory {
             throw new IllegalStateException("Therapist " + creator.getId() + " with ad " + creator.getAd() + " wanted to create another one");
         }
         TherapyAd ad = new TherapyAd(creator.getId());
+        ad.setDetails(new TherapyAdDetails());
         creator.setAd(ad.getId());
         return ad;
     }
