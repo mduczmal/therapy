@@ -4,7 +4,6 @@ import com.mduczmal.therapy.ad.comment.CommentRepository;
 import com.mduczmal.therapy.user.Specialist;
 import com.mduczmal.therapy.user.UserRepository;
 import com.mduczmal.therapy.user.UserService;
-import com.mduczmal.therapy.user.therapist.Therapist;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +39,10 @@ public class SingleAdController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Boolean> createAd(@RequestBody AdDetails adDetails) {
         try {
-            Therapist therapist = userService.getCurrentTherapist();
-            Ad ad = adFactory.createAd(therapist);
+            Specialist specialist  = (Specialist) userService.getCurrentUser();
+            Ad ad = adFactory.createAd(specialist);
             ad.setDetails(adDetails);
-            userRepository.save(therapist);
+            userRepository.save(specialist);
             adRepository.save(ad);
             return Map.of("success", true);
         } catch (Exception e) {
