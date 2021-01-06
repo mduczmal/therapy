@@ -18,7 +18,7 @@ public abstract class Ad implements Identifiable {
     private UUID id;
 
     private LocalDateTime dateCreated;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ad")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ad")
     private List<Comment> comments;
     @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "details_id")
     protected AdDetails adDetails;

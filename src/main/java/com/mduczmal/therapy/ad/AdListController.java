@@ -9,15 +9,15 @@ import java.util.List;
 @RestController
 public class AdListController {
 
-    private final AdService adService;
+    private final AdRepository adRepository;
 
-    public AdListController(AdService adService) {
-        this.adService = adService;
+    public AdListController(AdRepository adRepository) {
+        this.adRepository = adRepository;
     }
 
     @PostMapping(value = "/v2/ads",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Ad> ads() {
-        return adService.load();
+        return adRepository.findAll();
     }
 }

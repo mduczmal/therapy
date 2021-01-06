@@ -19,7 +19,6 @@ public class UserAccount implements UserDetails {
     private String username;
     private String password;
     private boolean enabled;
-    //TODO: remove eager fetching, put @Transactional in some sensible place instead
     @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
     private List<Authority> authorities;
 
