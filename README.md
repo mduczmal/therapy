@@ -35,7 +35,7 @@ Aplikacja uruchomi się na localhost:8080.
 ## Testy
 
 ### Jednostkowe
-Wszystkie testy jednostkowe są w pliku TherapyAppTests. Wszystkie przechodzą, wyniki nie są częścią repo, załączam je na Pegazie.
+Wszystkie testy jednostkowe są w pliku TherapyAppTests.
 
 ### Integracyjne
 
