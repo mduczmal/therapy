@@ -224,6 +224,7 @@ export class EditAd extends React.Component {
                                         href={"/v2/ads"}>{selfLabels.cancel}</Button>
                             </Grid>
                             <Grid item xs={6}>
+                                {/*TODO: redirect to home*/}
                                 <Button type="submit" color={this.props.button.color}>{selfLabels.edit}</Button>
                             </Grid>
                         </Grid>

@@ -1,6 +1,4 @@
 import React from 'react';
-import {MuiThemeProvider} from '@material-ui/core/styles';
-import {TopBar, topBarTheme} from "./topbar";
 
 
 export function getCookie(n) {
@@ -9,12 +7,3 @@ export function getCookie(n) {
     return c ? c.pop() : '';
 }
 
-export class Hello extends React.Component {
-    render() {
-        return (
-            <MuiThemeProvider theme={topBarTheme}>
-                <TopBar/>
-            </MuiThemeProvider>
-        );
-    }
-}

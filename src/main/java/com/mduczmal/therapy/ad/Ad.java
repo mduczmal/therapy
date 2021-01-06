@@ -2,7 +2,7 @@ package com.mduczmal.therapy.ad;
 
 import com.mduczmal.therapy.Identifiable;
 import com.mduczmal.therapy.ad.comment.Comment;
-import com.mduczmal.therapy.user.therapist.Therapist;
+import com.mduczmal.therapy.user.Specialist;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -71,8 +71,8 @@ public abstract class Ad implements Identifiable {
         comments.add(comment);
     }
 
-    public void addComment(Comment comment, Therapist therapist) {
-        if (therapist != null && id == therapist.getAd()) {
+    public void addComment(Comment comment, Specialist specialist) {
+        if (specialist != null && id == specialist.getAd()) {
             comment.markAsSelfComment();
         }
         addComment(comment);
