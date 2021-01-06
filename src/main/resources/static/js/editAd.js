@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import {Redirect} from "react-router-dom";
 
 export class EditAd extends React.Component {
     constructor(props) {
@@ -114,7 +115,7 @@ export class EditAd extends React.Component {
                 .then(
                     (result) => {
                         this.setState({
-                            isLoaded: true,
+                            redirect: true,
                         });
                         console.log(result);
                     },
@@ -122,7 +123,7 @@ export class EditAd extends React.Component {
                         console.log(error);
                     }
                 )
-        })
+        });
         event.preventDefault();
     }
 
@@ -143,6 +144,9 @@ export class EditAd extends React.Component {
         const selfLabels = {
             "edit": "Zapisz zmiany",
             "cancel": "Anuluj"
+        }
+        if (this.state.redirect) {
+            return <Redirect to="/v2/ads"/>
         }
         return (
             <React.Fragment>
@@ -224,7 +228,6 @@ export class EditAd extends React.Component {
                                         href={"/v2/ads"}>{selfLabels.cancel}</Button>
                             </Grid>
                             <Grid item xs={6}>
-                                {/*TODO: redirect to home*/}
                                 <Button type="submit" color={this.props.button.color}>{selfLabels.edit}</Button>
                             </Grid>
                         </Grid>

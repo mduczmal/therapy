@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import {Redirect} from 'react-router-dom';
 
 export class CreateAd extends React.Component {
     constructor(props) {
@@ -98,7 +99,7 @@ export class CreateAd extends React.Component {
                 .then(
                     (result) => {
                         this.setState({
-                            isLoaded: true,
+                            redirect: true,
                         });
                         console.log(result);
                     },
@@ -106,7 +107,7 @@ export class CreateAd extends React.Component {
                         console.log(error);
                     }
                 )
-        })
+        });
         event.preventDefault();
     }
 
@@ -120,6 +121,9 @@ export class CreateAd extends React.Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to="/v2/ads"/>
+        }
         return (
             <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                 <Grid container spacing={1} alignItems={'center'}>
