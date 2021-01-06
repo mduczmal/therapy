@@ -4,9 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Cookies implements Subject {
-    /*
-    Single Responsibility - klasa odpowiada za stan ciasteczek i związane z nimi akcje
-     */
     private boolean accepted = false;
     public static final String TEXT = "Nasza strona korzysta tylko z niezbędnych plików cookies.";
     private final List<Observer> observers;

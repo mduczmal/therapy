@@ -12,9 +12,6 @@ import java.util.UUID;
 
 @Entity
 public class TherapyAdDetails extends AdDetails {
-    /*
-    Single Responsibility - klasa przechowuje szczegółowe dane ogłoszenia
-     */
     @NotNull
     private String name;
     @NotNull

@@ -8,9 +8,6 @@ import java.util.UUID;
 
 @Entity
 public class Comment implements Identifiable {
-    /*
-    Single Responsibility - klasa odpowiada za stan komentarza
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;

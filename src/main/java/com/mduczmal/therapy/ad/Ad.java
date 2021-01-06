@@ -14,17 +14,12 @@ import static java.util.UUID.randomUUID;
 
 @Entity
 public abstract class Ad implements Identifiable {
-    /*
-    Single responsibility - klasa reprezentuje stan ogłoszenia i związane z ogłoszeniem akcje
-     */
     @Id
     private UUID id;
 
     private LocalDateTime dateCreated;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "ad")
     private List<Comment> comments;
-    //Single responsibility - ogłoszenie zawiera dużo danych, więc umieszczenie ich w osobnej klasę zwiększa czytelność
-    //kodu. Klasa AdDetails zawiera szczegółowe dane, a klasa Ad określa interakcje z innymi klasami.
     @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "details_id")
     protected AdDetails adDetails;
 

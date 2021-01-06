@@ -14,11 +14,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "users")
 public class UserAccount implements UserDetails {
-    /*
-        Open-closed principle - w serwisie już istnieją 2 rodzaje użytkowników, którzy mogą się logować:
-        moderatorzy i terapeuci. Jeśli zajdzie taka potrzeba, można rozszerzyć funkcjonalność systemu
-        o kolejny rodzaj użytkownika dziedzicząc po klasie SecurityDetails bez modyfikowania istniejącego kodu.
-         */
+
     @Id
     private String username;
     private String password;

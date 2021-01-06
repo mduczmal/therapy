@@ -7,9 +7,7 @@ import java.util.UUID;
 
 @Entity
 public abstract class Specialist extends User implements AdCreator {
-    /*
-        Single Responsibility - klasa odpowiada za stan i akcje wykonywane przez terapeutę
-         */
+
     private UUID ad;
 
     public UUID getAd() { return ad; }

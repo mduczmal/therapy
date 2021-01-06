@@ -6,11 +6,6 @@ import java.util.List;
 
 @Service
 public class AdService {
-    /*
-    Single Responsibility - klasa dostarcza kontrolerowi metodę zwracającą listę ogłoszeń z bazy danych
-    1. Ta klasa ma pojedynczą odpowiedzialność
-    2. Kontroler zachowuje pojedynczą odpowiedzialność
-     */
     private final AdRepository adRepository;
 
     public AdService(AdRepository adRepository) {

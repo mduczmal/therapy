@@ -7,9 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "authorities")
 public class Authority implements GrantedAuthority {
-    /*
-    Single Responsibility - klasa określa rolę użytkownika w systemie, wykorzystywaną przy autoryzacji
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -11,6 +11,7 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "concrete_users")
 public abstract class User implements Identifiable {
+
     @Id
     protected UUID id;
     protected boolean cookiesAccepted;

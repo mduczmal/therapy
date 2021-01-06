@@ -18,9 +18,7 @@ import java.util.List;
 
 @Component
 public class InitData implements CommandLineRunner {
-    /*
-    Single Responsibility - klasa odpowiada za wypełnienie bazy danych przykładowymi danymi
-     */
+
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AdRepository adRepository;

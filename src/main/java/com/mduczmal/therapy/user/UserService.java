@@ -6,11 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements Observer {
-    /*
-    Single Responsibility - klasa dostarcza dla kontrolera metod dotyczących obecnie zalogowanego użytkownika
-    1. Ta klasa ma pojedynczą odpowiedzialność
-    2. Kontroler zachowuje pojedynczą odpowiedzialność
-     */
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
